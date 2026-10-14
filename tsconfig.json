@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@nutex/types": ["packages/types/src/index.ts"],
+      "@nutex/validation": ["packages/validation/src/index.ts"],
+      "@nutex/formula-specs": ["packages/formula-specs/src/index.ts"],
+      "@nutex/sheet-connector": ["packages/sheet-connector/src/index.ts"],
+      "@nutex/drive-connector": ["packages/drive-connector/src/index.ts"],
+      "@nutex/report-engine": ["packages/report-engine/src/index.ts"],
+      "@nutex/ui": ["packages/ui/src/index.ts"]
+    }
+  },
+  "include": ["packages/*/src", "apps/api", "scripts", "google/setup", "tests"],
+  "exclude": ["node_modules", "**/.next"]
+}

@@ -1,0 +1,3778 @@
+[
+  {
+    "tab": "SYSTEM_CONFIG",
+    "column": "updated_at",
+    "sheet": "SYSTEM_CONFIG",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "USERS",
+    "column": "employee_id",
+    "sheet": "USERS",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 1001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "USERS",
+    "column": "role",
+    "sheet": "USERS",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 1001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "SUPER_ADMIN",
+      "HR_ADMIN",
+      "MANAGER",
+      "FINANCE_PAYROLL",
+      "EMPLOYEE",
+      "ATTENDANCE_OPERATOR"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "USERS",
+    "column": "mfa_enabled",
+    "sheet": "USERS",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 1001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "USERS",
+    "column": "failed_attempts",
+    "sheet": "USERS",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 1001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "USERS",
+    "column": "locked_until",
+    "sheet": "USERS",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 1001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "USERS",
+    "column": "last_login_at",
+    "sheet": "USERS",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 1001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "USERS",
+    "column": "password_changed_at",
+    "sheet": "USERS",
+    "columnIndex": 12,
+    "startRow": 2,
+    "endRow": 1001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "USERS",
+    "column": "must_change_password",
+    "sheet": "USERS",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 1001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "USERS",
+    "column": "created_at",
+    "sheet": "USERS",
+    "columnIndex": 15,
+    "startRow": 2,
+    "endRow": 1001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "USERS",
+    "column": "updated_at",
+    "sheet": "USERS",
+    "columnIndex": 17,
+    "startRow": 2,
+    "endRow": 1001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "USERS",
+    "column": "status",
+    "sheet": "USERS",
+    "columnIndex": 21,
+    "startRow": 2,
+    "endRow": 1001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "LOCKED",
+      "DISABLED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "ROLES",
+    "column": "role",
+    "sheet": "ROLES",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 401,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "SUPER_ADMIN",
+      "HR_ADMIN",
+      "MANAGER",
+      "FINANCE_PAYROLL",
+      "EMPLOYEE",
+      "ATTENDANCE_OPERATOR"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "ROLES",
+    "column": "can_read",
+    "sheet": "ROLES",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 401,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "ROLES",
+    "column": "can_write",
+    "sheet": "ROLES",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 401,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "ROLES",
+    "column": "can_approve",
+    "sheet": "ROLES",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 401,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "ROLES",
+    "column": "can_export",
+    "sheet": "ROLES",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 401,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "date_of_joining",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "date_of_exit",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "employment_type",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "PERMANENT",
+      "PROBATION",
+      "CONTRACT",
+      "INTERN",
+      "CONSULTANT"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "employee_status",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "NOTICE",
+      "EXITED",
+      "INACTIVE"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "department_id",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_RANGE",
+    "source": "DEPARTMENTS!$A$2:$A$301",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "designation_id",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_RANGE",
+    "source": "DESIGNATIONS!$A$2:$A$301",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "location_id",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 12,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_RANGE",
+    "source": "LOCATIONS!$A$2:$A$201",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "default_shift_id",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 14,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_RANGE",
+    "source": "SHIFT_MASTER!$A$2:$A$201",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "probation_end_date",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 16,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "ot_eligible",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 17,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "pf_applicable",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 18,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "esi_applicable",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 19,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "pt_applicable",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 20,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "created_at",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 25,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "updated_at",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 27,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEES",
+    "column": "status",
+    "sheet": "EMPLOYEES",
+    "columnIndex": 31,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "EMPLOYMENT_HISTORY",
+    "column": "employee_id",
+    "sheet": "EMPLOYMENT_HISTORY",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYMENT_HISTORY",
+    "column": "event_type",
+    "sheet": "EMPLOYMENT_HISTORY",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "JOINING",
+      "CONFIRMATION",
+      "TRANSFER",
+      "PROMOTION",
+      "SALARY_REVISION",
+      "RESIGNATION",
+      "EXIT",
+      "REHIRE"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "EMPLOYMENT_HISTORY",
+    "column": "effective_date",
+    "sheet": "EMPLOYMENT_HISTORY",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYMENT_HISTORY",
+    "column": "created_at",
+    "sheet": "EMPLOYMENT_HISTORY",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYMENT_HISTORY",
+    "column": "updated_at",
+    "sheet": "EMPLOYMENT_HISTORY",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYMENT_HISTORY",
+    "column": "status",
+    "sheet": "EMPLOYMENT_HISTORY",
+    "columnIndex": 14,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "EMPLOYEE_DOCUMENTS",
+    "column": "employee_id",
+    "sheet": "EMPLOYEE_DOCUMENTS",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_DOCUMENTS",
+    "column": "size_bytes",
+    "sheet": "EMPLOYEE_DOCUMENTS",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_DOCUMENTS",
+    "column": "visibility",
+    "sheet": "EMPLOYEE_DOCUMENTS",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "EMPLOYEE",
+      "HR_ONLY"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "EMPLOYEE_DOCUMENTS",
+    "column": "uploaded_at",
+    "sheet": "EMPLOYEE_DOCUMENTS",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_DOCUMENTS",
+    "column": "created_at",
+    "sheet": "EMPLOYEE_DOCUMENTS",
+    "columnIndex": 12,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_DOCUMENTS",
+    "column": "updated_at",
+    "sheet": "EMPLOYEE_DOCUMENTS",
+    "columnIndex": 14,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_DOCUMENTS",
+    "column": "status",
+    "sheet": "EMPLOYEE_DOCUMENTS",
+    "columnIndex": 18,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "DEPARTMENTS",
+    "column": "created_at",
+    "sheet": "DEPARTMENTS",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "DEPARTMENTS",
+    "column": "updated_at",
+    "sheet": "DEPARTMENTS",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "DEPARTMENTS",
+    "column": "status",
+    "sheet": "DEPARTMENTS",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "DESIGNATIONS",
+    "column": "level",
+    "sheet": "DESIGNATIONS",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "DESIGNATIONS",
+    "column": "created_at",
+    "sheet": "DESIGNATIONS",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "DESIGNATIONS",
+    "column": "updated_at",
+    "sheet": "DESIGNATIONS",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "DESIGNATIONS",
+    "column": "status",
+    "sheet": "DESIGNATIONS",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LOCATIONS",
+    "column": "latitude",
+    "sheet": "LOCATIONS",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOCATIONS",
+    "column": "longitude",
+    "sheet": "LOCATIONS",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOCATIONS",
+    "column": "geofence_radius_m",
+    "sheet": "LOCATIONS",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOCATIONS",
+    "column": "geofence_required",
+    "sheet": "LOCATIONS",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LOCATIONS",
+    "column": "created_at",
+    "sheet": "LOCATIONS",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOCATIONS",
+    "column": "updated_at",
+    "sheet": "LOCATIONS",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOCATIONS",
+    "column": "status",
+    "sheet": "LOCATIONS",
+    "columnIndex": 17,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "column": "shift_type",
+    "sheet": "SHIFT_MASTER",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "FIXED",
+      "ROTATIONAL",
+      "FLEXIBLE",
+      "SPLIT",
+      "NIGHT"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "column": "break_minutes",
+    "sheet": "SHIFT_MASTER",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "column": "grace_in_minutes",
+    "sheet": "SHIFT_MASTER",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "column": "grace_out_minutes",
+    "sheet": "SHIFT_MASTER",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "column": "full_day_minutes",
+    "sheet": "SHIFT_MASTER",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "column": "half_day_minutes",
+    "sheet": "SHIFT_MASTER",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "column": "ot_threshold_minutes",
+    "sheet": "SHIFT_MASTER",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "column": "is_flexible",
+    "sheet": "SHIFT_MASTER",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "column": "effective_from",
+    "sheet": "SHIFT_MASTER",
+    "columnIndex": 12,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "column": "effective_to",
+    "sheet": "SHIFT_MASTER",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "column": "created_at",
+    "sheet": "SHIFT_MASTER",
+    "columnIndex": 15,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "column": "updated_at",
+    "sheet": "SHIFT_MASTER",
+    "columnIndex": 17,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "column": "status",
+    "sheet": "SHIFT_MASTER",
+    "columnIndex": 21,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "SHIFT_ROSTER",
+    "column": "employee_id",
+    "sheet": "SHIFT_ROSTER",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_ROSTER",
+    "column": "work_date",
+    "sheet": "SHIFT_ROSTER",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_ROSTER",
+    "column": "shift_id",
+    "sheet": "SHIFT_ROSTER",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "ONE_OF_RANGE",
+    "source": "SHIFT_MASTER!$A$2:$A$201",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_ROSTER",
+    "column": "is_week_off",
+    "sheet": "SHIFT_ROSTER",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "SHIFT_ROSTER",
+    "column": "created_at",
+    "sheet": "SHIFT_ROSTER",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_ROSTER",
+    "column": "updated_at",
+    "sheet": "SHIFT_ROSTER",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SHIFT_ROSTER",
+    "column": "status",
+    "sheet": "SHIFT_ROSTER",
+    "columnIndex": 12,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "HOLIDAYS",
+    "column": "holiday_date",
+    "sheet": "HOLIDAYS",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "HOLIDAYS",
+    "column": "holiday_type",
+    "sheet": "HOLIDAYS",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "PUBLIC",
+      "RESTRICTED",
+      "COMPANY"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "HOLIDAYS",
+    "column": "created_at",
+    "sheet": "HOLIDAYS",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "HOLIDAYS",
+    "column": "updated_at",
+    "sheet": "HOLIDAYS",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "HOLIDAYS",
+    "column": "status",
+    "sheet": "HOLIDAYS",
+    "columnIndex": 12,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_TYPES",
+    "column": "category",
+    "sheet": "LEAVE_TYPES",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "LEAVE",
+      "WFH",
+      "OD",
+      "TRAVEL",
+      "COMP_OFF"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_TYPES",
+    "column": "is_paid",
+    "sheet": "LEAVE_TYPES",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_TYPES",
+    "column": "requires_approval",
+    "sheet": "LEAVE_TYPES",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_TYPES",
+    "column": "allow_half_day",
+    "sheet": "LEAVE_TYPES",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_TYPES",
+    "column": "count_holidays_weekoffs",
+    "sheet": "LEAVE_TYPES",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_TYPES",
+    "column": "allow_negative",
+    "sheet": "LEAVE_TYPES",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_TYPES",
+    "column": "max_negative_days",
+    "sheet": "LEAVE_TYPES",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_TYPES",
+    "column": "min_notice_days",
+    "sheet": "LEAVE_TYPES",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_TYPES",
+    "column": "max_consecutive_days",
+    "sheet": "LEAVE_TYPES",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_TYPES",
+    "column": "created_at",
+    "sheet": "LEAVE_TYPES",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_TYPES",
+    "column": "updated_at",
+    "sheet": "LEAVE_TYPES",
+    "columnIndex": 15,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_TYPES",
+    "column": "status",
+    "sheet": "LEAVE_TYPES",
+    "columnIndex": 19,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "leave_type_id",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "ONE_OF_RANGE",
+    "source": "LEAVE_TYPES!$A$2:$A$101",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "employment_type",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "PERMANENT",
+      "PROBATION",
+      "CONTRACT",
+      "INTERN",
+      "CONSULTANT"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "annual_quota",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "accrual_days_per_month",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "accrual_method",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "MONTHLY",
+      "ANNUAL_UPFRONT",
+      "MANUAL"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "prorate_joiners",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "probation_lock",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "max_carry_forward",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "max_encashable",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "effective_from",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "effective_to",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "created_at",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "updated_at",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 15,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "column": "status",
+    "sheet": "LEAVE_POLICIES",
+    "columnIndex": 19,
+    "startRow": 2,
+    "endRow": 301,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_BALANCES",
+    "column": "employee_id",
+    "sheet": "LEAVE_BALANCES",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_BALANCES",
+    "column": "leave_type_id",
+    "sheet": "LEAVE_BALANCES",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "ONE_OF_RANGE",
+    "source": "LEAVE_TYPES!$A$2:$A$101",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_BALANCES",
+    "column": "leave_year",
+    "sheet": "LEAVE_BALANCES",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_BALANCES",
+    "column": "created_at",
+    "sheet": "LEAVE_BALANCES",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_BALANCES",
+    "column": "updated_at",
+    "sheet": "LEAVE_BALANCES",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_BALANCES",
+    "column": "status",
+    "sheet": "LEAVE_BALANCES",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_TRANSACTIONS",
+    "column": "employee_id",
+    "sheet": "LEAVE_TRANSACTIONS",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 12001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_TRANSACTIONS",
+    "column": "leave_type_id",
+    "sheet": "LEAVE_TRANSACTIONS",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 12001,
+    "type": "ONE_OF_RANGE",
+    "source": "LEAVE_TYPES!$A$2:$A$101",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_TRANSACTIONS",
+    "column": "leave_year",
+    "sheet": "LEAVE_TRANSACTIONS",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 12001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_TRANSACTIONS",
+    "column": "txn_type",
+    "sheet": "LEAVE_TRANSACTIONS",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 12001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "OPENING",
+      "ACCRUAL",
+      "CARRY_FORWARD",
+      "COMP_OFF_CREDIT",
+      "ADJUSTMENT_CREDIT",
+      "LEAVE_TAKEN",
+      "LEAVE_REVERSAL",
+      "ENCASHMENT",
+      "LAPSE",
+      "ADJUSTMENT_DEBIT"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_TRANSACTIONS",
+    "column": "txn_date",
+    "sheet": "LEAVE_TRANSACTIONS",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 12001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_TRANSACTIONS",
+    "column": "days",
+    "sheet": "LEAVE_TRANSACTIONS",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 12001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_TRANSACTIONS",
+    "column": "created_at",
+    "sheet": "LEAVE_TRANSACTIONS",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 12001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_TRANSACTIONS",
+    "column": "updated_at",
+    "sheet": "LEAVE_TRANSACTIONS",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 12001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_TRANSACTIONS",
+    "column": "status",
+    "sheet": "LEAVE_TRANSACTIONS",
+    "columnIndex": 17,
+    "startRow": 2,
+    "endRow": 12001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_APPLICATIONS",
+    "column": "employee_id",
+    "sheet": "LEAVE_APPLICATIONS",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_APPLICATIONS",
+    "column": "leave_type_id",
+    "sheet": "LEAVE_APPLICATIONS",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "ONE_OF_RANGE",
+    "source": "LEAVE_TYPES!$A$2:$A$101",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_APPLICATIONS",
+    "column": "from_date",
+    "sheet": "LEAVE_APPLICATIONS",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_APPLICATIONS",
+    "column": "to_date",
+    "sheet": "LEAVE_APPLICATIONS",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_APPLICATIONS",
+    "column": "half_day",
+    "sheet": "LEAVE_APPLICATIONS",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LEAVE_APPLICATIONS",
+    "column": "decided_at",
+    "sheet": "LEAVE_APPLICATIONS",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_APPLICATIONS",
+    "column": "created_at",
+    "sheet": "LEAVE_APPLICATIONS",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_APPLICATIONS",
+    "column": "updated_at",
+    "sheet": "LEAVE_APPLICATIONS",
+    "columnIndex": 15,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LEAVE_APPLICATIONS",
+    "column": "status",
+    "sheet": "LEAVE_APPLICATIONS",
+    "columnIndex": 19,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "PENDING",
+      "APPROVED",
+      "REJECTED",
+      "CANCELLED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "ATTENDANCE_EVENTS",
+    "column": "employee_id",
+    "sheet": "ATTENDANCE_EVENTS",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EVENTS",
+    "column": "event_datetime",
+    "sheet": "ATTENDANCE_EVENTS",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EVENTS",
+    "column": "event_type",
+    "sheet": "ATTENDANCE_EVENTS",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "IN",
+      "OUT"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "ATTENDANCE_EVENTS",
+    "column": "capture_method",
+    "sheet": "ATTENDANCE_EVENTS",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "WEB",
+      "MOBILE",
+      "MANUAL",
+      "IMPORT"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "ATTENDANCE_EVENTS",
+    "column": "geo_lat",
+    "sheet": "ATTENDANCE_EVENTS",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EVENTS",
+    "column": "geo_lng",
+    "sheet": "ATTENDANCE_EVENTS",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EVENTS",
+    "column": "geo_accuracy",
+    "sheet": "ATTENDANCE_EVENTS",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EVENTS",
+    "column": "geo_status",
+    "sheet": "ATTENDANCE_EVENTS",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "INSIDE",
+      "OUTSIDE",
+      "UNKNOWN",
+      "NOT_REQUIRED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "ATTENDANCE_EVENTS",
+    "column": "geo_distance_m",
+    "sheet": "ATTENDANCE_EVENTS",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EVENTS",
+    "column": "created_at",
+    "sheet": "ATTENDANCE_EVENTS",
+    "columnIndex": 14,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EVENTS",
+    "column": "updated_at",
+    "sheet": "ATTENDANCE_EVENTS",
+    "columnIndex": 16,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EVENTS",
+    "column": "status",
+    "sheet": "ATTENDANCE_EVENTS",
+    "columnIndex": 20,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "ATTENDANCE_DAILY",
+    "column": "employee_id",
+    "sheet": "ATTENDANCE_DAILY",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 6001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_DAILY",
+    "column": "work_date",
+    "sheet": "ATTENDANCE_DAILY",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 6001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_DAILY",
+    "column": "created_at",
+    "sheet": "ATTENDANCE_DAILY",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 6001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_DAILY",
+    "column": "status_flag",
+    "sheet": "ATTENDANCE_DAILY",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 6001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "ATTENDANCE_ADJUSTMENTS",
+    "column": "employee_id",
+    "sheet": "ATTENDANCE_ADJUSTMENTS",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_ADJUSTMENTS",
+    "column": "work_date",
+    "sheet": "ATTENDANCE_ADJUSTMENTS",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_ADJUSTMENTS",
+    "column": "adjustment_type",
+    "sheet": "ATTENDANCE_ADJUSTMENTS",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "MISSING_PUNCH",
+      "TIME_CORRECTION"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "ATTENDANCE_ADJUSTMENTS",
+    "column": "adjusted_in",
+    "sheet": "ATTENDANCE_ADJUSTMENTS",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_ADJUSTMENTS",
+    "column": "adjusted_out",
+    "sheet": "ATTENDANCE_ADJUSTMENTS",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_ADJUSTMENTS",
+    "column": "original_first_in",
+    "sheet": "ATTENDANCE_ADJUSTMENTS",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_ADJUSTMENTS",
+    "column": "original_last_out",
+    "sheet": "ATTENDANCE_ADJUSTMENTS",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_ADJUSTMENTS",
+    "column": "decided_at",
+    "sheet": "ATTENDANCE_ADJUSTMENTS",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_ADJUSTMENTS",
+    "column": "created_at",
+    "sheet": "ATTENDANCE_ADJUSTMENTS",
+    "columnIndex": 15,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_ADJUSTMENTS",
+    "column": "updated_at",
+    "sheet": "ATTENDANCE_ADJUSTMENTS",
+    "columnIndex": 17,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_ADJUSTMENTS",
+    "column": "status",
+    "sheet": "ATTENDANCE_ADJUSTMENTS",
+    "columnIndex": 21,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "PENDING",
+      "APPROVED",
+      "REJECTED",
+      "CANCELLED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "ATTENDANCE_EXCEPTIONS",
+    "column": "employee_id",
+    "sheet": "ATTENDANCE_EXCEPTIONS",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EXCEPTIONS",
+    "column": "work_date",
+    "sheet": "ATTENDANCE_EXCEPTIONS",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EXCEPTIONS",
+    "column": "detected_at",
+    "sheet": "ATTENDANCE_EXCEPTIONS",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EXCEPTIONS",
+    "column": "resolved_at",
+    "sheet": "ATTENDANCE_EXCEPTIONS",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EXCEPTIONS",
+    "column": "created_at",
+    "sheet": "ATTENDANCE_EXCEPTIONS",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EXCEPTIONS",
+    "column": "updated_at",
+    "sheet": "ATTENDANCE_EXCEPTIONS",
+    "columnIndex": 12,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ATTENDANCE_EXCEPTIONS",
+    "column": "status",
+    "sheet": "ATTENDANCE_EXCEPTIONS",
+    "columnIndex": 16,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "OPEN",
+      "RESOLVED",
+      "WAIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "OVERTIME",
+    "column": "employee_id",
+    "sheet": "OVERTIME",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "OVERTIME",
+    "column": "work_date",
+    "sheet": "OVERTIME",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "OVERTIME",
+    "column": "day_type",
+    "sheet": "OVERTIME",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "REGULAR",
+      "OFFDAY"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "OVERTIME",
+    "column": "requested_minutes",
+    "sheet": "OVERTIME",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "OVERTIME",
+    "column": "approved_minutes",
+    "sheet": "OVERTIME",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "OVERTIME",
+    "column": "decided_at",
+    "sheet": "OVERTIME",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "OVERTIME",
+    "column": "created_at",
+    "sheet": "OVERTIME",
+    "columnIndex": 12,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "OVERTIME",
+    "column": "updated_at",
+    "sheet": "OVERTIME",
+    "columnIndex": 14,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "OVERTIME",
+    "column": "status",
+    "sheet": "OVERTIME",
+    "columnIndex": 18,
+    "startRow": 2,
+    "endRow": 3001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "PENDING",
+      "APPROVED",
+      "REJECTED",
+      "CANCELLED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "TIMESHEETS",
+    "column": "employee_id",
+    "sheet": "TIMESHEETS",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "TIMESHEETS",
+    "column": "work_date",
+    "sheet": "TIMESHEETS",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "TIMESHEETS",
+    "column": "hours",
+    "sheet": "TIMESHEETS",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "TIMESHEETS",
+    "column": "billable",
+    "sheet": "TIMESHEETS",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "TIMESHEETS",
+    "column": "decided_at",
+    "sheet": "TIMESHEETS",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "TIMESHEETS",
+    "column": "created_at",
+    "sheet": "TIMESHEETS",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "TIMESHEETS",
+    "column": "updated_at",
+    "sheet": "TIMESHEETS",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "TIMESHEETS",
+    "column": "status",
+    "sheet": "TIMESHEETS",
+    "columnIndex": 17,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "PENDING",
+      "APPROVED",
+      "REJECTED",
+      "CANCELLED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "SALARY_COMPONENTS",
+    "column": "component_type",
+    "sheet": "SALARY_COMPONENTS",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "EARNING",
+      "DEDUCTION",
+      "BENEFIT",
+      "REIMBURSEMENT"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "SALARY_COMPONENTS",
+    "column": "taxable",
+    "sheet": "SALARY_COMPONENTS",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "SALARY_COMPONENTS",
+    "column": "pf_wage",
+    "sheet": "SALARY_COMPONENTS",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "SALARY_COMPONENTS",
+    "column": "esi_wage",
+    "sheet": "SALARY_COMPONENTS",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "SALARY_COMPONENTS",
+    "column": "ot_base",
+    "sheet": "SALARY_COMPONENTS",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "SALARY_COMPONENTS",
+    "column": "display_order",
+    "sheet": "SALARY_COMPONENTS",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SALARY_COMPONENTS",
+    "column": "effective_from",
+    "sheet": "SALARY_COMPONENTS",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SALARY_COMPONENTS",
+    "column": "effective_to",
+    "sheet": "SALARY_COMPONENTS",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SALARY_COMPONENTS",
+    "column": "created_at",
+    "sheet": "SALARY_COMPONENTS",
+    "columnIndex": 12,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SALARY_COMPONENTS",
+    "column": "updated_at",
+    "sheet": "SALARY_COMPONENTS",
+    "columnIndex": 14,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "SALARY_COMPONENTS",
+    "column": "status",
+    "sheet": "SALARY_COMPONENTS",
+    "columnIndex": 18,
+    "startRow": 2,
+    "endRow": 101,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "employee_id",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "effective_from",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "effective_to",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "basic",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "hra",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "da",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "conveyance",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "special_allowance",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "other_allowance",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "custom_earning_1",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "custom_earning_2",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "version",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "created_at",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 15,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "updated_at",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 17,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "column": "status",
+    "sheet": "EMPLOYEE_SALARY",
+    "columnIndex": 21,
+    "startRow": 2,
+    "endRow": 4001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "PAYROLL_CONTROL",
+    "column": "period_start",
+    "sheet": "PAYROLL_CONTROL",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_CONTROL",
+    "column": "period_end",
+    "sheet": "PAYROLL_CONTROL",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_CONTROL",
+    "column": "cutoff_date",
+    "sheet": "PAYROLL_CONTROL",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_CONTROL",
+    "column": "run_type",
+    "sheet": "PAYROLL_CONTROL",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "REGULAR",
+      "OFF_CYCLE"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "PAYROLL_CONTROL",
+    "column": "version",
+    "sheet": "PAYROLL_CONTROL",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_CONTROL",
+    "column": "approved_at",
+    "sheet": "PAYROLL_CONTROL",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_CONTROL",
+    "column": "locked_at",
+    "sheet": "PAYROLL_CONTROL",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_CONTROL",
+    "column": "created_at",
+    "sheet": "PAYROLL_CONTROL",
+    "columnIndex": 14,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_CONTROL",
+    "column": "updated_at",
+    "sheet": "PAYROLL_CONTROL",
+    "columnIndex": 16,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_CONTROL",
+    "column": "status",
+    "sheet": "PAYROLL_CONTROL",
+    "columnIndex": 20,
+    "startRow": 2,
+    "endRow": 201,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "OPEN",
+      "PROCESSING",
+      "REVIEW",
+      "APPROVED",
+      "LOCKED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "column": "period_id",
+    "sheet": "PAYROLL_INPUTS",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "ONE_OF_RANGE",
+    "source": "PAYROLL_CONTROL!$A$2:$A$201",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "column": "employee_id",
+    "sheet": "PAYROLL_INPUTS",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "column": "bonus",
+    "sheet": "PAYROLL_INPUTS",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "column": "incentive",
+    "sheet": "PAYROLL_INPUTS",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "column": "arrears",
+    "sheet": "PAYROLL_INPUTS",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "column": "manual_adjustment",
+    "sheet": "PAYROLL_INPUTS",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "column": "other_deduction",
+    "sheet": "PAYROLL_INPUTS",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "column": "tds_manual_flag",
+    "sheet": "PAYROLL_INPUTS",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "column": "tds_manual_amount",
+    "sheet": "PAYROLL_INPUTS",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "column": "created_at",
+    "sheet": "PAYROLL_INPUTS",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "column": "updated_at",
+    "sheet": "PAYROLL_INPUTS",
+    "columnIndex": 15,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "column": "status",
+    "sheet": "PAYROLL_INPUTS",
+    "columnIndex": 19,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "PAYROLL_CALC",
+    "column": "input_id",
+    "sheet": "PAYROLL_CALC",
+    "columnIndex": 0,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "ONE_OF_RANGE",
+    "source": "PAYROLL_INPUTS!$A$2:$A$2001",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_CALC",
+    "column": "created_at",
+    "sheet": "PAYROLL_CALC",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "period_version",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "paid_days",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "lop_days",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "gross_earnings",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "pf_emp",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "esi_emp",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "pt",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "lwf_emp",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "tds",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "loan_emi",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 12,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "advance_recovery",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "other_deduction",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 14,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "reimbursement",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 15,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "total_deductions",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 16,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "net_pay",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 17,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "employer_cost",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 18,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "column": "locked_at",
+    "sheet": "PAYROLL_SNAPSHOT",
+    "columnIndex": 23,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYSLIPS",
+    "column": "employee_id",
+    "sheet": "PAYSLIPS",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "PAYSLIPS",
+    "column": "generated_at",
+    "sheet": "PAYSLIPS",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYSLIPS",
+    "column": "published_at",
+    "sheet": "PAYSLIPS",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYSLIPS",
+    "column": "created_at",
+    "sheet": "PAYSLIPS",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYSLIPS",
+    "column": "updated_at",
+    "sheet": "PAYSLIPS",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "PAYSLIPS",
+    "column": "status",
+    "sheet": "PAYSLIPS",
+    "columnIndex": 17,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LOANS",
+    "column": "employee_id",
+    "sheet": "LOANS",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "LOANS",
+    "column": "loan_type",
+    "sheet": "LOANS",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "LOAN",
+      "ADVANCE"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LOANS",
+    "column": "principal",
+    "sheet": "LOANS",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOANS",
+    "column": "annual_interest_rate",
+    "sheet": "LOANS",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOANS",
+    "column": "tenure_months",
+    "sheet": "LOANS",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOANS",
+    "column": "disbursed_on",
+    "sheet": "LOANS",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOANS",
+    "column": "approved_at",
+    "sheet": "LOANS",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOANS",
+    "column": "created_at",
+    "sheet": "LOANS",
+    "columnIndex": 12,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOANS",
+    "column": "updated_at",
+    "sheet": "LOANS",
+    "columnIndex": 14,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOANS",
+    "column": "status",
+    "sheet": "LOANS",
+    "columnIndex": 18,
+    "startRow": 2,
+    "endRow": 1501,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "CLOSED",
+      "WRITTEN_OFF"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LOAN_SCHEDULE",
+    "column": "loan_id",
+    "sheet": "LOAN_SCHEDULE",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "ONE_OF_RANGE",
+    "source": "LOANS!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "LOAN_SCHEDULE",
+    "column": "employee_id",
+    "sheet": "LOAN_SCHEDULE",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "LOAN_SCHEDULE",
+    "column": "loan_type",
+    "sheet": "LOAN_SCHEDULE",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "LOAN",
+      "ADVANCE"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "LOAN_SCHEDULE",
+    "column": "installment_no",
+    "sheet": "LOAN_SCHEDULE",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOAN_SCHEDULE",
+    "column": "due_period_id",
+    "sheet": "LOAN_SCHEDULE",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "ONE_OF_RANGE",
+    "source": "PAYROLL_CONTROL!$A$2:$A$201",
+    "strict": false
+  },
+  {
+    "tab": "LOAN_SCHEDULE",
+    "column": "deducted_at",
+    "sheet": "LOAN_SCHEDULE",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOAN_SCHEDULE",
+    "column": "created_at",
+    "sheet": "LOAN_SCHEDULE",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOAN_SCHEDULE",
+    "column": "updated_at",
+    "sheet": "LOAN_SCHEDULE",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "LOAN_SCHEDULE",
+    "column": "status",
+    "sheet": "LOAN_SCHEDULE",
+    "columnIndex": 15,
+    "startRow": 2,
+    "endRow": 10001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "SCHEDULED",
+      "DEDUCTED",
+      "SKIPPED",
+      "CLOSED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "EXPENSES",
+    "column": "employee_id",
+    "sheet": "EXPENSES",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "EXPENSES",
+    "column": "expense_date",
+    "sheet": "EXPENSES",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EXPENSES",
+    "column": "amount",
+    "sheet": "EXPENSES",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EXPENSES",
+    "column": "decided_at",
+    "sheet": "EXPENSES",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EXPENSES",
+    "column": "created_at",
+    "sheet": "EXPENSES",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EXPENSES",
+    "column": "updated_at",
+    "sheet": "EXPENSES",
+    "columnIndex": 15,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "EXPENSES",
+    "column": "status",
+    "sheet": "EXPENSES",
+    "columnIndex": 19,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "PENDING",
+      "APPROVED",
+      "REJECTED",
+      "PAID"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "REIMBURSEMENTS",
+    "column": "employee_id",
+    "sheet": "REIMBURSEMENTS",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "REIMBURSEMENTS",
+    "column": "period_id",
+    "sheet": "REIMBURSEMENTS",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "ONE_OF_RANGE",
+    "source": "PAYROLL_CONTROL!$A$2:$A$201",
+    "strict": false
+  },
+  {
+    "tab": "REIMBURSEMENTS",
+    "column": "amount",
+    "sheet": "REIMBURSEMENTS",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "REIMBURSEMENTS",
+    "column": "created_at",
+    "sheet": "REIMBURSEMENTS",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "REIMBURSEMENTS",
+    "column": "updated_at",
+    "sheet": "REIMBURSEMENTS",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "REIMBURSEMENTS",
+    "column": "status",
+    "sheet": "REIMBURSEMENTS",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 5001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "PENDING",
+      "APPROVED",
+      "REJECTED",
+      "PAID"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "TAX_DECLARATIONS",
+    "column": "employee_id",
+    "sheet": "TAX_DECLARATIONS",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "TAX_DECLARATIONS",
+    "column": "regime",
+    "sheet": "TAX_DECLARATIONS",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "NEW",
+      "OLD"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "TAX_DECLARATIONS",
+    "column": "declared_amount",
+    "sheet": "TAX_DECLARATIONS",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "TAX_DECLARATIONS",
+    "column": "verified_amount",
+    "sheet": "TAX_DECLARATIONS",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "TAX_DECLARATIONS",
+    "column": "created_at",
+    "sheet": "TAX_DECLARATIONS",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "TAX_DECLARATIONS",
+    "column": "updated_at",
+    "sheet": "TAX_DECLARATIONS",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "TAX_DECLARATIONS",
+    "column": "status",
+    "sheet": "TAX_DECLARATIONS",
+    "columnIndex": 17,
+    "startRow": 2,
+    "endRow": 8001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "PENDING",
+      "APPROVED",
+      "REJECTED",
+      "CANCELLED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "STATUTORY_RULES",
+    "column": "value",
+    "sheet": "STATUTORY_RULES",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 601,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "STATUTORY_RULES",
+    "column": "effective_from",
+    "sheet": "STATUTORY_RULES",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 601,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "STATUTORY_RULES",
+    "column": "effective_to",
+    "sheet": "STATUTORY_RULES",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 601,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "STATUTORY_RULES",
+    "column": "version",
+    "sheet": "STATUTORY_RULES",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 601,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "STATUTORY_RULES",
+    "column": "created_at",
+    "sheet": "STATUTORY_RULES",
+    "columnIndex": 11,
+    "startRow": 2,
+    "endRow": 601,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "STATUTORY_RULES",
+    "column": "updated_at",
+    "sheet": "STATUTORY_RULES",
+    "columnIndex": 13,
+    "startRow": 2,
+    "endRow": 601,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "STATUTORY_RULES",
+    "column": "status",
+    "sheet": "STATUTORY_RULES",
+    "columnIndex": 17,
+    "startRow": 2,
+    "endRow": 601,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "ACTIVE",
+      "INACTIVE",
+      "ARCHIVED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "STATUTORY_CALC",
+    "column": "input_id",
+    "sheet": "STATUTORY_CALC",
+    "columnIndex": 0,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "ONE_OF_RANGE",
+    "source": "PAYROLL_INPUTS!$A$2:$A$2001",
+    "strict": false
+  },
+  {
+    "tab": "STATUTORY_CALC",
+    "column": "created_at",
+    "sheet": "STATUTORY_CALC",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 2001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "FULL_FINAL",
+    "column": "employee_id",
+    "sheet": "FULL_FINAL",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "ONE_OF_RANGE",
+    "source": "EMPLOYEES!$A$2:$A$1501",
+    "strict": false
+  },
+  {
+    "tab": "FULL_FINAL",
+    "column": "last_working_day",
+    "sheet": "FULL_FINAL",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "FULL_FINAL",
+    "column": "notice_period_days",
+    "sheet": "FULL_FINAL",
+    "columnIndex": 3,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "FULL_FINAL",
+    "column": "notice_served_days",
+    "sheet": "FULL_FINAL",
+    "columnIndex": 4,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "FULL_FINAL",
+    "column": "exit_period_id",
+    "sheet": "FULL_FINAL",
+    "columnIndex": 5,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "ONE_OF_RANGE",
+    "source": "PAYROLL_CONTROL!$A$2:$A$201",
+    "strict": false
+  },
+  {
+    "tab": "FULL_FINAL",
+    "column": "pending_salary_included",
+    "sheet": "FULL_FINAL",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "Y",
+      "N"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "FULL_FINAL",
+    "column": "other_dues_recoverable",
+    "sheet": "FULL_FINAL",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "FULL_FINAL",
+    "column": "other_payables",
+    "sheet": "FULL_FINAL",
+    "columnIndex": 8,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "FULL_FINAL",
+    "column": "decided_at",
+    "sheet": "FULL_FINAL",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "FULL_FINAL",
+    "column": "created_at",
+    "sheet": "FULL_FINAL",
+    "columnIndex": 12,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "FULL_FINAL",
+    "column": "updated_at",
+    "sheet": "FULL_FINAL",
+    "columnIndex": 14,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "FULL_FINAL",
+    "column": "status",
+    "sheet": "FULL_FINAL",
+    "columnIndex": 18,
+    "startRow": 2,
+    "endRow": 501,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "DRAFT",
+      "REVIEW",
+      "APPROVED",
+      "PAID"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "NOTIFICATIONS",
+    "column": "channel",
+    "sheet": "NOTIFICATIONS",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "EMAIL",
+      "SMS",
+      "WHATSAPP",
+      "INAPP"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "NOTIFICATIONS",
+    "column": "send_after",
+    "sheet": "NOTIFICATIONS",
+    "columnIndex": 6,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "NOTIFICATIONS",
+    "column": "attempts",
+    "sheet": "NOTIFICATIONS",
+    "columnIndex": 7,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "NUMBER_VALID",
+    "strict": false
+  },
+  {
+    "tab": "NOTIFICATIONS",
+    "column": "sent_at",
+    "sheet": "NOTIFICATIONS",
+    "columnIndex": 9,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "NOTIFICATIONS",
+    "column": "read_at",
+    "sheet": "NOTIFICATIONS",
+    "columnIndex": 10,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "NOTIFICATIONS",
+    "column": "created_at",
+    "sheet": "NOTIFICATIONS",
+    "columnIndex": 12,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "NOTIFICATIONS",
+    "column": "updated_at",
+    "sheet": "NOTIFICATIONS",
+    "columnIndex": 14,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "NOTIFICATIONS",
+    "column": "status",
+    "sheet": "NOTIFICATIONS",
+    "columnIndex": 18,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "QUEUED",
+      "SENT",
+      "FAILED",
+      "CANCELLED"
+    ],
+    "strict": true
+  },
+  {
+    "tab": "AUDIT_LOG",
+    "column": "timestamp",
+    "sheet": "AUDIT_LOG",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 100001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ERROR_LOG",
+    "column": "timestamp",
+    "sheet": "ERROR_LOG",
+    "columnIndex": 1,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "DATE_IS_VALID",
+    "strict": false
+  },
+  {
+    "tab": "ERROR_LOG",
+    "column": "severity",
+    "sheet": "ERROR_LOG",
+    "columnIndex": 2,
+    "startRow": 2,
+    "endRow": 20001,
+    "type": "ONE_OF_LIST",
+    "values": [
+      "INFO",
+      "WARN",
+      "ERROR",
+      "CRITICAL"
+    ],
+    "strict": true
+  }
+]

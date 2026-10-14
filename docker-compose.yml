@@ -1,0 +1,45 @@
+# Production layout: HTTPS (Caddy, automatic Let's Encrypt) -> web -> api -> Google Sheets.
+# Browsers share location only on HTTPS, so the public site must go through the proxy.
+#
+#   1. Fill .env (SETUP_GOOGLE.md): NODE_ENV=production, NUTEX_BACKEND=google, COOKIE_SECURE=true, CORS_ORIGIN=https://<DOMAIN>, Google ids.
+#   2. Put the service-account key in ./secrets/nutex-sa.json and set GOOGLE_SERVICE_ACCOUNT_KEY_FILE=/run/secrets/nutex-sa.json
+#   3. DOMAIN=attendance.example.com docker compose up -d --build
+#
+# Run exactly ONE api container (locks, sessions and the audit chain head are in-process).
+services:
+  api:
+    build: .
+    command: npm run start:api
+    env_file: .env
+    environment:
+      HOST: 0.0.0.0
+    volumes:
+      - ./secrets:/run/secrets:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:4000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  web:
+    build: .
+    command: npm run start:web
+    environment:
+      API_URL: http://api:4000
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+  caddy:
+    image: caddy:2
+    command: caddy reverse-proxy --from ${DOMAIN:?set DOMAIN} --to web:3000
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy_data:/data
+    depends_on:
+      - web
+    restart: unless-stopped
+volumes:
+  caddy_data:

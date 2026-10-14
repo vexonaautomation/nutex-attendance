@@ -1,0 +1,2328 @@
+{
+  "EMPLOYEES": [
+    {
+      "column": "weekend_mask",
+      "letter": "AH",
+      "type": "text",
+      "template": "IF(@employee_id=\"\",\"\",IF(ISNUMBER(SEARCH(\"MON\",@weekly_off_pattern)),\"1\",\"0\")&IF(ISNUMBER(SEARCH(\"TUE\",@weekly_off_pattern)),\"1\",\"0\")&IF(ISNUMBER(SEARCH(\"WED\",@weekly_off_pattern)),\"1\",\"0\")&IF(ISNUMBER(SEARCH(\"THU\",@weekly_off_pattern)),\"1\",\"0\")&IF(ISNUMBER(SEARCH(\"FRI\",@weekly_off_pattern)),\"1\",\"0\")&IF(ISNUMBER(SEARCH(\"SAT\",@weekly_off_pattern)),\"1\",\"0\")&IF(ISNUMBER(SEARCH(\"SUN\",@weekly_off_pattern)),\"1\",\"0\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(ISNUMBER(SEARCH(\"MON\",P2)),\"1\",\"0\")&IF(ISNUMBER(SEARCH(\"TUE\",P2)),\"1\",\"0\")&IF(ISNUMBER(SEARCH(\"WED\",P2)),\"1\",\"0\")&IF(ISNUMBER(SEARCH(\"THU\",P2)),\"1\",\"0\")&IF(ISNUMBER(SEARCH(\"FRI\",P2)),\"1\",\"0\")&IF(ISNUMBER(SEARCH(\"SAT\",P2)),\"1\",\"0\")&IF(ISNUMBER(SEARCH(\"SUN\",P2)),\"1\",\"0\"))"
+    },
+    {
+      "column": "full_name",
+      "letter": "AI",
+      "type": "text",
+      "template": "IF(@employee_id=\"\",\"\",TRIM(@first_name&\" \"&@last_name))",
+      "row2": "=IF(A2=\"\",\"\",TRIM(C2&\" \"&D2))"
+    },
+    {
+      "column": "dup_code_check",
+      "letter": "AJ",
+      "type": "text",
+      "template": "IF(@employee_id=\"\",\"\",IF(COUNTIFS([EMPLOYEES.employee_code],@employee_code)>1,\"DUPLICATE_CODE\",\"OK\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(EMPLOYEES!$B$2:$B$1501,B2)>1,\"DUPLICATE_CODE\",\"OK\"))"
+    }
+  ],
+  "SHIFT_ROSTER": [
+    {
+      "column": "roster_key",
+      "letter": "O",
+      "type": "text",
+      "template": "IF(@roster_id=\"\",\"\",@employee_id&\":\"&@work_date)",
+      "row2": "=IF(A2=\"\",\"\",B2&\":\"&C2)"
+    },
+    {
+      "column": "dup_check",
+      "letter": "P",
+      "type": "text",
+      "template": "IF(@roster_id=\"\",\"\",IF(COUNTIFS([SHIFT_ROSTER.roster_key],@roster_key)>1,\"DUPLICATE\",\"OK\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(SHIFT_ROSTER!$O$2:$O$20001,O2)>1,\"DUPLICATE\",\"OK\"))"
+    }
+  ],
+  "HOLIDAYS": [
+    {
+      "column": "effective_date",
+      "letter": "O",
+      "type": "date",
+      "template": "IF(@holiday_id=\"\",1,IF(@status=\"ACTIVE\",@holiday_date,1))",
+      "row2": "=IF(A2=\"\",1,IF(M2=\"ACTIVE\",B2,1))",
+      "note": "serial 1 (1899) = inactive/blank; keeps NETWORKDAYS holiday range numeric"
+    }
+  ],
+  "LEAVE_POLICIES": [
+    {
+      "column": "policy_key",
+      "letter": "V",
+      "type": "text",
+      "template": "IF(@policy_id=\"\",\"\",IF(@status=\"ACTIVE\",@leave_type_id&\":\"&@employment_type,\"INACTIVE:\"&@policy_id))",
+      "row2": "=IF(A2=\"\",\"\",IF(T2=\"ACTIVE\",B2&\":\"&C2,\"INACTIVE:\"&A2))"
+    },
+    {
+      "column": "dup_check",
+      "letter": "W",
+      "type": "text",
+      "template": "IF(@policy_id=\"\",\"\",IF(COUNTIFS([LEAVE_POLICIES.policy_key],@policy_key)>1,\"DUPLICATE_ACTIVE_POLICY\",\"OK\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(LEAVE_POLICIES!$V$2:$V$301,V2)>1,\"DUPLICATE_ACTIVE_POLICY\",\"OK\"))"
+    }
+  ],
+  "LEAVE_BALANCES": [
+    {
+      "column": "balance_key",
+      "letter": "N",
+      "type": "text",
+      "template": "IF(@balance_id=\"\",\"\",@employee_id&\":\"&@leave_type_id&\":\"&@leave_year)",
+      "row2": "=IF(A2=\"\",\"\",B2&\":\"&C2&\":\"&D2)"
+    },
+    {
+      "column": "credited",
+      "letter": "O",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",SUMIFS([LEAVE_TRANSACTIONS.days],[LEAVE_TRANSACTIONS.balance_key],@balance_key,[LEAVE_TRANSACTIONS.days],\">0\"))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(LEAVE_TRANSACTIONS!$G$2:$G$12001,LEAVE_TRANSACTIONS!$T$2:$T$12001,N2,LEAVE_TRANSACTIONS!$G$2:$G$12001,\">0\"))"
+    },
+    {
+      "column": "debited",
+      "letter": "P",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",-SUMIFS([LEAVE_TRANSACTIONS.days],[LEAVE_TRANSACTIONS.balance_key],@balance_key,[LEAVE_TRANSACTIONS.days],\"<0\"))",
+      "row2": "=IF(A2=\"\",\"\",-SUMIFS(LEAVE_TRANSACTIONS!$G$2:$G$12001,LEAVE_TRANSACTIONS!$T$2:$T$12001,N2,LEAVE_TRANSACTIONS!$G$2:$G$12001,\"<0\"))"
+    },
+    {
+      "column": "balance",
+      "letter": "Q",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",@credited-@debited)",
+      "row2": "=IF(A2=\"\",\"\",O2-P2)"
+    },
+    {
+      "column": "pending_approval",
+      "letter": "R",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",SUMIFS([LEAVE_APPLICATIONS.days_count],[LEAVE_APPLICATIONS.balance_key],@balance_key,[LEAVE_APPLICATIONS.status],\"PENDING\",[LEAVE_APPLICATIONS.is_leave_like],\"Y\"))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(LEAVE_APPLICATIONS!$AC$2:$AC$4001,LEAVE_APPLICATIONS!$AE$2:$AE$4001,N2,LEAVE_APPLICATIONS!$T$2:$T$4001,\"PENDING\",LEAVE_APPLICATIONS!$X$2:$X$4001,\"Y\"))"
+    },
+    {
+      "column": "available",
+      "letter": "S",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",@balance-@pending_approval)",
+      "row2": "=IF(A2=\"\",\"\",Q2-R2)"
+    },
+    {
+      "column": "emp_type",
+      "letter": "T",
+      "type": "text",
+      "template": "IF(@balance_id=\"\",\"\",$LKD(EMPLOYEES.employment_type,EMPLOYEES.employee_id,@employee_id,\"PERMANENT\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(EMPLOYEES!$I$2:$I$1501,MATCH(B2,EMPLOYEES!$A$2:$A$1501,0)),\"PERMANENT\"))"
+    },
+    {
+      "column": "policy_key",
+      "letter": "U",
+      "type": "text",
+      "template": "IF(@balance_id=\"\",\"\",@leave_type_id&\":\"&@emp_type)",
+      "row2": "=IF(A2=\"\",\"\",C2&\":\"&T2)"
+    },
+    {
+      "column": "allow_negative",
+      "letter": "V",
+      "type": "text",
+      "template": "IF(@balance_id=\"\",\"\",$LKD(LEAVE_TYPES.allow_negative,LEAVE_TYPES.leave_type_id,@leave_type_id,\"N\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(LEAVE_TYPES!$I$2:$I$101,MATCH(C2,LEAVE_TYPES!$A$2:$A$101,0)),\"N\"))"
+    },
+    {
+      "column": "max_negative",
+      "letter": "W",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",N($LKD(LEAVE_TYPES.max_negative_days,LEAVE_TYPES.leave_type_id,@leave_type_id,0)))",
+      "row2": "=IF(A2=\"\",\"\",N(IFERROR(INDEX(LEAVE_TYPES!$J$2:$J$101,MATCH(C2,LEAVE_TYPES!$A$2:$A$101,0)),0)))"
+    },
+    {
+      "column": "quota",
+      "letter": "X",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",N($LKD(LEAVE_POLICIES.annual_quota,LEAVE_POLICIES.policy_key,@policy_key,0)))",
+      "row2": "=IF(A2=\"\",\"\",N(IFERROR(INDEX(LEAVE_POLICIES!$D$2:$D$301,MATCH(U2,LEAVE_POLICIES!$V$2:$V$301,0)),0)))"
+    },
+    {
+      "column": "per_month",
+      "letter": "Y",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",N($LKD(LEAVE_POLICIES.accrual_days_per_month,LEAVE_POLICIES.policy_key,@policy_key,0)))",
+      "row2": "=IF(A2=\"\",\"\",N(IFERROR(INDEX(LEAVE_POLICIES!$E$2:$E$301,MATCH(U2,LEAVE_POLICIES!$V$2:$V$301,0)),0)))"
+    },
+    {
+      "column": "method",
+      "letter": "Z",
+      "type": "text",
+      "template": "IF(@balance_id=\"\",\"\",$LKD(LEAVE_POLICIES.accrual_method,LEAVE_POLICIES.policy_key,@policy_key,\"MANUAL\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(LEAVE_POLICIES!$F$2:$F$301,MATCH(U2,LEAVE_POLICIES!$V$2:$V$301,0)),\"MANUAL\"))"
+    },
+    {
+      "column": "prorate",
+      "letter": "AA",
+      "type": "text",
+      "template": "IF(@balance_id=\"\",\"\",$LKD(LEAVE_POLICIES.prorate_joiners,LEAVE_POLICIES.policy_key,@policy_key,\"Y\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(LEAVE_POLICIES!$G$2:$G$301,MATCH(U2,LEAVE_POLICIES!$V$2:$V$301,0)),\"Y\"))"
+    },
+    {
+      "column": "eligible_from",
+      "letter": "AB",
+      "type": "date",
+      "template": "IF(@balance_id=\"\",\"\",IF($LKD(LEAVE_POLICIES.probation_lock,LEAVE_POLICIES.policy_key,@policy_key,\"N\")=\"Y\",MAX(N($LKD(EMPLOYEES.date_of_joining,EMPLOYEES.employee_id,@employee_id,0)),N($LKD(EMPLOYEES.probation_end_date,EMPLOYEES.employee_id,@employee_id,0))),N($LKD(EMPLOYEES.date_of_joining,EMPLOYEES.employee_id,@employee_id,0))))",
+      "row2": "=IF(A2=\"\",\"\",IF(IFERROR(INDEX(LEAVE_POLICIES!$H$2:$H$301,MATCH(U2,LEAVE_POLICIES!$V$2:$V$301,0)),\"N\")=\"Y\",MAX(N(IFERROR(INDEX(EMPLOYEES!$G$2:$G$1501,MATCH(B2,EMPLOYEES!$A$2:$A$1501,0)),0)),N(IFERROR(INDEX(EMPLOYEES!$Q$2:$Q$1501,MATCH(B2,EMPLOYEES!$A$2:$A$1501,0)),0))),N(IFERROR(INDEX(EMPLOYEES!$G$2:$G$1501,MATCH(B2,EMPLOYEES!$A$2:$A$1501,0)),0))))"
+    },
+    {
+      "column": "year_start",
+      "letter": "AC",
+      "type": "date",
+      "template": "IF(@balance_id=\"\",\"\",DATE(@leave_year,$CFG(LEAVE_YEAR_START_MONTH),1))",
+      "row2": "=IF(A2=\"\",\"\",DATE(D2,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"LEAVE_YEAR_START_MONTH\",SYSTEM_CONFIG!$A$2:$A$201,0)),1))"
+    },
+    {
+      "column": "accrual_start",
+      "letter": "AD",
+      "type": "date",
+      "template": "IF(@balance_id=\"\",\"\",MAX(@year_start,@eligible_from))",
+      "row2": "=IF(A2=\"\",\"\",MAX(AC2,AB2))"
+    },
+    {
+      "column": "start_offset_months",
+      "letter": "AE",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",(YEAR(@accrual_start)-YEAR(@year_start))*12+MONTH(@accrual_start)-MONTH(@year_start))",
+      "row2": "=IF(A2=\"\",\"\",(YEAR(AD2)-YEAR(AC2))*12+MONTH(AD2)-MONTH(AC2))"
+    },
+    {
+      "column": "months_elapsed",
+      "letter": "AF",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",IF($CFG(ACCRUAL_AS_OF_DATE)<@accrual_start,0,MAX(0,MIN(12-@start_offset_months,(YEAR($CFG(ACCRUAL_AS_OF_DATE))-YEAR(@accrual_start))*12+MONTH($CFG(ACCRUAL_AS_OF_DATE))-MONTH(@accrual_start)+1))))",
+      "row2": "=IF(A2=\"\",\"\",IF(INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"ACCRUAL_AS_OF_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0))<AD2,0,MAX(0,MIN(12-AE2,(YEAR(INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"ACCRUAL_AS_OF_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0)))-YEAR(AD2))*12+MONTH(INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"ACCRUAL_AS_OF_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0)))-MONTH(AD2)+1))))"
+    },
+    {
+      "column": "accrual_target",
+      "letter": "AG",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",IF(@method=\"MANUAL\",0,IF(@method=\"ANNUAL_UPFRONT\",IF($CFG(ACCRUAL_AS_OF_DATE)<@accrual_start,0,ROUND(@quota*IF(@prorate=\"Y\",(12-@start_offset_months)/12,1)*2,0)/2),MIN(@quota,ROUND(@per_month*@months_elapsed,2)))))",
+      "row2": "=IF(A2=\"\",\"\",IF(Z2=\"MANUAL\",0,IF(Z2=\"ANNUAL_UPFRONT\",IF(INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"ACCRUAL_AS_OF_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0))<AD2,0,ROUND(X2*IF(AA2=\"Y\",(12-AE2)/12,1)*2,0)/2),MIN(X2,ROUND(Y2*AF2,2)))))"
+    },
+    {
+      "column": "accrued_so_far",
+      "letter": "AH",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",SUMIFS([LEAVE_TRANSACTIONS.days],[LEAVE_TRANSACTIONS.balance_key],@balance_key,[LEAVE_TRANSACTIONS.txn_type],\"ACCRUAL\"))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(LEAVE_TRANSACTIONS!$G$2:$G$12001,LEAVE_TRANSACTIONS!$T$2:$T$12001,N2,LEAVE_TRANSACTIONS!$E$2:$E$12001,\"ACCRUAL\"))"
+    },
+    {
+      "column": "accrual_pending",
+      "letter": "AI",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",MAX(0,ROUND(@accrual_target-@accrued_so_far,2)))",
+      "row2": "=IF(A2=\"\",\"\",MAX(0,ROUND(AG2-AH2,2)))",
+      "note": "amount the accrual job posts as an ACCRUAL transaction"
+    },
+    {
+      "column": "carry_forward_eligible",
+      "letter": "AJ",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",MIN(MAX(@balance,0),N($LKD(LEAVE_POLICIES.max_carry_forward,LEAVE_POLICIES.policy_key,@policy_key,0))))",
+      "row2": "=IF(A2=\"\",\"\",MIN(MAX(Q2,0),N(IFERROR(INDEX(LEAVE_POLICIES!$I$2:$I$301,MATCH(U2,LEAVE_POLICIES!$V$2:$V$301,0)),0))))"
+    },
+    {
+      "column": "encashable_days",
+      "letter": "AK",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",MIN(MAX(@balance,0),N($LKD(LEAVE_POLICIES.max_encashable,LEAVE_POLICIES.policy_key,@policy_key,0))))",
+      "row2": "=IF(A2=\"\",\"\",MIN(MAX(Q2,0),N(IFERROR(INDEX(LEAVE_POLICIES!$J$2:$J$301,MATCH(U2,LEAVE_POLICIES!$V$2:$V$301,0)),0))))"
+    },
+    {
+      "column": "lapse_days",
+      "letter": "AL",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",MAX(0,@balance-@carry_forward_eligible))",
+      "row2": "=IF(A2=\"\",\"\",MAX(0,Q2-AJ2))"
+    },
+    {
+      "column": "negative_flag",
+      "letter": "AM",
+      "type": "number",
+      "template": "IF(@balance_id=\"\",\"\",IF(@allow_negative<>\"Y\",IF(@balance<0,1,0),IF(@balance<-@max_negative,1,0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(V2<>\"Y\",IF(Q2<0,1,0),IF(Q2<-W2,1,0)))"
+    },
+    {
+      "column": "dup_check",
+      "letter": "AN",
+      "type": "text",
+      "template": "IF(@balance_id=\"\",\"\",IF(COUNTIFS([LEAVE_BALANCES.balance_key],@balance_key)>1,\"DUPLICATE\",\"OK\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(LEAVE_BALANCES!$N$2:$N$4001,N2)>1,\"DUPLICATE\",\"OK\"))"
+    }
+  ],
+  "LEAVE_TRANSACTIONS": [
+    {
+      "column": "balance_key",
+      "letter": "T",
+      "type": "text",
+      "template": "IF(@txn_id=\"\",\"\",@employee_id&\":\"&@leave_type_id&\":\"&@leave_year)",
+      "row2": "=IF(A2=\"\",\"\",B2&\":\"&C2&\":\"&D2)"
+    },
+    {
+      "column": "sign_check",
+      "letter": "U",
+      "type": "text",
+      "template": "IF(@txn_id=\"\",\"\",IF(OR(AND(@days>0,OR(@txn_type=\"OPENING\",@txn_type=\"ACCRUAL\",@txn_type=\"CARRY_FORWARD\",@txn_type=\"COMP_OFF_CREDIT\",@txn_type=\"ADJUSTMENT_CREDIT\",@txn_type=\"LEAVE_REVERSAL\")),AND(@days<0,OR(@txn_type=\"LEAVE_TAKEN\",@txn_type=\"ENCASHMENT\",@txn_type=\"LAPSE\",@txn_type=\"ADJUSTMENT_DEBIT\"))),\"OK\",\"SIGN_MISMATCH\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(OR(AND(G2>0,OR(E2=\"OPENING\",E2=\"ACCRUAL\",E2=\"CARRY_FORWARD\",E2=\"COMP_OFF_CREDIT\",E2=\"ADJUSTMENT_CREDIT\",E2=\"LEAVE_REVERSAL\")),AND(G2<0,OR(E2=\"LEAVE_TAKEN\",E2=\"ENCASHMENT\",E2=\"LAPSE\",E2=\"ADJUSTMENT_DEBIT\"))),\"OK\",\"SIGN_MISMATCH\"))"
+    }
+  ],
+  "LEAVE_APPLICATIONS": [
+    {
+      "column": "category",
+      "letter": "V",
+      "type": "text",
+      "template": "IF(@application_id=\"\",\"\",$LKD(LEAVE_TYPES.category,LEAVE_TYPES.leave_type_id,@leave_type_id,\"\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(LEAVE_TYPES!$D$2:$D$101,MATCH(C2,LEAVE_TYPES!$A$2:$A$101,0)),\"\"))"
+    },
+    {
+      "column": "is_paid",
+      "letter": "W",
+      "type": "text",
+      "template": "IF(@application_id=\"\",\"\",$LKD(LEAVE_TYPES.is_paid,LEAVE_TYPES.leave_type_id,@leave_type_id,\"Y\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(LEAVE_TYPES!$E$2:$E$101,MATCH(C2,LEAVE_TYPES!$A$2:$A$101,0)),\"Y\"))"
+    },
+    {
+      "column": "is_leave_like",
+      "letter": "X",
+      "type": "text",
+      "template": "IF(@application_id=\"\",\"\",IF(OR(@category=\"LEAVE\",@category=\"COMP_OFF\"),\"Y\",\"N\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(OR(V2=\"LEAVE\",V2=\"COMP_OFF\"),\"Y\",\"N\"))"
+    },
+    {
+      "column": "is_workday_override",
+      "letter": "Y",
+      "type": "text",
+      "template": "IF(@application_id=\"\",\"\",IF(OR(@category=\"WFH\",@category=\"OD\",@category=\"TRAVEL\"),\"Y\",\"N\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(OR(V2=\"WFH\",V2=\"OD\",V2=\"TRAVEL\"),\"Y\",\"N\"))"
+    },
+    {
+      "column": "day_fraction",
+      "letter": "Z",
+      "type": "number",
+      "template": "IF(@application_id=\"\",\"\",IF(@half_day=\"Y\",0.5,1))",
+      "row2": "=IF(A2=\"\",\"\",IF(F2=\"Y\",0.5,1))"
+    },
+    {
+      "column": "count_hw",
+      "letter": "AA",
+      "type": "text",
+      "template": "IF(@application_id=\"\",\"\",$LKD(LEAVE_TYPES.count_holidays_weekoffs,LEAVE_TYPES.leave_type_id,@leave_type_id,\"N\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(LEAVE_TYPES!$H$2:$H$101,MATCH(C2,LEAVE_TYPES!$A$2:$A$101,0)),\"N\"))"
+    },
+    {
+      "column": "weekend_mask",
+      "letter": "AB",
+      "type": "text",
+      "template": "IF(@application_id=\"\",\"\",$LKD(EMPLOYEES.weekend_mask,EMPLOYEES.employee_id,@employee_id,\"0000011\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(EMPLOYEES!$AH$2:$AH$1501,MATCH(B2,EMPLOYEES!$A$2:$A$1501,0)),\"0000011\"))"
+    },
+    {
+      "column": "days_count",
+      "letter": "AC",
+      "type": "number",
+      "template": "IF(@application_id=\"\",\"\",IF(@half_day=\"Y\",0.5,IF(@count_hw=\"Y\",@to_date-@from_date+1,NETWORKDAYS.INTL(@from_date,@to_date,@weekend_mask,[HOLIDAYS.effective_date]))))",
+      "row2": "=IF(A2=\"\",\"\",IF(F2=\"Y\",0.5,IF(AA2=\"Y\",E2-D2+1,NETWORKDAYS.INTL(D2,E2,AB2,HOLIDAYS!$O$2:$O$501))))"
+    },
+    {
+      "column": "leave_year",
+      "letter": "AD",
+      "type": "number",
+      "template": "IF(@application_id=\"\",\"\",IF(MONTH(@from_date)>=$CFG(LEAVE_YEAR_START_MONTH),YEAR(@from_date),YEAR(@from_date)-1))",
+      "row2": "=IF(A2=\"\",\"\",IF(MONTH(D2)>=INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"LEAVE_YEAR_START_MONTH\",SYSTEM_CONFIG!$A$2:$A$201,0)),YEAR(D2),YEAR(D2)-1))"
+    },
+    {
+      "column": "balance_key",
+      "letter": "AE",
+      "type": "text",
+      "template": "IF(@application_id=\"\",\"\",@employee_id&\":\"&@leave_type_id&\":\"&@leave_year)",
+      "row2": "=IF(A2=\"\",\"\",B2&\":\"&C2&\":\"&AD2)"
+    },
+    {
+      "column": "balance_available",
+      "letter": "AF",
+      "type": "number",
+      "template": "IF(@application_id=\"\",\"\",IFERROR(INDEX([LEAVE_BALANCES.available],MATCH(@balance_key,[LEAVE_BALANCES.balance_key],0)),0)+IF(@status=\"PENDING\",@days_count,0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(LEAVE_BALANCES!$S$2:$S$4001,MATCH(AE2,LEAVE_BALANCES!$N$2:$N$4001,0)),0)+IF(T2=\"PENDING\",AC2,0))",
+      "note": "available balance excluding this application own pending hold"
+    },
+    {
+      "column": "balance_check",
+      "letter": "AG",
+      "type": "text",
+      "template": "IF(@application_id=\"\",\"\",IF(@is_leave_like<>\"Y\",\"N/A\",IF(@days_count<=@balance_available,\"OK\",IF(AND($LKD(LEAVE_TYPES.allow_negative,LEAVE_TYPES.leave_type_id,@leave_type_id,\"N\")=\"Y\",@balance_available-@days_count>=-N($LKD(LEAVE_TYPES.max_negative_days,LEAVE_TYPES.leave_type_id,@leave_type_id,0))),\"NEGATIVE_ALLOWED\",\"INSUFFICIENT\"))))",
+      "row2": "=IF(A2=\"\",\"\",IF(X2<>\"Y\",\"N/A\",IF(AC2<=AF2,\"OK\",IF(AND(IFERROR(INDEX(LEAVE_TYPES!$I$2:$I$101,MATCH(C2,LEAVE_TYPES!$A$2:$A$101,0)),\"N\")=\"Y\",AF2-AC2>=-N(IFERROR(INDEX(LEAVE_TYPES!$J$2:$J$101,MATCH(C2,LEAVE_TYPES!$A$2:$A$101,0)),0))),\"NEGATIVE_ALLOWED\",\"INSUFFICIENT\"))))"
+    },
+    {
+      "column": "overlap_count",
+      "letter": "AH",
+      "type": "number",
+      "template": "IF(@application_id=\"\",\"\",COUNTIFS([LEAVE_APPLICATIONS.employee_id],@employee_id,[LEAVE_APPLICATIONS.from_date],\"<=\"&@to_date,[LEAVE_APPLICATIONS.to_date],\">=\"&@from_date,[LEAVE_APPLICATIONS.status],\"APPROVED\")+COUNTIFS([LEAVE_APPLICATIONS.employee_id],@employee_id,[LEAVE_APPLICATIONS.from_date],\"<=\"&@to_date,[LEAVE_APPLICATIONS.to_date],\">=\"&@from_date,[LEAVE_APPLICATIONS.status],\"PENDING\")-IF(OR(@status=\"APPROVED\",@status=\"PENDING\"),1,0))",
+      "row2": "=IF(A2=\"\",\"\",COUNTIFS(LEAVE_APPLICATIONS!$B$2:$B$4001,B2,LEAVE_APPLICATIONS!$D$2:$D$4001,\"<=\"&E2,LEAVE_APPLICATIONS!$E$2:$E$4001,\">=\"&D2,LEAVE_APPLICATIONS!$T$2:$T$4001,\"APPROVED\")+COUNTIFS(LEAVE_APPLICATIONS!$B$2:$B$4001,B2,LEAVE_APPLICATIONS!$D$2:$D$4001,\"<=\"&E2,LEAVE_APPLICATIONS!$E$2:$E$4001,\">=\"&D2,LEAVE_APPLICATIONS!$T$2:$T$4001,\"PENDING\")-IF(OR(T2=\"APPROVED\",T2=\"PENDING\"),1,0))"
+    },
+    {
+      "column": "is_period_locked",
+      "letter": "AI",
+      "type": "number",
+      "template": "IF(@application_id=\"\",\"\",IF(COUNTIFS([PAYROLL_CONTROL.period_start],\"<=\"&@from_date,[PAYROLL_CONTROL.period_end],\">=\"&@from_date,[PAYROLL_CONTROL.status],\"LOCKED\",[PAYROLL_CONTROL.run_type],\"REGULAR\")>0,1,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(PAYROLL_CONTROL!$C$2:$C$201,\"<=\"&D2,PAYROLL_CONTROL!$D$2:$D$201,\">=\"&D2,PAYROLL_CONTROL!$U$2:$U$201,\"LOCKED\",PAYROLL_CONTROL!$F$2:$F$201,\"REGULAR\")>0,1,0))"
+    }
+  ],
+  "ATTENDANCE_EVENTS": [
+    {
+      "column": "is_dup",
+      "letter": "W",
+      "type": "number",
+      "template": "IF(@event_id=\"\",\"\",IF(COUNTIFS([ATTENDANCE_EVENTS.employee_id],@employee_id,[ATTENDANCE_EVENTS.event_type],@event_type,[ATTENDANCE_EVENTS.event_datetime],\">=\"&(@event_datetime-$CFG(DUPLICATE_WINDOW_SEC)/86400),[ATTENDANCE_EVENTS.event_datetime],\"<\"&@event_datetime)>0,1,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(ATTENDANCE_EVENTS!$B$2:$B$10001,B2,ATTENDANCE_EVENTS!$E$2:$E$10001,E2,ATTENDANCE_EVENTS!$C$2:$C$10001,\">=\"&(C2-INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DUPLICATE_WINDOW_SEC\",SYSTEM_CONFIG!$A$2:$A$201,0))/86400),ATTENDANCE_EVENTS!$C$2:$C$10001,\"<\"&C2)>0,1,0))",
+      "note": "same employee + type within DUPLICATE_WINDOW_SEC of an earlier punch"
+    },
+    {
+      "column": "prev_in_dt",
+      "letter": "X",
+      "type": "datetime",
+      "template": "IF(@event_id=\"\",\"\",IF(@event_type<>\"OUT\",\"\",MAXIFS([ATTENDANCE_EVENTS.event_datetime],[ATTENDANCE_EVENTS.employee_id],@employee_id,[ATTENDANCE_EVENTS.event_type],\"IN\",[ATTENDANCE_EVENTS.event_datetime],\"<\"&@event_datetime,[ATTENDANCE_EVENTS.is_dup],0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(E2<>\"OUT\",\"\",MAXIFS(ATTENDANCE_EVENTS!$C$2:$C$10001,ATTENDANCE_EVENTS!$B$2:$B$10001,B2,ATTENDANCE_EVENTS!$E$2:$E$10001,\"IN\",ATTENDANCE_EVENTS!$C$2:$C$10001,\"<\"&C2,ATTENDANCE_EVENTS!$W$2:$W$10001,0)))"
+    },
+    {
+      "column": "prev_out_dt",
+      "letter": "Y",
+      "type": "datetime",
+      "template": "IF(@event_id=\"\",\"\",IF(@event_type<>\"OUT\",\"\",MAXIFS([ATTENDANCE_EVENTS.event_datetime],[ATTENDANCE_EVENTS.employee_id],@employee_id,[ATTENDANCE_EVENTS.event_type],\"OUT\",[ATTENDANCE_EVENTS.event_datetime],\"<\"&@event_datetime,[ATTENDANCE_EVENTS.is_dup],0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(E2<>\"OUT\",\"\",MAXIFS(ATTENDANCE_EVENTS!$C$2:$C$10001,ATTENDANCE_EVENTS!$B$2:$B$10001,B2,ATTENDANCE_EVENTS!$E$2:$E$10001,\"OUT\",ATTENDANCE_EVENTS!$C$2:$C$10001,\"<\"&C2,ATTENDANCE_EVENTS!$W$2:$W$10001,0)))"
+    },
+    {
+      "column": "segment_minutes",
+      "letter": "Z",
+      "type": "number",
+      "template": "IF(@event_id=\"\",\"\",IF(@event_type<>\"OUT\",\"\",IF(AND(@is_dup=0,@prev_in_dt>0,@prev_in_dt>@prev_out_dt,(@event_datetime-@prev_in_dt)*24<=$CFG(MAX_SEGMENT_HOURS)),ROUND((@event_datetime-@prev_in_dt)*1440,2),0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(E2<>\"OUT\",\"\",IF(AND(W2=0,X2>0,X2>Y2,(C2-X2)*24<=INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"MAX_SEGMENT_HOURS\",SYSTEM_CONFIG!$A$2:$A$201,0))),ROUND((C2-X2)*1440,2),0)))",
+      "note": "IN->OUT pairing: minutes between an OUT and the latest earlier valid IN that has no OUT in between"
+    },
+    {
+      "column": "work_date",
+      "letter": "AA",
+      "type": "date",
+      "template": "IF(@event_id=\"\",\"\",IF(@event_type<>\"OUT\",INT(@event_datetime-$CFG(DAY_BOUNDARY_HOURS)/24),IF(AND(@prev_in_dt>0,(@event_datetime-@prev_in_dt)*24<=$CFG(MAX_SEGMENT_HOURS),@prev_in_dt>@prev_out_dt),INT(@prev_in_dt-$CFG(DAY_BOUNDARY_HOURS)/24),INT(@event_datetime-$CFG(DAY_BOUNDARY_HOURS)/24))))",
+      "row2": "=IF(A2=\"\",\"\",IF(E2<>\"OUT\",INT(C2-INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DAY_BOUNDARY_HOURS\",SYSTEM_CONFIG!$A$2:$A$201,0))/24),IF(AND(X2>0,(C2-X2)*24<=INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"MAX_SEGMENT_HOURS\",SYSTEM_CONFIG!$A$2:$A$201,0)),X2>Y2),INT(X2-INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DAY_BOUNDARY_HOURS\",SYSTEM_CONFIG!$A$2:$A$201,0))/24),INT(C2-INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DAY_BOUNDARY_HOURS\",SYSTEM_CONFIG!$A$2:$A$201,0))/24))))",
+      "note": "IN uses the day-boundary rule; a paired OUT inherits its IN work date, so night / cross-midnight shifts stay on one day"
+    },
+    {
+      "column": "map_url",
+      "letter": "AB",
+      "type": "text",
+      "template": "IF(@event_id=\"\",\"\",IF(OR(@geo_lat=\"\",@geo_lng=\"\"),\"\",\"https://www.google.com/maps?q=\"&SUBSTITUTE(@geo_lat,\",\",\".\")&\",\"&SUBSTITUTE(@geo_lng,\",\",\".\")))",
+      "row2": "=IF(A2=\"\",\"\",IF(OR(H2=\"\",I2=\"\"),\"\",\"https://www.google.com/maps?q=\"&SUBSTITUTE(H2,\",\",\".\")&\",\"&SUBSTITUTE(I2,\",\",\".\")))",
+      "note": "Google Maps link for the punch location, built from geo_lat / geo_lng"
+    }
+  ],
+  "ATTENDANCE_DAILY": [
+    {
+      "column": "daily_key",
+      "letter": "I",
+      "type": "text",
+      "template": "IF(@attendance_id=\"\",\"\",@employee_id&\":\"&@work_date)",
+      "row2": "=IF(A2=\"\",\"\",B2&\":\"&C2)"
+    },
+    {
+      "column": "dup_check",
+      "letter": "J",
+      "type": "text",
+      "template": "IF(@attendance_id=\"\",\"\",IF(COUNTIFS([ATTENDANCE_DAILY.daily_key],@daily_key)>1,\"DUPLICATE\",\"OK\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(ATTENDANCE_DAILY!$I$2:$I$6001,I2)>1,\"DUPLICATE\",\"OK\"))"
+    },
+    {
+      "column": "emp_join",
+      "letter": "K",
+      "type": "date",
+      "template": "IF(@attendance_id=\"\",\"\",N($LKD(EMPLOYEES.date_of_joining,EMPLOYEES.employee_id,@employee_id,0)))",
+      "row2": "=IF(A2=\"\",\"\",N(IFERROR(INDEX(EMPLOYEES!$G$2:$G$1501,MATCH(B2,EMPLOYEES!$A$2:$A$1501,0)),0)))"
+    },
+    {
+      "column": "emp_exit",
+      "letter": "L",
+      "type": "date",
+      "template": "IF(@attendance_id=\"\",\"\",N($LKD(EMPLOYEES.date_of_exit,EMPLOYEES.employee_id,@employee_id,0)))",
+      "row2": "=IF(A2=\"\",\"\",N(IFERROR(INDEX(EMPLOYEES!$H$2:$H$1501,MATCH(B2,EMPLOYEES!$A$2:$A$1501,0)),0)))"
+    },
+    {
+      "column": "in_service",
+      "letter": "M",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(AND(@emp_join>0,@work_date>=@emp_join,OR(@emp_exit=0,@work_date<=@emp_exit)),1,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(AND(K2>0,C2>=K2,OR(L2=0,C2<=L2)),1,0))"
+    },
+    {
+      "column": "location_id",
+      "letter": "N",
+      "type": "text",
+      "template": "IF(@attendance_id=\"\",\"\",$LKD(EMPLOYEES.location_id,EMPLOYEES.employee_id,@employee_id,\"\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(EMPLOYEES!$M$2:$M$1501,MATCH(B2,EMPLOYEES!$A$2:$A$1501,0)),\"\"))"
+    },
+    {
+      "column": "ot_eligible",
+      "letter": "O",
+      "type": "text",
+      "template": "IF(@attendance_id=\"\",\"\",$LKD(EMPLOYEES.ot_eligible,EMPLOYEES.employee_id,@employee_id,\"N\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(EMPLOYEES!$R$2:$R$1501,MATCH(B2,EMPLOYEES!$A$2:$A$1501,0)),\"N\"))"
+    },
+    {
+      "column": "roster_shift",
+      "letter": "P",
+      "type": "text",
+      "template": "IF(@attendance_id=\"\",\"\",$LKD(SHIFT_ROSTER.shift_id,SHIFT_ROSTER.roster_key,@daily_key,\"\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(SHIFT_ROSTER!$D$2:$D$20001,MATCH(I2,SHIFT_ROSTER!$O$2:$O$20001,0)),\"\"))"
+    },
+    {
+      "column": "roster_weekoff",
+      "letter": "Q",
+      "type": "text",
+      "template": "IF(@attendance_id=\"\",\"\",$LKD(SHIFT_ROSTER.is_week_off,SHIFT_ROSTER.roster_key,@daily_key,\"\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(SHIFT_ROSTER!$E$2:$E$20001,MATCH(I2,SHIFT_ROSTER!$O$2:$O$20001,0)),\"\"))"
+    },
+    {
+      "column": "shift_id",
+      "letter": "R",
+      "type": "text",
+      "template": "IF(@attendance_id=\"\",\"\",IF(@roster_shift<>\"\",@roster_shift,$LKD(EMPLOYEES.default_shift_id,EMPLOYEES.employee_id,@employee_id,\"\")))",
+      "row2": "=IF(A2=\"\",\"\",IF(P2<>\"\",P2,IFERROR(INDEX(EMPLOYEES!$O$2:$O$1501,MATCH(B2,EMPLOYEES!$A$2:$A$1501,0)),\"\")))"
+    },
+    {
+      "column": "is_week_off",
+      "letter": "S",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(@roster_weekoff=\"Y\",1,IF(@roster_weekoff=\"N\",0,IF(MID($LKD(EMPLOYEES.weekend_mask,EMPLOYEES.employee_id,@employee_id,\"0000000\"),WEEKDAY(@work_date,2),1)=\"1\",1,0))))",
+      "row2": "=IF(A2=\"\",\"\",IF(Q2=\"Y\",1,IF(Q2=\"N\",0,IF(MID(IFERROR(INDEX(EMPLOYEES!$AH$2:$AH$1501,MATCH(B2,EMPLOYEES!$A$2:$A$1501,0)),\"0000000\"),WEEKDAY(C2,2),1)=\"1\",1,0))))"
+    },
+    {
+      "column": "is_holiday",
+      "letter": "T",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(COUNTIFS([HOLIDAYS.effective_date],@work_date,[HOLIDAYS.location_id],\"ALL\")+COUNTIFS([HOLIDAYS.effective_date],@work_date,[HOLIDAYS.location_id],@location_id)>0,1,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(HOLIDAYS!$O$2:$O$501,C2,HOLIDAYS!$E$2:$E$501,\"ALL\")+COUNTIFS(HOLIDAYS!$O$2:$O$501,C2,HOLIDAYS!$E$2:$E$501,N2)>0,1,0))"
+    },
+    {
+      "column": "sh_start",
+      "letter": "U",
+      "type": "time",
+      "template": "IF(@attendance_id=\"\",\"\",$LKD(SHIFT_MASTER.start_time,SHIFT_MASTER.shift_id,@shift_id,0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(SHIFT_MASTER!$D$2:$D$201,MATCH(R2,SHIFT_MASTER!$A$2:$A$201,0)),0))"
+    },
+    {
+      "column": "sh_end",
+      "letter": "V",
+      "type": "time",
+      "template": "IF(@attendance_id=\"\",\"\",$LKD(SHIFT_MASTER.end_time,SHIFT_MASTER.shift_id,@shift_id,0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(SHIFT_MASTER!$E$2:$E$201,MATCH(R2,SHIFT_MASTER!$A$2:$A$201,0)),0))"
+    },
+    {
+      "column": "sh_break",
+      "letter": "W",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",$LKD(SHIFT_MASTER.break_minutes,SHIFT_MASTER.shift_id,@shift_id,0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(SHIFT_MASTER!$F$2:$F$201,MATCH(R2,SHIFT_MASTER!$A$2:$A$201,0)),0))"
+    },
+    {
+      "column": "sh_grace_in",
+      "letter": "X",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",$LKD(SHIFT_MASTER.grace_in_minutes,SHIFT_MASTER.shift_id,@shift_id,0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(SHIFT_MASTER!$G$2:$G$201,MATCH(R2,SHIFT_MASTER!$A$2:$A$201,0)),0))"
+    },
+    {
+      "column": "sh_grace_out",
+      "letter": "Y",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",$LKD(SHIFT_MASTER.grace_out_minutes,SHIFT_MASTER.shift_id,@shift_id,0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(SHIFT_MASTER!$H$2:$H$201,MATCH(R2,SHIFT_MASTER!$A$2:$A$201,0)),0))"
+    },
+    {
+      "column": "sh_full",
+      "letter": "Z",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",$LKD(SHIFT_MASTER.full_day_minutes,SHIFT_MASTER.shift_id,@shift_id,0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(SHIFT_MASTER!$I$2:$I$201,MATCH(R2,SHIFT_MASTER!$A$2:$A$201,0)),0))"
+    },
+    {
+      "column": "sh_half",
+      "letter": "AA",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",$LKD(SHIFT_MASTER.half_day_minutes,SHIFT_MASTER.shift_id,@shift_id,0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(SHIFT_MASTER!$J$2:$J$201,MATCH(R2,SHIFT_MASTER!$A$2:$A$201,0)),0))"
+    },
+    {
+      "column": "sh_ot_thr",
+      "letter": "AB",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",$LKD(SHIFT_MASTER.ot_threshold_minutes,SHIFT_MASTER.shift_id,@shift_id,0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(SHIFT_MASTER!$K$2:$K$201,MATCH(R2,SHIFT_MASTER!$A$2:$A$201,0)),0))"
+    },
+    {
+      "column": "sh_flex",
+      "letter": "AC",
+      "type": "text",
+      "template": "IF(@attendance_id=\"\",\"\",$LKD(SHIFT_MASTER.is_flexible,SHIFT_MASTER.shift_id,@shift_id,\"N\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(SHIFT_MASTER!$L$2:$L$201,MATCH(R2,SHIFT_MASTER!$A$2:$A$201,0)),\"N\"))"
+    },
+    {
+      "column": "shift_start_dt",
+      "letter": "AD",
+      "type": "datetime",
+      "template": "IF(@attendance_id=\"\",\"\",IF(@shift_id=\"\",0,@work_date+@sh_start))",
+      "row2": "=IF(A2=\"\",\"\",IF(R2=\"\",0,C2+U2))"
+    },
+    {
+      "column": "shift_end_dt",
+      "letter": "AE",
+      "type": "datetime",
+      "template": "IF(@attendance_id=\"\",\"\",IF(@shift_id=\"\",0,@work_date+@sh_end+IF(@sh_end<=@sh_start,1,0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(R2=\"\",0,C2+V2+IF(V2<=U2,1,0)))"
+    },
+    {
+      "column": "first_in",
+      "letter": "AF",
+      "type": "datetime",
+      "template": "IF(@attendance_id=\"\",\"\",MINIFS([ATTENDANCE_EVENTS.event_datetime],[ATTENDANCE_EVENTS.employee_id],@employee_id,[ATTENDANCE_EVENTS.work_date],@work_date,[ATTENDANCE_EVENTS.event_type],\"IN\",[ATTENDANCE_EVENTS.is_dup],0))",
+      "row2": "=IF(A2=\"\",\"\",MINIFS(ATTENDANCE_EVENTS!$C$2:$C$10001,ATTENDANCE_EVENTS!$B$2:$B$10001,B2,ATTENDANCE_EVENTS!$AA$2:$AA$10001,C2,ATTENDANCE_EVENTS!$E$2:$E$10001,\"IN\",ATTENDANCE_EVENTS!$W$2:$W$10001,0))"
+    },
+    {
+      "column": "last_out",
+      "letter": "AG",
+      "type": "datetime",
+      "template": "IF(@attendance_id=\"\",\"\",MAXIFS([ATTENDANCE_EVENTS.event_datetime],[ATTENDANCE_EVENTS.employee_id],@employee_id,[ATTENDANCE_EVENTS.work_date],@work_date,[ATTENDANCE_EVENTS.event_type],\"OUT\",[ATTENDANCE_EVENTS.is_dup],0))",
+      "row2": "=IF(A2=\"\",\"\",MAXIFS(ATTENDANCE_EVENTS!$C$2:$C$10001,ATTENDANCE_EVENTS!$B$2:$B$10001,B2,ATTENDANCE_EVENTS!$AA$2:$AA$10001,C2,ATTENDANCE_EVENTS!$E$2:$E$10001,\"OUT\",ATTENDANCE_EVENTS!$W$2:$W$10001,0))"
+    },
+    {
+      "column": "last_in",
+      "letter": "AH",
+      "type": "datetime",
+      "template": "IF(@attendance_id=\"\",\"\",MAXIFS([ATTENDANCE_EVENTS.event_datetime],[ATTENDANCE_EVENTS.employee_id],@employee_id,[ATTENDANCE_EVENTS.work_date],@work_date,[ATTENDANCE_EVENTS.event_type],\"IN\",[ATTENDANCE_EVENTS.is_dup],0))",
+      "row2": "=IF(A2=\"\",\"\",MAXIFS(ATTENDANCE_EVENTS!$C$2:$C$10001,ATTENDANCE_EVENTS!$B$2:$B$10001,B2,ATTENDANCE_EVENTS!$AA$2:$AA$10001,C2,ATTENDANCE_EVENTS!$E$2:$E$10001,\"IN\",ATTENDANCE_EVENTS!$W$2:$W$10001,0))"
+    },
+    {
+      "column": "punch_count",
+      "letter": "AI",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",COUNTIFS([ATTENDANCE_EVENTS.employee_id],@employee_id,[ATTENDANCE_EVENTS.work_date],@work_date,[ATTENDANCE_EVENTS.is_dup],0))",
+      "row2": "=IF(A2=\"\",\"\",COUNTIFS(ATTENDANCE_EVENTS!$B$2:$B$10001,B2,ATTENDANCE_EVENTS!$AA$2:$AA$10001,C2,ATTENDANCE_EVENTS!$W$2:$W$10001,0))"
+    },
+    {
+      "column": "in_count",
+      "letter": "AJ",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",COUNTIFS([ATTENDANCE_EVENTS.employee_id],@employee_id,[ATTENDANCE_EVENTS.work_date],@work_date,[ATTENDANCE_EVENTS.event_type],\"IN\",[ATTENDANCE_EVENTS.is_dup],0))",
+      "row2": "=IF(A2=\"\",\"\",COUNTIFS(ATTENDANCE_EVENTS!$B$2:$B$10001,B2,ATTENDANCE_EVENTS!$AA$2:$AA$10001,C2,ATTENDANCE_EVENTS!$E$2:$E$10001,\"IN\",ATTENDANCE_EVENTS!$W$2:$W$10001,0))"
+    },
+    {
+      "column": "out_count",
+      "letter": "AK",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",COUNTIFS([ATTENDANCE_EVENTS.employee_id],@employee_id,[ATTENDANCE_EVENTS.work_date],@work_date,[ATTENDANCE_EVENTS.event_type],\"OUT\",[ATTENDANCE_EVENTS.is_dup],0))",
+      "row2": "=IF(A2=\"\",\"\",COUNTIFS(ATTENDANCE_EVENTS!$B$2:$B$10001,B2,ATTENDANCE_EVENTS!$AA$2:$AA$10001,C2,ATTENDANCE_EVENTS!$E$2:$E$10001,\"OUT\",ATTENDANCE_EVENTS!$W$2:$W$10001,0))"
+    },
+    {
+      "column": "seg_minutes",
+      "letter": "AL",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",SUMIFS([ATTENDANCE_EVENTS.segment_minutes],[ATTENDANCE_EVENTS.employee_id],@employee_id,[ATTENDANCE_EVENTS.work_date],@work_date))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(ATTENDANCE_EVENTS!$Z$2:$Z$10001,ATTENDANCE_EVENTS!$B$2:$B$10001,B2,ATTENDANCE_EVENTS!$AA$2:$AA$10001,C2))"
+    },
+    {
+      "column": "seg_count",
+      "letter": "AM",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",COUNTIFS([ATTENDANCE_EVENTS.employee_id],@employee_id,[ATTENDANCE_EVENTS.work_date],@work_date,[ATTENDANCE_EVENTS.segment_minutes],\">0\"))",
+      "row2": "=IF(A2=\"\",\"\",COUNTIFS(ATTENDANCE_EVENTS!$B$2:$B$10001,B2,ATTENDANCE_EVENTS!$AA$2:$AA$10001,C2,ATTENDANCE_EVENTS!$Z$2:$Z$10001,\">0\"))"
+    },
+    {
+      "column": "adj_in",
+      "letter": "AN",
+      "type": "datetime",
+      "template": "IF(@attendance_id=\"\",\"\",MAXIFS([ATTENDANCE_ADJUSTMENTS.adjusted_in],[ATTENDANCE_ADJUSTMENTS.employee_id],@employee_id,[ATTENDANCE_ADJUSTMENTS.work_date],@work_date,[ATTENDANCE_ADJUSTMENTS.status],\"APPROVED\"))",
+      "row2": "=IF(A2=\"\",\"\",MAXIFS(ATTENDANCE_ADJUSTMENTS!$E$2:$E$3001,ATTENDANCE_ADJUSTMENTS!$B$2:$B$3001,B2,ATTENDANCE_ADJUSTMENTS!$C$2:$C$3001,C2,ATTENDANCE_ADJUSTMENTS!$V$2:$V$3001,\"APPROVED\"))"
+    },
+    {
+      "column": "adj_out",
+      "letter": "AO",
+      "type": "datetime",
+      "template": "IF(@attendance_id=\"\",\"\",MAXIFS([ATTENDANCE_ADJUSTMENTS.adjusted_out],[ATTENDANCE_ADJUSTMENTS.employee_id],@employee_id,[ATTENDANCE_ADJUSTMENTS.work_date],@work_date,[ATTENDANCE_ADJUSTMENTS.status],\"APPROVED\"))",
+      "row2": "=IF(A2=\"\",\"\",MAXIFS(ATTENDANCE_ADJUSTMENTS!$F$2:$F$3001,ATTENDANCE_ADJUSTMENTS!$B$2:$B$3001,B2,ATTENDANCE_ADJUSTMENTS!$C$2:$C$3001,C2,ATTENDANCE_ADJUSTMENTS!$V$2:$V$3001,\"APPROVED\"))"
+    },
+    {
+      "column": "eff_in",
+      "letter": "AP",
+      "type": "datetime",
+      "template": "IF(@attendance_id=\"\",\"\",IF(@adj_in>0,@adj_in,@first_in))",
+      "row2": "=IF(A2=\"\",\"\",IF(AN2>0,AN2,AF2))"
+    },
+    {
+      "column": "eff_out",
+      "letter": "AQ",
+      "type": "datetime",
+      "template": "IF(@attendance_id=\"\",\"\",IF(@adj_out>0,@adj_out,@last_out))",
+      "row2": "=IF(A2=\"\",\"\",IF(AO2>0,AO2,AG2))"
+    },
+    {
+      "column": "worked_minutes",
+      "letter": "AR",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(OR(@adj_in>0,@adj_out>0),IF(AND(@eff_in>0,@eff_out>@eff_in),MAX(0,ROUND((@eff_out-@eff_in)*1440-@sh_break,0)),0),IF(@seg_count<=1,MAX(0,ROUND(@seg_minutes-IF(@seg_minutes>@sh_break,@sh_break,0),0)),ROUND(@seg_minutes,0))))",
+      "row2": "=IF(A2=\"\",\"\",IF(OR(AN2>0,AO2>0),IF(AND(AP2>0,AQ2>AP2),MAX(0,ROUND((AQ2-AP2)*1440-W2,0)),0),IF(AM2<=1,MAX(0,ROUND(AL2-IF(AL2>W2,W2,0),0)),ROUND(AL2,0))))",
+      "note": "adjusted: span minus break; otherwise IN/OUT pairing (single segment deducts the shift break, multi-segment trusts break punches)"
+    },
+    {
+      "column": "open_now",
+      "letter": "AS",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(AND(@adj_in=0,@adj_out=0,@in_count=@out_count+1,@last_in>@last_out,@last_in<=$CFG(ATTENDANCE_AS_OF),($CFG(ATTENDANCE_AS_OF)-@last_in)*24<=$CFG(MAX_SEGMENT_HOURS)),1,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(AND(AN2=0,AO2=0,AJ2=AK2+1,AH2>AG2,AH2<=INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"ATTENDANCE_AS_OF\",SYSTEM_CONFIG!$A$2:$A$201,0)),(INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"ATTENDANCE_AS_OF\",SYSTEM_CONFIG!$A$2:$A$201,0))-AH2)*24<=INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"MAX_SEGMENT_HOURS\",SYSTEM_CONFIG!$A$2:$A$201,0))),1,0))",
+      "note": "checked in and still inside a normal working window at ATTENDANCE_AS_OF: in progress, not a missing punch"
+    },
+    {
+      "column": "missing_punch",
+      "letter": "AT",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(OR(@adj_in>0,@adj_out>0),0,IF(AND(@in_count<>@out_count,@open_now=0),1,0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(OR(AN2>0,AO2>0),0,IF(AND(AJ2<>AK2,AS2=0),1,0)))"
+    },
+    {
+      "column": "leave_paid_frac",
+      "letter": "AU",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",MIN(1,SUMIFS([LEAVE_APPLICATIONS.day_fraction],[LEAVE_APPLICATIONS.employee_id],@employee_id,[LEAVE_APPLICATIONS.from_date],\"<=\"&@work_date,[LEAVE_APPLICATIONS.to_date],\">=\"&@work_date,[LEAVE_APPLICATIONS.status],\"APPROVED\",[LEAVE_APPLICATIONS.is_leave_like],\"Y\",[LEAVE_APPLICATIONS.is_paid],\"Y\")))",
+      "row2": "=IF(A2=\"\",\"\",MIN(1,SUMIFS(LEAVE_APPLICATIONS!$Z$2:$Z$4001,LEAVE_APPLICATIONS!$B$2:$B$4001,B2,LEAVE_APPLICATIONS!$D$2:$D$4001,\"<=\"&C2,LEAVE_APPLICATIONS!$E$2:$E$4001,\">=\"&C2,LEAVE_APPLICATIONS!$T$2:$T$4001,\"APPROVED\",LEAVE_APPLICATIONS!$X$2:$X$4001,\"Y\",LEAVE_APPLICATIONS!$W$2:$W$4001,\"Y\")))"
+    },
+    {
+      "column": "leave_unpaid_frac",
+      "letter": "AV",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",MIN(1,SUMIFS([LEAVE_APPLICATIONS.day_fraction],[LEAVE_APPLICATIONS.employee_id],@employee_id,[LEAVE_APPLICATIONS.from_date],\"<=\"&@work_date,[LEAVE_APPLICATIONS.to_date],\">=\"&@work_date,[LEAVE_APPLICATIONS.status],\"APPROVED\",[LEAVE_APPLICATIONS.is_leave_like],\"Y\",[LEAVE_APPLICATIONS.is_paid],\"N\")))",
+      "row2": "=IF(A2=\"\",\"\",MIN(1,SUMIFS(LEAVE_APPLICATIONS!$Z$2:$Z$4001,LEAVE_APPLICATIONS!$B$2:$B$4001,B2,LEAVE_APPLICATIONS!$D$2:$D$4001,\"<=\"&C2,LEAVE_APPLICATIONS!$E$2:$E$4001,\">=\"&C2,LEAVE_APPLICATIONS!$T$2:$T$4001,\"APPROVED\",LEAVE_APPLICATIONS!$X$2:$X$4001,\"Y\",LEAVE_APPLICATIONS!$W$2:$W$4001,\"N\")))"
+    },
+    {
+      "column": "wfh_od",
+      "letter": "AW",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",COUNTIFS([LEAVE_APPLICATIONS.employee_id],@employee_id,[LEAVE_APPLICATIONS.from_date],\"<=\"&@work_date,[LEAVE_APPLICATIONS.to_date],\">=\"&@work_date,[LEAVE_APPLICATIONS.status],\"APPROVED\",[LEAVE_APPLICATIONS.is_workday_override],\"Y\"))",
+      "row2": "=IF(A2=\"\",\"\",COUNTIFS(LEAVE_APPLICATIONS!$B$2:$B$4001,B2,LEAVE_APPLICATIONS!$D$2:$D$4001,\"<=\"&C2,LEAVE_APPLICATIONS!$E$2:$E$4001,\">=\"&C2,LEAVE_APPLICATIONS!$T$2:$T$4001,\"APPROVED\",LEAVE_APPLICATIONS!$Y$2:$Y$4001,\"Y\"))"
+    },
+    {
+      "column": "grace_credit_minutes",
+      "letter": "AX",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(OR(@shift_id=\"\",@sh_flex=\"Y\",@eff_in=0,@eff_out=0,@missing_punch=1),0,IF(ROUND((@eff_in-@shift_start_dt)*1440,0)<=@sh_grace_in,MAX(0,ROUND((@eff_in-@shift_start_dt)*1440,0)),0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(OR(R2=\"\",AC2=\"Y\",AP2=0,AQ2=0,AT2=1),0,IF(ROUND((AP2-AD2)*1440,0)<=X2,MAX(0,ROUND((AP2-AD2)*1440,0)),0)))",
+      "note": "arriving inside the grace window is not penalised when deciding full / half day"
+    },
+    {
+      "column": "worked_credit",
+      "letter": "AY",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(OR(@missing_punch=1,@worked_minutes<=0),0,IF(@worked_minutes+@grace_credit_minutes>=@sh_full,1,IF(@worked_minutes+@grace_credit_minutes>=@sh_half,0.5,0))))",
+      "row2": "=IF(A2=\"\",\"\",IF(OR(AT2=1,AR2<=0),0,IF(AR2+AX2>=Z2,1,IF(AR2+AX2>=AA2,0.5,0))))"
+    },
+    {
+      "column": "status",
+      "letter": "AZ",
+      "type": "text",
+      "template": "IF(@attendance_id=\"\",\"\",IF(@in_service=0,\"NA\",IF(@wfh_od>0,\"WFH_OD\",IF(@open_now=1,\"IN_PROGRESS\",IF(@is_holiday=1,IF(@worked_minutes>0,\"HOLIDAY_WORK\",\"HOLIDAY\"),IF(@is_week_off=1,IF(@worked_minutes>0,\"WEEKOFF_WORK\",\"WEEKOFF\"),IF(@leave_paid_frac+@leave_unpaid_frac>=1,IF(@leave_unpaid_frac>=1,\"UNPAID_LEAVE\",\"LEAVE\"),IF(@missing_punch=1,\"MISSING_PUNCH\",IF(MIN(1,@worked_credit+@leave_paid_frac)>=1,\"PRESENT\",IF(MIN(1,@worked_credit+@leave_paid_frac)>0,\"HALF_DAY\",\"ABSENT\"))))))))))",
+      "row2": "=IF(A2=\"\",\"\",IF(M2=0,\"NA\",IF(AW2>0,\"WFH_OD\",IF(AS2=1,\"IN_PROGRESS\",IF(T2=1,IF(AR2>0,\"HOLIDAY_WORK\",\"HOLIDAY\"),IF(S2=1,IF(AR2>0,\"WEEKOFF_WORK\",\"WEEKOFF\"),IF(AU2+AV2>=1,IF(AV2>=1,\"UNPAID_LEAVE\",\"LEAVE\"),IF(AT2=1,\"MISSING_PUNCH\",IF(MIN(1,AY2+AU2)>=1,\"PRESENT\",IF(MIN(1,AY2+AU2)>0,\"HALF_DAY\",\"ABSENT\"))))))))))"
+    },
+    {
+      "column": "day_credit",
+      "letter": "BA",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(@in_service=0,0,IF(OR(@status=\"WFH_OD\",@status=\"HOLIDAY\",@status=\"HOLIDAY_WORK\",@status=\"WEEKOFF\",@status=\"WEEKOFF_WORK\",@status=\"LEAVE\"),1,IF(@status=\"UNPAID_LEAVE\",0,MIN(1,@worked_credit+@leave_paid_frac)))))",
+      "row2": "=IF(A2=\"\",\"\",IF(M2=0,0,IF(OR(AZ2=\"WFH_OD\",AZ2=\"HOLIDAY\",AZ2=\"HOLIDAY_WORK\",AZ2=\"WEEKOFF\",AZ2=\"WEEKOFF_WORK\",AZ2=\"LEAVE\"),1,IF(AZ2=\"UNPAID_LEAVE\",0,MIN(1,AY2+AU2)))))",
+      "note": "paid-day credit 0..1 consumed by payroll"
+    },
+    {
+      "column": "lop_days",
+      "letter": "BB",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(@in_service=0,0,ROUND(1-@day_credit,2)))",
+      "row2": "=IF(A2=\"\",\"\",IF(M2=0,0,ROUND(1-BA2,2)))"
+    },
+    {
+      "column": "late_minutes",
+      "letter": "BC",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(OR(@shift_id=\"\",@sh_flex=\"Y\",@eff_in=0,@is_week_off=1,@is_holiday=1,@in_service=0),0,MAX(0,ROUND((@eff_in-@shift_start_dt)*1440-@sh_grace_in,0))))",
+      "row2": "=IF(A2=\"\",\"\",IF(OR(R2=\"\",AC2=\"Y\",AP2=0,S2=1,T2=1,M2=0),0,MAX(0,ROUND((AP2-AD2)*1440-X2,0))))"
+    },
+    {
+      "column": "early_minutes",
+      "letter": "BD",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(OR(@shift_id=\"\",@sh_flex=\"Y\",@eff_out=0,@is_week_off=1,@is_holiday=1,@in_service=0),0,MAX(0,ROUND((@shift_end_dt-@eff_out)*1440-@sh_grace_out,0))))",
+      "row2": "=IF(A2=\"\",\"\",IF(OR(R2=\"\",AC2=\"Y\",AQ2=0,S2=1,T2=1,M2=0),0,MAX(0,ROUND((AE2-AQ2)*1440-Y2,0))))"
+    },
+    {
+      "column": "night_minutes",
+      "letter": "BE",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(OR(@eff_in=0,@eff_out<=@eff_in),0,ROUND(1440*(MAX(0,MIN(@eff_out,@work_date+$CFG(NIGHT_END_HOUR)/24)-MAX(@eff_in,@work_date-1+$CFG(NIGHT_START_HOUR)/24))+MAX(0,MIN(@eff_out,@work_date+1+$CFG(NIGHT_END_HOUR)/24)-MAX(@eff_in,@work_date+$CFG(NIGHT_START_HOUR)/24))),0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(OR(AP2=0,AQ2<=AP2),0,ROUND(1440*(MAX(0,MIN(AQ2,C2+INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"NIGHT_END_HOUR\",SYSTEM_CONFIG!$A$2:$A$201,0))/24)-MAX(AP2,C2-1+INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"NIGHT_START_HOUR\",SYSTEM_CONFIG!$A$2:$A$201,0))/24))+MAX(0,MIN(AQ2,C2+1+INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"NIGHT_END_HOUR\",SYSTEM_CONFIG!$A$2:$A$201,0))/24)-MAX(AP2,C2+INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"NIGHT_START_HOUR\",SYSTEM_CONFIG!$A$2:$A$201,0))/24))),0)))"
+    },
+    {
+      "column": "ot_min_regular",
+      "letter": "BF",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(OR(@ot_eligible<>\"Y\",@in_service=0,@is_holiday=1,@is_week_off=1,@missing_punch=1,@sh_full=0),0,MAX(0,@worked_minutes-@sh_full-@sh_ot_thr)))",
+      "row2": "=IF(A2=\"\",\"\",IF(OR(O2<>\"Y\",M2=0,T2=1,S2=1,AT2=1,Z2=0),0,MAX(0,AR2-Z2-AB2)))"
+    },
+    {
+      "column": "ot_min_offday",
+      "letter": "BG",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(OR(@ot_eligible<>\"Y\",@in_service=0,@missing_punch=1),0,IF(OR(@is_holiday=1,@is_week_off=1),@worked_minutes,0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(OR(O2<>\"Y\",M2=0,AT2=1),0,IF(OR(T2=1,S2=1),AR2,0)))"
+    },
+    {
+      "column": "night_ot_minutes",
+      "letter": "BH",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",MIN(@ot_min_regular+@ot_min_offday,@night_minutes))",
+      "row2": "=IF(A2=\"\",\"\",MIN(BF2+BG2,BE2))"
+    },
+    {
+      "column": "comp_off_eligible",
+      "letter": "BI",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(AND(OR(@status=\"HOLIDAY_WORK\",@status=\"WEEKOFF_WORK\"),@sh_full>0),IF(@worked_minutes>=@sh_full,1,IF(@worked_minutes>=@sh_half,0.5,0)),0))",
+      "row2": "=IF(A2=\"\",\"\",IF(AND(OR(AZ2=\"HOLIDAY_WORK\",AZ2=\"WEEKOFF_WORK\"),Z2>0),IF(AR2>=Z2,1,IF(AR2>=AA2,0.5,0)),0))"
+    },
+    {
+      "column": "is_period_locked",
+      "letter": "BJ",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(COUNTIFS([PAYROLL_CONTROL.period_start],\"<=\"&@work_date,[PAYROLL_CONTROL.period_end],\">=\"&@work_date,[PAYROLL_CONTROL.status],\"LOCKED\",[PAYROLL_CONTROL.run_type],\"REGULAR\")>0,1,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(PAYROLL_CONTROL!$C$2:$C$201,\"<=\"&C2,PAYROLL_CONTROL!$D$2:$D$201,\">=\"&C2,PAYROLL_CONTROL!$U$2:$U$201,\"LOCKED\",PAYROLL_CONTROL!$F$2:$F$201,\"REGULAR\")>0,1,0))"
+    },
+    {
+      "column": "exception_flag",
+      "letter": "BK",
+      "type": "text",
+      "template": "IF(@attendance_id=\"\",\"\",IF(@in_service=0,\"\",IF(@missing_punch=1,\"MISSING_PUNCH\",IF(AND(@shift_id=\"\",@is_holiday=0,@is_week_off=0),\"NO_SHIFT\",IF(AND(@worked_minutes>0,@worked_credit=0,@wfh_od=0),\"SHORT_HOURS\",\"\")))))",
+      "row2": "=IF(A2=\"\",\"\",IF(M2=0,\"\",IF(AT2=1,\"MISSING_PUNCH\",IF(AND(R2=\"\",T2=0,S2=0),\"NO_SHIFT\",IF(AND(AR2>0,AY2=0,AW2=0),\"SHORT_HOURS\",\"\")))))"
+    },
+    {
+      "column": "exception_open",
+      "letter": "BL",
+      "type": "number",
+      "template": "IF(@attendance_id=\"\",\"\",IF(@exception_flag=\"\",0,IF(COUNTIFS([ATTENDANCE_EXCEPTIONS.attendance_key],@daily_key,[ATTENDANCE_EXCEPTIONS.status],\"WAIVED\")>0,0,1)))",
+      "row2": "=IF(A2=\"\",\"\",IF(BK2=\"\",0,IF(COUNTIFS(ATTENDANCE_EXCEPTIONS!$B$2:$B$3001,I2,ATTENDANCE_EXCEPTIONS!$Q$2:$Q$3001,\"WAIVED\")>0,0,1)))"
+    }
+  ],
+  "ATTENDANCE_ADJUSTMENTS": [
+    {
+      "column": "attendance_key",
+      "letter": "X",
+      "type": "text",
+      "template": "IF(@adjustment_id=\"\",\"\",@employee_id&\":\"&@work_date)",
+      "row2": "=IF(A2=\"\",\"\",B2&\":\"&C2)"
+    },
+    {
+      "column": "is_period_locked",
+      "letter": "Y",
+      "type": "number",
+      "template": "IF(@adjustment_id=\"\",\"\",IF(COUNTIFS([PAYROLL_CONTROL.period_start],\"<=\"&@work_date,[PAYROLL_CONTROL.period_end],\">=\"&@work_date,[PAYROLL_CONTROL.status],\"LOCKED\",[PAYROLL_CONTROL.run_type],\"REGULAR\")>0,1,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(PAYROLL_CONTROL!$C$2:$C$201,\"<=\"&C2,PAYROLL_CONTROL!$D$2:$D$201,\">=\"&C2,PAYROLL_CONTROL!$U$2:$U$201,\"LOCKED\",PAYROLL_CONTROL!$F$2:$F$201,\"REGULAR\")>0,1,0))"
+    },
+    {
+      "column": "locked_violation",
+      "letter": "Z",
+      "type": "number",
+      "template": "IF(@adjustment_id=\"\",\"\",IF(AND(@is_period_locked=1,@status=\"APPROVED\",@decided_at>MAXIFS([PAYROLL_CONTROL.locked_at],[PAYROLL_CONTROL.period_start],\"<=\"&@work_date,[PAYROLL_CONTROL.period_end],\">=\"&@work_date,[PAYROLL_CONTROL.status],\"LOCKED\")),1,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(AND(Y2=1,V2=\"APPROVED\",L2>MAXIFS(PAYROLL_CONTROL!$L$2:$L$201,PAYROLL_CONTROL!$C$2:$C$201,\"<=\"&C2,PAYROLL_CONTROL!$D$2:$D$201,\">=\"&C2,PAYROLL_CONTROL!$U$2:$U$201,\"LOCKED\")),1,0))",
+      "note": "approved after the covering period was locked"
+    }
+  ],
+  "ATTENDANCE_EXCEPTIONS": [
+    {
+      "column": "still_flagged",
+      "letter": "S",
+      "type": "text",
+      "template": "IF(@exception_id=\"\",\"\",$LKD(ATTENDANCE_DAILY.exception_flag,ATTENDANCE_DAILY.daily_key,@attendance_key,\"\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(ATTENDANCE_DAILY!$BK$2:$BK$6001,MATCH(B2,ATTENDANCE_DAILY!$I$2:$I$6001,0)),\"\"))"
+    }
+  ],
+  "OVERTIME": [
+    {
+      "column": "daily_key",
+      "letter": "U",
+      "type": "text",
+      "template": "IF(@ot_id=\"\",\"\",@employee_id&\":\"&@work_date)",
+      "row2": "=IF(A2=\"\",\"\",B2&\":\"&C2)"
+    },
+    {
+      "column": "ad_row",
+      "letter": "V",
+      "type": "number",
+      "template": "IF(@ot_id=\"\",\"\",IFERROR(MATCH(@daily_key,[ATTENDANCE_DAILY.daily_key],0),0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(MATCH(U2,ATTENDANCE_DAILY!$I$2:$I$6001,0),0))"
+    },
+    {
+      "column": "calc_minutes",
+      "letter": "W",
+      "type": "number",
+      "template": "IF(@ot_id=\"\",\"\",IF(@ad_row=0,0,IF(@day_type=\"OFFDAY\",INDEX([ATTENDANCE_DAILY.ot_min_offday],@ad_row),INDEX([ATTENDANCE_DAILY.ot_min_regular],@ad_row))))",
+      "row2": "=IF(A2=\"\",\"\",IF(V2=0,0,IF(D2=\"OFFDAY\",INDEX(ATTENDANCE_DAILY!$BG$2:$BG$6001,V2),INDEX(ATTENDANCE_DAILY!$BF$2:$BF$6001,V2))))"
+    },
+    {
+      "column": "payable_minutes",
+      "letter": "X",
+      "type": "number",
+      "template": "IF(@ot_id=\"\",\"\",IF(@status=\"APPROVED\",MIN(@approved_minutes,@calc_minutes),0))",
+      "row2": "=IF(A2=\"\",\"\",IF(S2=\"APPROVED\",MIN(H2,W2),0))"
+    },
+    {
+      "column": "payable_night_minutes",
+      "letter": "Y",
+      "type": "number",
+      "template": "IF(@ot_id=\"\",\"\",IF(@status=\"APPROVED\",IF(@ad_row=0,0,MIN(@payable_minutes,INDEX([ATTENDANCE_DAILY.night_ot_minutes],@ad_row))),0))",
+      "row2": "=IF(A2=\"\",\"\",IF(S2=\"APPROVED\",IF(V2=0,0,MIN(X2,INDEX(ATTENDANCE_DAILY!$BH$2:$BH$6001,V2))),0))"
+    },
+    {
+      "column": "is_period_locked",
+      "letter": "Z",
+      "type": "number",
+      "template": "IF(@ot_id=\"\",\"\",IF(COUNTIFS([PAYROLL_CONTROL.period_start],\"<=\"&@work_date,[PAYROLL_CONTROL.period_end],\">=\"&@work_date,[PAYROLL_CONTROL.status],\"LOCKED\",[PAYROLL_CONTROL.run_type],\"REGULAR\")>0,1,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(PAYROLL_CONTROL!$C$2:$C$201,\"<=\"&C2,PAYROLL_CONTROL!$D$2:$D$201,\">=\"&C2,PAYROLL_CONTROL!$U$2:$U$201,\"LOCKED\",PAYROLL_CONTROL!$F$2:$F$201,\"REGULAR\")>0,1,0))"
+    }
+  ],
+  "TIMESHEETS": [
+    {
+      "column": "daily_total_hours",
+      "letter": "T",
+      "type": "number",
+      "template": "IF(@timesheet_id=\"\",\"\",SUMIFS([TIMESHEETS.hours],[TIMESHEETS.employee_id],@employee_id,[TIMESHEETS.work_date],@work_date,[TIMESHEETS.status],\"<>REJECTED\"))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(TIMESHEETS!$F$2:$F$10001,TIMESHEETS!$B$2:$B$10001,B2,TIMESHEETS!$C$2:$C$10001,C2,TIMESHEETS!$R$2:$R$10001,\"<>REJECTED\"))"
+    },
+    {
+      "column": "attendance_hours",
+      "letter": "U",
+      "type": "number",
+      "template": "IF(@timesheet_id=\"\",\"\",ROUND($LKD(ATTENDANCE_DAILY.worked_minutes,ATTENDANCE_DAILY.daily_key,@employee_id&\":\"&@work_date,0)/60,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(IFERROR(INDEX(ATTENDANCE_DAILY!$AR$2:$AR$6001,MATCH(B2&\":\"&C2,ATTENDANCE_DAILY!$I$2:$I$6001,0)),0)/60,2))"
+    },
+    {
+      "column": "variance_flag",
+      "letter": "V",
+      "type": "text",
+      "template": "IF(@timesheet_id=\"\",\"\",IF(@daily_total_hours>@attendance_hours+0.5,\"EXCEEDS_ATTENDANCE\",\"OK\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(T2>U2+0.5,\"EXCEEDS_ATTENDANCE\",\"OK\"))"
+    }
+  ],
+  "EMPLOYEE_SALARY": [
+    {
+      "column": "salary_key",
+      "letter": "X",
+      "type": "text",
+      "template": "IF(@salary_id=\"\",\"\",@employee_id&\":\"&@effective_from)",
+      "row2": "=IF(A2=\"\",\"\",B2&\":\"&C2)"
+    },
+    {
+      "column": "monthly_gross",
+      "letter": "Y",
+      "type": "money",
+      "template": "IF(@salary_id=\"\",\"\",N(@basic)+N(@hra)+N(@da)+N(@conveyance)+N(@special_allowance)+N(@other_allowance)+N(@custom_earning_1)+N(@custom_earning_2))",
+      "row2": "=IF(A2=\"\",\"\",N(E2)+N(F2)+N(G2)+N(H2)+N(I2)+N(J2)+N(K2)+N(L2))"
+    },
+    {
+      "column": "dup_check",
+      "letter": "Z",
+      "type": "text",
+      "template": "IF(@salary_id=\"\",\"\",IF(COUNTIFS([EMPLOYEE_SALARY.salary_key],@salary_key,[EMPLOYEE_SALARY.status],\"ACTIVE\")>1,\"DUPLICATE_EFFECTIVE_DATE\",\"OK\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(EMPLOYEE_SALARY!$X$2:$X$4001,X2,EMPLOYEE_SALARY!$V$2:$V$4001,\"ACTIVE\")>1,\"DUPLICATE_EFFECTIVE_DATE\",\"OK\"))"
+    }
+  ],
+  "PAYROLL_CONTROL": [
+    {
+      "column": "days_in_period",
+      "letter": "W",
+      "type": "number",
+      "template": "IF(@period_id=\"\",\"\",@period_end-@period_start+1)",
+      "row2": "=IF(A2=\"\",\"\",D2-C2+1)"
+    },
+    {
+      "column": "employee_rows",
+      "letter": "X",
+      "type": "number",
+      "template": "IF(@period_id=\"\",\"\",COUNTIFS([PAYROLL_INPUTS.period_id],@period_id))",
+      "row2": "=IF(A2=\"\",\"\",COUNTIFS(PAYROLL_INPUTS!$B$2:$B$2001,A2))"
+    },
+    {
+      "column": "total_gross",
+      "letter": "Y",
+      "type": "money",
+      "template": "IF(@period_id=\"\",\"\",SUMIFS([PAYROLL_CALC.gross_earnings],[PAYROLL_CALC.period_id],@period_id))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(PAYROLL_CALC!$AY$2:$AY$2001,PAYROLL_CALC!$G$2:$G$2001,A2))"
+    },
+    {
+      "column": "total_net",
+      "letter": "Z",
+      "type": "money",
+      "template": "IF(@period_id=\"\",\"\",SUMIFS([PAYROLL_CALC.net_pay],[PAYROLL_CALC.period_id],@period_id))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(PAYROLL_CALC!$BQ$2:$BQ$2001,PAYROLL_CALC!$G$2:$G$2001,A2))"
+    },
+    {
+      "column": "total_employer_cost",
+      "letter": "AA",
+      "type": "money",
+      "template": "IF(@period_id=\"\",\"\",SUMIFS([PAYROLL_CALC.employer_cost],[PAYROLL_CALC.period_id],@period_id))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(PAYROLL_CALC!$BR$2:$BR$2001,PAYROLL_CALC!$G$2:$G$2001,A2))"
+    },
+    {
+      "column": "issue_count",
+      "letter": "AB",
+      "type": "number",
+      "template": "IF(@period_id=\"\",\"\",COUNTIFS([PAYROLL_CALC.period_id],@period_id,[PAYROLL_CALC.check_status],\"<>OK\"))",
+      "row2": "=IF(A2=\"\",\"\",COUNTIFS(PAYROLL_CALC!$G$2:$G$2001,A2,PAYROLL_CALC!$BT$2:$BT$2001,\"<>OK\"))"
+    },
+    {
+      "column": "ready_to_approve",
+      "letter": "AC",
+      "type": "text",
+      "template": "IF(@period_id=\"\",\"\",IF(AND(@employee_rows>0,@issue_count=0),\"YES\",\"NO\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(AND(X2>0,AB2=0),\"YES\",\"NO\"))"
+    }
+  ],
+  "PAYROLL_INPUTS": [
+    {
+      "column": "period_start",
+      "letter": "V",
+      "type": "date",
+      "template": "IF(@input_id=\"\",\"\",$LKD(PAYROLL_CONTROL.period_start,PAYROLL_CONTROL.period_id,@period_id,0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(PAYROLL_CONTROL!$C$2:$C$201,MATCH(B2,PAYROLL_CONTROL!$A$2:$A$201,0)),0))"
+    },
+    {
+      "column": "period_end",
+      "letter": "W",
+      "type": "date",
+      "template": "IF(@input_id=\"\",\"\",$LKD(PAYROLL_CONTROL.period_end,PAYROLL_CONTROL.period_id,@period_id,0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(PAYROLL_CONTROL!$D$2:$D$201,MATCH(B2,PAYROLL_CONTROL!$A$2:$A$201,0)),0))"
+    },
+    {
+      "column": "dim",
+      "letter": "X",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",@period_end-@period_start+1)",
+      "row2": "=IF(A2=\"\",\"\",W2-V2+1)"
+    },
+    {
+      "column": "emp_join",
+      "letter": "Y",
+      "type": "date",
+      "template": "IF(@input_id=\"\",\"\",N($LKD(EMPLOYEES.date_of_joining,EMPLOYEES.employee_id,@employee_id,0)))",
+      "row2": "=IF(A2=\"\",\"\",N(IFERROR(INDEX(EMPLOYEES!$G$2:$G$1501,MATCH(C2,EMPLOYEES!$A$2:$A$1501,0)),0)))"
+    },
+    {
+      "column": "emp_exit",
+      "letter": "Z",
+      "type": "date",
+      "template": "IF(@input_id=\"\",\"\",N($LKD(EMPLOYEES.date_of_exit,EMPLOYEES.employee_id,@employee_id,0)))",
+      "row2": "=IF(A2=\"\",\"\",N(IFERROR(INDEX(EMPLOYEES!$H$2:$H$1501,MATCH(C2,EMPLOYEES!$A$2:$A$1501,0)),0)))"
+    },
+    {
+      "column": "window_start",
+      "letter": "AA",
+      "type": "date",
+      "template": "IF(@input_id=\"\",\"\",MAX(@period_start,@emp_join))",
+      "row2": "=IF(A2=\"\",\"\",MAX(V2,Y2))"
+    },
+    {
+      "column": "window_end",
+      "letter": "AB",
+      "type": "date",
+      "template": "IF(@input_id=\"\",\"\",IF(@emp_exit>0,MIN(@period_end,@emp_exit),@period_end))",
+      "row2": "=IF(A2=\"\",\"\",IF(Z2>0,MIN(W2,Z2),W2))"
+    },
+    {
+      "column": "window_days",
+      "letter": "AC",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",MAX(0,@window_end-@window_start+1))",
+      "row2": "=IF(A2=\"\",\"\",MAX(0,AB2-AA2+1))"
+    },
+    {
+      "column": "att_rows",
+      "letter": "AD",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",COUNTIFS([ATTENDANCE_DAILY.employee_id],@employee_id,[ATTENDANCE_DAILY.work_date],\">=\"&@period_start,[ATTENDANCE_DAILY.work_date],\"<=\"&@period_end,[ATTENDANCE_DAILY.in_service],1))",
+      "row2": "=IF(A2=\"\",\"\",COUNTIFS(ATTENDANCE_DAILY!$B$2:$B$6001,C2,ATTENDANCE_DAILY!$C$2:$C$6001,\">=\"&V2,ATTENDANCE_DAILY!$C$2:$C$6001,\"<=\"&W2,ATTENDANCE_DAILY!$M$2:$M$6001,1))"
+    },
+    {
+      "column": "paid_days",
+      "letter": "AE",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",SUMIFS([ATTENDANCE_DAILY.day_credit],[ATTENDANCE_DAILY.employee_id],@employee_id,[ATTENDANCE_DAILY.work_date],\">=\"&@period_start,[ATTENDANCE_DAILY.work_date],\"<=\"&@period_end))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(ATTENDANCE_DAILY!$BA$2:$BA$6001,ATTENDANCE_DAILY!$B$2:$B$6001,C2,ATTENDANCE_DAILY!$C$2:$C$6001,\">=\"&V2,ATTENDANCE_DAILY!$C$2:$C$6001,\"<=\"&W2))"
+    },
+    {
+      "column": "lop_days",
+      "letter": "AF",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",SUMIFS([ATTENDANCE_DAILY.lop_days],[ATTENDANCE_DAILY.employee_id],@employee_id,[ATTENDANCE_DAILY.work_date],\">=\"&@period_start,[ATTENDANCE_DAILY.work_date],\"<=\"&@period_end))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(ATTENDANCE_DAILY!$BB$2:$BB$6001,ATTENDANCE_DAILY!$B$2:$B$6001,C2,ATTENDANCE_DAILY!$C$2:$C$6001,\">=\"&V2,ATTENDANCE_DAILY!$C$2:$C$6001,\"<=\"&W2))"
+    },
+    {
+      "column": "unresolved_exceptions",
+      "letter": "AG",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",SUMIFS([ATTENDANCE_DAILY.exception_open],[ATTENDANCE_DAILY.employee_id],@employee_id,[ATTENDANCE_DAILY.work_date],\">=\"&@period_start,[ATTENDANCE_DAILY.work_date],\"<=\"&@period_end))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(ATTENDANCE_DAILY!$BL$2:$BL$6001,ATTENDANCE_DAILY!$B$2:$B$6001,C2,ATTENDANCE_DAILY!$C$2:$C$6001,\">=\"&V2,ATTENDANCE_DAILY!$C$2:$C$6001,\"<=\"&W2))"
+    },
+    {
+      "column": "ot_reg_min",
+      "letter": "AH",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",SUMIFS([OVERTIME.payable_minutes],[OVERTIME.employee_id],@employee_id,[OVERTIME.work_date],\">=\"&@period_start,[OVERTIME.work_date],\"<=\"&@period_end,[OVERTIME.day_type],\"REGULAR\"))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(OVERTIME!$X$2:$X$3001,OVERTIME!$B$2:$B$3001,C2,OVERTIME!$C$2:$C$3001,\">=\"&V2,OVERTIME!$C$2:$C$3001,\"<=\"&W2,OVERTIME!$D$2:$D$3001,\"REGULAR\"))"
+    },
+    {
+      "column": "ot_off_min",
+      "letter": "AI",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",SUMIFS([OVERTIME.payable_minutes],[OVERTIME.employee_id],@employee_id,[OVERTIME.work_date],\">=\"&@period_start,[OVERTIME.work_date],\"<=\"&@period_end,[OVERTIME.day_type],\"OFFDAY\"))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(OVERTIME!$X$2:$X$3001,OVERTIME!$B$2:$B$3001,C2,OVERTIME!$C$2:$C$3001,\">=\"&V2,OVERTIME!$C$2:$C$3001,\"<=\"&W2,OVERTIME!$D$2:$D$3001,\"OFFDAY\"))"
+    },
+    {
+      "column": "ot_night_min",
+      "letter": "AJ",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",SUMIFS([OVERTIME.payable_night_minutes],[OVERTIME.employee_id],@employee_id,[OVERTIME.work_date],\">=\"&@period_start,[OVERTIME.work_date],\"<=\"&@period_end))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(OVERTIME!$Y$2:$Y$3001,OVERTIME!$B$2:$B$3001,C2,OVERTIME!$C$2:$C$3001,\">=\"&V2,OVERTIME!$C$2:$C$3001,\"<=\"&W2))"
+    },
+    {
+      "column": "reimbursement",
+      "letter": "AK",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",SUMIFS([REIMBURSEMENTS.amount],[REIMBURSEMENTS.employee_id],@employee_id,[REIMBURSEMENTS.period_id],@period_id,[REIMBURSEMENTS.status],\"APPROVED\"))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(REIMBURSEMENTS!$E$2:$E$5001,REIMBURSEMENTS!$C$2:$C$5001,C2,REIMBURSEMENTS!$D$2:$D$5001,B2,REIMBURSEMENTS!$N$2:$N$5001,\"APPROVED\"))"
+    },
+    {
+      "column": "loan_emi",
+      "letter": "AL",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",SUMIFS([LOAN_SCHEDULE.emi_amount],[LOAN_SCHEDULE.employee_id],@employee_id,[LOAN_SCHEDULE.due_period_id],@period_id,[LOAN_SCHEDULE.status],\"SCHEDULED\",[LOAN_SCHEDULE.loan_type],\"LOAN\"))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(LOAN_SCHEDULE!$R$2:$R$10001,LOAN_SCHEDULE!$C$2:$C$10001,C2,LOAN_SCHEDULE!$F$2:$F$10001,B2,LOAN_SCHEDULE!$P$2:$P$10001,\"SCHEDULED\",LOAN_SCHEDULE!$D$2:$D$10001,\"LOAN\"))"
+    },
+    {
+      "column": "advance_recovery",
+      "letter": "AM",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",SUMIFS([LOAN_SCHEDULE.emi_amount],[LOAN_SCHEDULE.employee_id],@employee_id,[LOAN_SCHEDULE.due_period_id],@period_id,[LOAN_SCHEDULE.status],\"SCHEDULED\",[LOAN_SCHEDULE.loan_type],\"ADVANCE\"))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(LOAN_SCHEDULE!$R$2:$R$10001,LOAN_SCHEDULE!$C$2:$C$10001,C2,LOAN_SCHEDULE!$F$2:$F$10001,B2,LOAN_SCHEDULE!$P$2:$P$10001,\"SCHEDULED\",LOAN_SCHEDULE!$D$2:$D$10001,\"ADVANCE\"))"
+    },
+    {
+      "column": "run_type",
+      "letter": "AN",
+      "type": "text",
+      "template": "IF(@input_id=\"\",\"\",$LKD(PAYROLL_CONTROL.run_type,PAYROLL_CONTROL.period_id,@period_id,\"REGULAR\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(PAYROLL_CONTROL!$F$2:$F$201,MATCH(B2,PAYROLL_CONTROL!$A$2:$A$201,0)),\"REGULAR\"))"
+    },
+    {
+      "column": "input_health",
+      "letter": "AO",
+      "type": "text",
+      "template": "IF(@input_id=\"\",\"\",IF(@run_type<>\"REGULAR\",\"OK\",IF(@att_rows<>@window_days,\"MISSING_ATTENDANCE_ROWS\",IF(@unresolved_exceptions>0,\"UNRESOLVED_EXCEPTIONS\",\"OK\"))))",
+      "row2": "=IF(A2=\"\",\"\",IF(AN2<>\"REGULAR\",\"OK\",IF(AD2<>AC2,\"MISSING_ATTENDANCE_ROWS\",IF(AG2>0,\"UNRESOLVED_EXCEPTIONS\",\"OK\"))))"
+    },
+    {
+      "column": "dup_check",
+      "letter": "AP",
+      "type": "text",
+      "template": "IF(@input_id=\"\",\"\",IF(COUNTIFS([PAYROLL_INPUTS.period_id],@period_id,[PAYROLL_INPUTS.employee_id],@employee_id)>1,\"DUPLICATE\",\"OK\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(PAYROLL_INPUTS!$B$2:$B$2001,B2,PAYROLL_INPUTS!$C$2:$C$2001,C2)>1,\"DUPLICATE\",\"OK\"))"
+    }
+  ],
+  "PAYROLL_CALC": [
+    {
+      "column": "pi_row",
+      "letter": "F",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",IFERROR(MATCH(@input_id,[PAYROLL_INPUTS.input_id],0),0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(MATCH(A2,PAYROLL_INPUTS!$A$2:$A$2001,0),0))"
+    },
+    {
+      "column": "period_id",
+      "letter": "G",
+      "type": "text",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.period_id],@pi_row))",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$B$2:$B$2001,F2))"
+    },
+    {
+      "column": "employee_id",
+      "letter": "H",
+      "type": "text",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.employee_id],@pi_row))",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$C$2:$C$2001,F2))"
+    },
+    {
+      "column": "calc_key",
+      "letter": "I",
+      "type": "text",
+      "template": "IF(@input_id=\"\",\"\",@period_id&\":\"&@employee_id)",
+      "row2": "=IF(A2=\"\",\"\",G2&\":\"&H2)"
+    },
+    {
+      "column": "run_type",
+      "letter": "J",
+      "type": "text",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.run_type],@pi_row))",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$AN$2:$AN$2001,F2))"
+    },
+    {
+      "column": "run_flag",
+      "letter": "K",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",IF(@run_type=\"REGULAR\",1,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(J2=\"REGULAR\",1,0))"
+    },
+    {
+      "column": "period_start",
+      "letter": "L",
+      "type": "date",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.period_start],@pi_row))",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$V$2:$V$2001,F2))"
+    },
+    {
+      "column": "period_end",
+      "letter": "M",
+      "type": "date",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.period_end],@pi_row))",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$W$2:$W$2001,F2))"
+    },
+    {
+      "column": "dim",
+      "letter": "N",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.dim],@pi_row))",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$X$2:$X$2001,F2))"
+    },
+    {
+      "column": "paid_days",
+      "letter": "O",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.paid_days],@pi_row)*@run_flag)",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$AE$2:$AE$2001,F2)*K2)"
+    },
+    {
+      "column": "lop_days",
+      "letter": "P",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.lop_days],@pi_row)*@run_flag)",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$AF$2:$AF$2001,F2)*K2)"
+    },
+    {
+      "column": "eff_from_a",
+      "letter": "Q",
+      "type": "date",
+      "template": "IF(@input_id=\"\",\"\",MAXIFS([EMPLOYEE_SALARY.effective_from],[EMPLOYEE_SALARY.employee_id],@employee_id,[EMPLOYEE_SALARY.effective_from],\"<=\"&@period_start,[EMPLOYEE_SALARY.status],\"ACTIVE\"))",
+      "row2": "=IF(A2=\"\",\"\",MAXIFS(EMPLOYEE_SALARY!$C$2:$C$4001,EMPLOYEE_SALARY!$B$2:$B$4001,H2,EMPLOYEE_SALARY!$C$2:$C$4001,\"<=\"&L2,EMPLOYEE_SALARY!$V$2:$V$4001,\"ACTIVE\"))"
+    },
+    {
+      "column": "eff_from_b",
+      "letter": "R",
+      "type": "date",
+      "template": "IF(@input_id=\"\",\"\",MAXIFS([EMPLOYEE_SALARY.effective_from],[EMPLOYEE_SALARY.employee_id],@employee_id,[EMPLOYEE_SALARY.effective_from],\"<=\"&@period_end,[EMPLOYEE_SALARY.status],\"ACTIVE\"))",
+      "row2": "=IF(A2=\"\",\"\",MAXIFS(EMPLOYEE_SALARY!$C$2:$C$4001,EMPLOYEE_SALARY!$B$2:$B$4001,H2,EMPLOYEE_SALARY!$C$2:$C$4001,\"<=\"&M2,EMPLOYEE_SALARY!$V$2:$V$4001,\"ACTIVE\"))"
+    },
+    {
+      "column": "sal_row_a",
+      "letter": "S",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",IF(@eff_from_a=0,0,IFERROR(MATCH(@employee_id&\":\"&@eff_from_a,[EMPLOYEE_SALARY.salary_key],0),0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(Q2=0,0,IFERROR(MATCH(H2&\":\"&Q2,EMPLOYEE_SALARY!$X$2:$X$4001,0),0)))"
+    },
+    {
+      "column": "sal_row_b",
+      "letter": "T",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",IF(@eff_from_b=0,0,IFERROR(MATCH(@employee_id&\":\"&@eff_from_b,[EMPLOYEE_SALARY.salary_key],0),0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(R2=0,0,IFERROR(MATCH(H2&\":\"&R2,EMPLOYEE_SALARY!$X$2:$X$4001,0),0)))"
+    },
+    {
+      "column": "rev_date",
+      "letter": "U",
+      "type": "date",
+      "template": "IF(@input_id=\"\",\"\",IF(AND(@sal_row_a>0,@eff_from_b>@eff_from_a),@eff_from_b,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(AND(S2>0,R2>Q2),R2,0))",
+      "note": "mid-period salary revision date (single revision per period supported)"
+    },
+    {
+      "column": "days_a",
+      "letter": "V",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",IF(@rev_date>0,@rev_date-@period_start,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(U2>0,U2-L2,0))"
+    },
+    {
+      "column": "days_b",
+      "letter": "W",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",@dim-@days_a)",
+      "row2": "=IF(A2=\"\",\"\",N2-V2)"
+    },
+    {
+      "column": "monthly_basic",
+      "letter": "X",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sal_row_b=0,0,(IF(@sal_row_a=0,0,INDEX([EMPLOYEE_SALARY.basic],@sal_row_a))*@days_a+INDEX([EMPLOYEE_SALARY.basic],@sal_row_b)*@days_b)/@dim))",
+      "row2": "=IF(A2=\"\",\"\",IF(T2=0,0,(IF(S2=0,0,INDEX(EMPLOYEE_SALARY!$E$2:$E$4001,S2))*V2+INDEX(EMPLOYEE_SALARY!$E$2:$E$4001,T2)*W2)/N2))"
+    },
+    {
+      "column": "monthly_hra",
+      "letter": "Y",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sal_row_b=0,0,(IF(@sal_row_a=0,0,INDEX([EMPLOYEE_SALARY.hra],@sal_row_a))*@days_a+INDEX([EMPLOYEE_SALARY.hra],@sal_row_b)*@days_b)/@dim))",
+      "row2": "=IF(A2=\"\",\"\",IF(T2=0,0,(IF(S2=0,0,INDEX(EMPLOYEE_SALARY!$F$2:$F$4001,S2))*V2+INDEX(EMPLOYEE_SALARY!$F$2:$F$4001,T2)*W2)/N2))"
+    },
+    {
+      "column": "monthly_da",
+      "letter": "Z",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sal_row_b=0,0,(IF(@sal_row_a=0,0,INDEX([EMPLOYEE_SALARY.da],@sal_row_a))*@days_a+INDEX([EMPLOYEE_SALARY.da],@sal_row_b)*@days_b)/@dim))",
+      "row2": "=IF(A2=\"\",\"\",IF(T2=0,0,(IF(S2=0,0,INDEX(EMPLOYEE_SALARY!$G$2:$G$4001,S2))*V2+INDEX(EMPLOYEE_SALARY!$G$2:$G$4001,T2)*W2)/N2))"
+    },
+    {
+      "column": "monthly_conveyance",
+      "letter": "AA",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sal_row_b=0,0,(IF(@sal_row_a=0,0,INDEX([EMPLOYEE_SALARY.conveyance],@sal_row_a))*@days_a+INDEX([EMPLOYEE_SALARY.conveyance],@sal_row_b)*@days_b)/@dim))",
+      "row2": "=IF(A2=\"\",\"\",IF(T2=0,0,(IF(S2=0,0,INDEX(EMPLOYEE_SALARY!$H$2:$H$4001,S2))*V2+INDEX(EMPLOYEE_SALARY!$H$2:$H$4001,T2)*W2)/N2))"
+    },
+    {
+      "column": "monthly_special",
+      "letter": "AB",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sal_row_b=0,0,(IF(@sal_row_a=0,0,INDEX([EMPLOYEE_SALARY.special_allowance],@sal_row_a))*@days_a+INDEX([EMPLOYEE_SALARY.special_allowance],@sal_row_b)*@days_b)/@dim))",
+      "row2": "=IF(A2=\"\",\"\",IF(T2=0,0,(IF(S2=0,0,INDEX(EMPLOYEE_SALARY!$I$2:$I$4001,S2))*V2+INDEX(EMPLOYEE_SALARY!$I$2:$I$4001,T2)*W2)/N2))"
+    },
+    {
+      "column": "monthly_other",
+      "letter": "AC",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sal_row_b=0,0,(IF(@sal_row_a=0,0,INDEX([EMPLOYEE_SALARY.other_allowance],@sal_row_a))*@days_a+INDEX([EMPLOYEE_SALARY.other_allowance],@sal_row_b)*@days_b)/@dim))",
+      "row2": "=IF(A2=\"\",\"\",IF(T2=0,0,(IF(S2=0,0,INDEX(EMPLOYEE_SALARY!$J$2:$J$4001,S2))*V2+INDEX(EMPLOYEE_SALARY!$J$2:$J$4001,T2)*W2)/N2))"
+    },
+    {
+      "column": "monthly_custom1",
+      "letter": "AD",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sal_row_b=0,0,(IF(@sal_row_a=0,0,INDEX([EMPLOYEE_SALARY.custom_earning_1],@sal_row_a))*@days_a+INDEX([EMPLOYEE_SALARY.custom_earning_1],@sal_row_b)*@days_b)/@dim))",
+      "row2": "=IF(A2=\"\",\"\",IF(T2=0,0,(IF(S2=0,0,INDEX(EMPLOYEE_SALARY!$K$2:$K$4001,S2))*V2+INDEX(EMPLOYEE_SALARY!$K$2:$K$4001,T2)*W2)/N2))"
+    },
+    {
+      "column": "monthly_custom2",
+      "letter": "AE",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sal_row_b=0,0,(IF(@sal_row_a=0,0,INDEX([EMPLOYEE_SALARY.custom_earning_2],@sal_row_a))*@days_a+INDEX([EMPLOYEE_SALARY.custom_earning_2],@sal_row_b)*@days_b)/@dim))",
+      "row2": "=IF(A2=\"\",\"\",IF(T2=0,0,(IF(S2=0,0,INDEX(EMPLOYEE_SALARY!$L$2:$L$4001,S2))*V2+INDEX(EMPLOYEE_SALARY!$L$2:$L$4001,T2)*W2)/N2))"
+    },
+    {
+      "column": "monthly_contract_gross",
+      "letter": "AF",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",@monthly_basic+@monthly_hra+@monthly_da+@monthly_conveyance+@monthly_special+@monthly_other+@monthly_custom1+@monthly_custom2)",
+      "row2": "=IF(A2=\"\",\"\",X2+Y2+Z2+AA2+AB2+AC2+AD2+AE2)"
+    },
+    {
+      "column": "earned_basic",
+      "letter": "AG",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND(@monthly_basic*@paid_days/@dim,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(X2*O2/N2,2))"
+    },
+    {
+      "column": "earned_hra",
+      "letter": "AH",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND(@monthly_hra*@paid_days/@dim,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(Y2*O2/N2,2))"
+    },
+    {
+      "column": "earned_da",
+      "letter": "AI",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND(@monthly_da*@paid_days/@dim,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(Z2*O2/N2,2))"
+    },
+    {
+      "column": "earned_conveyance",
+      "letter": "AJ",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND(@monthly_conveyance*@paid_days/@dim,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(AA2*O2/N2,2))"
+    },
+    {
+      "column": "earned_special",
+      "letter": "AK",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND(@monthly_special*@paid_days/@dim,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(AB2*O2/N2,2))"
+    },
+    {
+      "column": "earned_other",
+      "letter": "AL",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND(@monthly_other*@paid_days/@dim,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(AC2*O2/N2,2))"
+    },
+    {
+      "column": "earned_custom1",
+      "letter": "AM",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND(@monthly_custom1*@paid_days/@dim,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(AD2*O2/N2,2))"
+    },
+    {
+      "column": "earned_custom2",
+      "letter": "AN",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND(@monthly_custom2*@paid_days/@dim,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(AE2*O2/N2,2))"
+    },
+    {
+      "column": "earned_fixed_total",
+      "letter": "AO",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",@earned_basic+@earned_hra+@earned_da+@earned_conveyance+@earned_special+@earned_other+@earned_custom1+@earned_custom2)",
+      "row2": "=IF(A2=\"\",\"\",AG2+AH2+AI2+AJ2+AK2+AL2+AM2+AN2)"
+    },
+    {
+      "column": "ot_hourly",
+      "letter": "AP",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND((@monthly_basic+@monthly_da)/@dim/$CFG(OT_HOURS_PER_DAY),4))",
+      "row2": "=IF(A2=\"\",\"\",ROUND((X2+Z2)/N2/INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"OT_HOURS_PER_DAY\",SYSTEM_CONFIG!$A$2:$A$201,0)),4))"
+    },
+    {
+      "column": "ot_reg_min",
+      "letter": "AQ",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.ot_reg_min],@pi_row)*@run_flag)",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$AH$2:$AH$2001,F2)*K2)"
+    },
+    {
+      "column": "ot_off_min",
+      "letter": "AR",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.ot_off_min],@pi_row)*@run_flag)",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$AI$2:$AI$2001,F2)*K2)"
+    },
+    {
+      "column": "ot_night_min",
+      "letter": "AS",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.ot_night_min],@pi_row)*@run_flag)",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$AJ$2:$AJ$2001,F2)*K2)"
+    },
+    {
+      "column": "ot_amount",
+      "letter": "AT",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND(@ot_hourly*(@ot_reg_min/60*$RULE(OT_MULT_REGULAR,@period_end)+@ot_off_min/60*$RULE(OT_MULT_OFFDAY,@period_end)+@ot_night_min/60*$RULE(OT_NIGHT_EXTRA,@period_end)),2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(AP2*(AQ2/60*SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"OT_MULT_REGULAR\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(M2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(M2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")+AR2/60*SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"OT_MULT_OFFDAY\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(M2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(M2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")+AS2/60*SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"OT_NIGHT_EXTRA\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(M2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(M2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")),2))"
+    },
+    {
+      "column": "bonus",
+      "letter": "AU",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",N(INDEX([PAYROLL_INPUTS.bonus],@pi_row)))",
+      "row2": "=IF(A2=\"\",\"\",N(INDEX(PAYROLL_INPUTS!$D$2:$D$2001,F2)))"
+    },
+    {
+      "column": "incentive",
+      "letter": "AV",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",N(INDEX([PAYROLL_INPUTS.incentive],@pi_row)))",
+      "row2": "=IF(A2=\"\",\"\",N(INDEX(PAYROLL_INPUTS!$E$2:$E$2001,F2)))"
+    },
+    {
+      "column": "arrears",
+      "letter": "AW",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",N(INDEX([PAYROLL_INPUTS.arrears],@pi_row)))",
+      "row2": "=IF(A2=\"\",\"\",N(INDEX(PAYROLL_INPUTS!$F$2:$F$2001,F2)))"
+    },
+    {
+      "column": "manual_adjustment",
+      "letter": "AX",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",N(INDEX([PAYROLL_INPUTS.manual_adjustment],@pi_row)))",
+      "row2": "=IF(A2=\"\",\"\",N(INDEX(PAYROLL_INPUTS!$G$2:$G$2001,F2)))"
+    },
+    {
+      "column": "gross_earnings",
+      "letter": "AY",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",@earned_fixed_total+@ot_amount+@bonus+@incentive+@arrears+@manual_adjustment)",
+      "row2": "=IF(A2=\"\",\"\",AO2+AT2+AU2+AV2+AW2+AX2)"
+    },
+    {
+      "column": "pf_wage_earned",
+      "letter": "AZ",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF($LKD(SALARY_COMPONENTS.pf_wage,SALARY_COMPONENTS.component_code,\"BASIC\",\"N\")=\"Y\",@earned_basic,0)+IF($LKD(SALARY_COMPONENTS.pf_wage,SALARY_COMPONENTS.component_code,\"HRA\",\"N\")=\"Y\",@earned_hra,0)+IF($LKD(SALARY_COMPONENTS.pf_wage,SALARY_COMPONENTS.component_code,\"DA\",\"N\")=\"Y\",@earned_da,0)+IF($LKD(SALARY_COMPONENTS.pf_wage,SALARY_COMPONENTS.component_code,\"CONVEYANCE\",\"N\")=\"Y\",@earned_conveyance,0)+IF($LKD(SALARY_COMPONENTS.pf_wage,SALARY_COMPONENTS.component_code,\"SPECIAL\",\"N\")=\"Y\",@earned_special,0)+IF($LKD(SALARY_COMPONENTS.pf_wage,SALARY_COMPONENTS.component_code,\"OTHER\",\"N\")=\"Y\",@earned_other,0)+IF($LKD(SALARY_COMPONENTS.pf_wage,SALARY_COMPONENTS.component_code,\"CUSTOM1\",\"N\")=\"Y\",@earned_custom1,0)+IF($LKD(SALARY_COMPONENTS.pf_wage,SALARY_COMPONENTS.component_code,\"CUSTOM2\",\"N\")=\"Y\",@earned_custom2,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(IFERROR(INDEX(SALARY_COMPONENTS!$F$2:$F$101,MATCH(\"BASIC\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AG2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$F$2:$F$101,MATCH(\"HRA\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AH2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$F$2:$F$101,MATCH(\"DA\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AI2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$F$2:$F$101,MATCH(\"CONVEYANCE\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AJ2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$F$2:$F$101,MATCH(\"SPECIAL\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AK2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$F$2:$F$101,MATCH(\"OTHER\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AL2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$F$2:$F$101,MATCH(\"CUSTOM1\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AM2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$F$2:$F$101,MATCH(\"CUSTOM2\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AN2,0))"
+    },
+    {
+      "column": "esi_wage_earned",
+      "letter": "BA",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF($LKD(SALARY_COMPONENTS.esi_wage,SALARY_COMPONENTS.component_code,\"BASIC\",\"N\")=\"Y\",@earned_basic,0)+IF($LKD(SALARY_COMPONENTS.esi_wage,SALARY_COMPONENTS.component_code,\"HRA\",\"N\")=\"Y\",@earned_hra,0)+IF($LKD(SALARY_COMPONENTS.esi_wage,SALARY_COMPONENTS.component_code,\"DA\",\"N\")=\"Y\",@earned_da,0)+IF($LKD(SALARY_COMPONENTS.esi_wage,SALARY_COMPONENTS.component_code,\"CONVEYANCE\",\"N\")=\"Y\",@earned_conveyance,0)+IF($LKD(SALARY_COMPONENTS.esi_wage,SALARY_COMPONENTS.component_code,\"SPECIAL\",\"N\")=\"Y\",@earned_special,0)+IF($LKD(SALARY_COMPONENTS.esi_wage,SALARY_COMPONENTS.component_code,\"OTHER\",\"N\")=\"Y\",@earned_other,0)+IF($LKD(SALARY_COMPONENTS.esi_wage,SALARY_COMPONENTS.component_code,\"CUSTOM1\",\"N\")=\"Y\",@earned_custom1,0)+IF($LKD(SALARY_COMPONENTS.esi_wage,SALARY_COMPONENTS.component_code,\"CUSTOM2\",\"N\")=\"Y\",@earned_custom2,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(IFERROR(INDEX(SALARY_COMPONENTS!$G$2:$G$101,MATCH(\"BASIC\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AG2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$G$2:$G$101,MATCH(\"HRA\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AH2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$G$2:$G$101,MATCH(\"DA\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AI2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$G$2:$G$101,MATCH(\"CONVEYANCE\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AJ2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$G$2:$G$101,MATCH(\"SPECIAL\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AK2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$G$2:$G$101,MATCH(\"OTHER\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AL2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$G$2:$G$101,MATCH(\"CUSTOM1\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AM2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$G$2:$G$101,MATCH(\"CUSTOM2\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AN2,0))"
+    },
+    {
+      "column": "taxable_earnings",
+      "letter": "BB",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF($LKD(SALARY_COMPONENTS.taxable,SALARY_COMPONENTS.component_code,\"BASIC\",\"N\")=\"Y\",@earned_basic,0)+IF($LKD(SALARY_COMPONENTS.taxable,SALARY_COMPONENTS.component_code,\"HRA\",\"N\")=\"Y\",@earned_hra,0)+IF($LKD(SALARY_COMPONENTS.taxable,SALARY_COMPONENTS.component_code,\"DA\",\"N\")=\"Y\",@earned_da,0)+IF($LKD(SALARY_COMPONENTS.taxable,SALARY_COMPONENTS.component_code,\"CONVEYANCE\",\"N\")=\"Y\",@earned_conveyance,0)+IF($LKD(SALARY_COMPONENTS.taxable,SALARY_COMPONENTS.component_code,\"SPECIAL\",\"N\")=\"Y\",@earned_special,0)+IF($LKD(SALARY_COMPONENTS.taxable,SALARY_COMPONENTS.component_code,\"OTHER\",\"N\")=\"Y\",@earned_other,0)+IF($LKD(SALARY_COMPONENTS.taxable,SALARY_COMPONENTS.component_code,\"CUSTOM1\",\"N\")=\"Y\",@earned_custom1,0)+IF($LKD(SALARY_COMPONENTS.taxable,SALARY_COMPONENTS.component_code,\"CUSTOM2\",\"N\")=\"Y\",@earned_custom2,0)+@ot_amount+@bonus+@incentive+@arrears+@manual_adjustment)",
+      "row2": "=IF(A2=\"\",\"\",IF(IFERROR(INDEX(SALARY_COMPONENTS!$E$2:$E$101,MATCH(\"BASIC\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AG2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$E$2:$E$101,MATCH(\"HRA\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AH2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$E$2:$E$101,MATCH(\"DA\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AI2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$E$2:$E$101,MATCH(\"CONVEYANCE\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AJ2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$E$2:$E$101,MATCH(\"SPECIAL\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AK2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$E$2:$E$101,MATCH(\"OTHER\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AL2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$E$2:$E$101,MATCH(\"CUSTOM1\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AM2,0)+IF(IFERROR(INDEX(SALARY_COMPONENTS!$E$2:$E$101,MATCH(\"CUSTOM2\",SALARY_COMPONENTS!$B$2:$B$101,0)),\"N\")=\"Y\",AN2,0)+AT2+AU2+AV2+AW2+AX2)"
+    },
+    {
+      "column": "sc_row",
+      "letter": "BC",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",IFERROR(MATCH(@input_id,[STATUTORY_CALC.input_id],0),0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(MATCH(A2,STATUTORY_CALC!$A$2:$A$2001,0),0))"
+    },
+    {
+      "column": "pf_emp",
+      "letter": "BD",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sc_row=0,0,INDEX([STATUTORY_CALC.pf_emp],@sc_row)))",
+      "row2": "=IF(A2=\"\",\"\",IF(BC2=0,0,INDEX(STATUTORY_CALC!$T$2:$T$2001,BC2)))"
+    },
+    {
+      "column": "pf_er",
+      "letter": "BE",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sc_row=0,0,INDEX([STATUTORY_CALC.pf_er],@sc_row)))",
+      "row2": "=IF(A2=\"\",\"\",IF(BC2=0,0,INDEX(STATUTORY_CALC!$U$2:$U$2001,BC2)))"
+    },
+    {
+      "column": "esi_emp",
+      "letter": "BF",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sc_row=0,0,INDEX([STATUTORY_CALC.esi_emp],@sc_row)))",
+      "row2": "=IF(A2=\"\",\"\",IF(BC2=0,0,INDEX(STATUTORY_CALC!$W$2:$W$2001,BC2)))"
+    },
+    {
+      "column": "esi_er",
+      "letter": "BG",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sc_row=0,0,INDEX([STATUTORY_CALC.esi_er],@sc_row)))",
+      "row2": "=IF(A2=\"\",\"\",IF(BC2=0,0,INDEX(STATUTORY_CALC!$X$2:$X$2001,BC2)))"
+    },
+    {
+      "column": "pt",
+      "letter": "BH",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sc_row=0,0,INDEX([STATUTORY_CALC.pt],@sc_row)))",
+      "row2": "=IF(A2=\"\",\"\",IF(BC2=0,0,INDEX(STATUTORY_CALC!$Y$2:$Y$2001,BC2)))"
+    },
+    {
+      "column": "lwf_emp",
+      "letter": "BI",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sc_row=0,0,INDEX([STATUTORY_CALC.lwf_emp],@sc_row)))",
+      "row2": "=IF(A2=\"\",\"\",IF(BC2=0,0,INDEX(STATUTORY_CALC!$Z$2:$Z$2001,BC2)))"
+    },
+    {
+      "column": "lwf_er",
+      "letter": "BJ",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sc_row=0,0,INDEX([STATUTORY_CALC.lwf_er],@sc_row)))",
+      "row2": "=IF(A2=\"\",\"\",IF(BC2=0,0,INDEX(STATUTORY_CALC!$AA$2:$AA$2001,BC2)))"
+    },
+    {
+      "column": "tds",
+      "letter": "BK",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(@sc_row=0,0,INDEX([STATUTORY_CALC.tds],@sc_row)))",
+      "row2": "=IF(A2=\"\",\"\",IF(BC2=0,0,INDEX(STATUTORY_CALC!$AB$2:$AB$2001,BC2)))"
+    },
+    {
+      "column": "loan_emi",
+      "letter": "BL",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.loan_emi],@pi_row)*@run_flag)",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$AL$2:$AL$2001,F2)*K2)"
+    },
+    {
+      "column": "advance_recovery",
+      "letter": "BM",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.advance_recovery],@pi_row)*@run_flag)",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$AM$2:$AM$2001,F2)*K2)"
+    },
+    {
+      "column": "other_deduction",
+      "letter": "BN",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",N(INDEX([PAYROLL_INPUTS.other_deduction],@pi_row)))",
+      "row2": "=IF(A2=\"\",\"\",N(INDEX(PAYROLL_INPUTS!$I$2:$I$2001,F2)))"
+    },
+    {
+      "column": "reimbursement",
+      "letter": "BO",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.reimbursement],@pi_row))",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$AK$2:$AK$2001,F2))"
+    },
+    {
+      "column": "total_deductions",
+      "letter": "BP",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",@pf_emp+@esi_emp+@pt+@lwf_emp+@tds+@loan_emi+@advance_recovery+@other_deduction)",
+      "row2": "=IF(A2=\"\",\"\",BD2+BF2+BH2+BI2+BK2+BL2+BM2+BN2)"
+    },
+    {
+      "column": "net_pay",
+      "letter": "BQ",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND(@gross_earnings+@reimbursement-@total_deductions,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(AY2+BO2-BP2,2))"
+    },
+    {
+      "column": "employer_cost",
+      "letter": "BR",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND(@gross_earnings+@reimbursement+@pf_er+@esi_er+@lwf_er,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(AY2+BO2+BE2+BG2+BJ2,2))"
+    },
+    {
+      "column": "period_status",
+      "letter": "BS",
+      "type": "text",
+      "template": "IF(@input_id=\"\",\"\",$LKD(PAYROLL_CONTROL.status,PAYROLL_CONTROL.period_id,@period_id,\"\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(PAYROLL_CONTROL!$U$2:$U$201,MATCH(G2,PAYROLL_CONTROL!$A$2:$A$201,0)),\"\"))"
+    },
+    {
+      "column": "check_status",
+      "letter": "BT",
+      "type": "text",
+      "template": "IF(@input_id=\"\",\"\",IF(@run_flag=1,IF(@sal_row_b=0,\"NO_SALARY_STRUCTURE\",IF(INDEX([PAYROLL_INPUTS.input_health],@pi_row)<>\"OK\",INDEX([PAYROLL_INPUTS.input_health],@pi_row),IF(@net_pay<0,\"NEGATIVE_NET\",\"OK\"))),IF(@net_pay<0,\"NEGATIVE_NET\",\"OK\")))",
+      "row2": "=IF(A2=\"\",\"\",IF(K2=1,IF(T2=0,\"NO_SALARY_STRUCTURE\",IF(INDEX(PAYROLL_INPUTS!$AO$2:$AO$2001,F2)<>\"OK\",INDEX(PAYROLL_INPUTS!$AO$2:$AO$2001,F2),IF(BQ2<0,\"NEGATIVE_NET\",\"OK\"))),IF(BQ2<0,\"NEGATIVE_NET\",\"OK\")))"
+    }
+  ],
+  "PAYSLIPS": [
+    {
+      "column": "net_pay",
+      "letter": "T",
+      "type": "money",
+      "template": "IF(@payslip_id=\"\",\"\",$LKD(PAYROLL_SNAPSHOT.net_pay,PAYROLL_SNAPSHOT.snapshot_id,@snapshot_id,0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(PAYROLL_SNAPSHOT!$R$2:$R$20001,MATCH(D2,PAYROLL_SNAPSHOT!$A$2:$A$20001,0)),0))"
+    }
+  ],
+  "LOANS": [
+    {
+      "column": "emi",
+      "letter": "U",
+      "type": "money",
+      "template": "IF(@loan_id=\"\",\"\",IF(@annual_interest_rate=0,ROUND(@principal/@tenure_months,2),ROUND(-PMT(@annual_interest_rate/12,@tenure_months,@principal),2)))",
+      "row2": "=IF(A2=\"\",\"\",IF(E2=0,ROUND(D2/F2,2),ROUND(-PMT(E2/12,F2,D2),2)))"
+    },
+    {
+      "column": "total_repayable",
+      "letter": "V",
+      "type": "money",
+      "template": "IF(@loan_id=\"\",\"\",ROUND(@emi*@tenure_months,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(U2*F2,2))"
+    },
+    {
+      "column": "recovered",
+      "letter": "W",
+      "type": "money",
+      "template": "IF(@loan_id=\"\",\"\",SUMIFS([LOAN_SCHEDULE.emi_amount],[LOAN_SCHEDULE.loan_id],@loan_id,[LOAN_SCHEDULE.status],\"DEDUCTED\"))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(LOAN_SCHEDULE!$R$2:$R$10001,LOAN_SCHEDULE!$B$2:$B$10001,A2,LOAN_SCHEDULE!$P$2:$P$10001,\"DEDUCTED\"))"
+    },
+    {
+      "column": "outstanding",
+      "letter": "X",
+      "type": "money",
+      "template": "IF(@loan_id=\"\",\"\",@total_repayable-@recovered)",
+      "row2": "=IF(A2=\"\",\"\",V2-W2)"
+    }
+  ],
+  "LOAN_SCHEDULE": [
+    {
+      "column": "emi_amount",
+      "letter": "R",
+      "type": "money",
+      "template": "IF(@schedule_id=\"\",\"\",$LKD(LOANS.emi,LOANS.loan_id,@loan_id,0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(LOANS!$U$2:$U$1501,MATCH(B2,LOANS!$A$2:$A$1501,0)),0))"
+    }
+  ],
+  "TAX_DECLARATIONS": [
+    {
+      "column": "employee_fy_declared",
+      "letter": "T",
+      "type": "money",
+      "template": "IF(@declaration_id=\"\",\"\",SUMIFS([TAX_DECLARATIONS.declared_amount],[TAX_DECLARATIONS.employee_id],@employee_id,[TAX_DECLARATIONS.financial_year],@financial_year))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(TAX_DECLARATIONS!$G$2:$G$8001,TAX_DECLARATIONS!$B$2:$B$8001,B2,TAX_DECLARATIONS!$C$2:$C$8001,C2))"
+    }
+  ],
+  "STATUTORY_RULES": [
+    {
+      "column": "effective_to_norm",
+      "letter": "T",
+      "type": "date",
+      "template": "IF(@rule_id=\"\",0,IF(@effective_to=\"\",2958465,@effective_to))",
+      "row2": "=IF(A2=\"\",0,IF(G2=\"\",2958465,G2))"
+    },
+    {
+      "column": "overlap_check",
+      "letter": "U",
+      "type": "text",
+      "template": "IF(@rule_id=\"\",\"\",IF(COUNTIFS([STATUTORY_RULES.rule_code],@rule_code,[STATUTORY_RULES.jurisdiction],@jurisdiction,[STATUTORY_RULES.effective_from],\"<=\"&@effective_to_norm,[STATUTORY_RULES.effective_to_norm],\">=\"&@effective_from,[STATUTORY_RULES.status],\"ACTIVE\")>1,\"OVERLAPPING_RULE\",\"OK\"))",
+      "row2": "=IF(A2=\"\",\"\",IF(COUNTIFS(STATUTORY_RULES!$B$2:$B$601,B2,STATUTORY_RULES!$H$2:$H$601,H2,STATUTORY_RULES!$F$2:$F$601,\"<=\"&T2,STATUTORY_RULES!$T$2:$T$601,\">=\"&F2,STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")>1,\"OVERLAPPING_RULE\",\"OK\"))"
+    }
+  ],
+  "STATUTORY_CALC": [
+    {
+      "column": "pc_row",
+      "letter": "F",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",IFERROR(MATCH(@input_id,[PAYROLL_CALC.input_id],0),0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(MATCH(A2,PAYROLL_CALC!$A$2:$A$2001,0),0))"
+    },
+    {
+      "column": "pi_row",
+      "letter": "G",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",IFERROR(MATCH(@input_id,[PAYROLL_INPUTS.input_id],0),0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(MATCH(A2,PAYROLL_INPUTS!$A$2:$A$2001,0),0))"
+    },
+    {
+      "column": "period_end",
+      "letter": "H",
+      "type": "date",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.period_end],@pi_row))",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$W$2:$W$2001,G2))"
+    },
+    {
+      "column": "employee_id",
+      "letter": "I",
+      "type": "text",
+      "template": "IF(@input_id=\"\",\"\",INDEX([PAYROLL_INPUTS.employee_id],@pi_row))",
+      "row2": "=IF(A2=\"\",\"\",INDEX(PAYROLL_INPUTS!$C$2:$C$2001,G2))"
+    },
+    {
+      "column": "run_flag",
+      "letter": "J",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",IF(INDEX([PAYROLL_INPUTS.run_type],@pi_row)=\"REGULAR\",1,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(INDEX(PAYROLL_INPUTS!$AN$2:$AN$2001,G2)=\"REGULAR\",1,0))"
+    },
+    {
+      "column": "pf_applicable",
+      "letter": "K",
+      "type": "text",
+      "template": "IF(@input_id=\"\",\"\",$LKD(EMPLOYEES.pf_applicable,EMPLOYEES.employee_id,@employee_id,\"N\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(EMPLOYEES!$S$2:$S$1501,MATCH(I2,EMPLOYEES!$A$2:$A$1501,0)),\"N\"))"
+    },
+    {
+      "column": "esi_applicable",
+      "letter": "L",
+      "type": "text",
+      "template": "IF(@input_id=\"\",\"\",$LKD(EMPLOYEES.esi_applicable,EMPLOYEES.employee_id,@employee_id,\"N\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(EMPLOYEES!$T$2:$T$1501,MATCH(I2,EMPLOYEES!$A$2:$A$1501,0)),\"N\"))"
+    },
+    {
+      "column": "pt_applicable",
+      "letter": "M",
+      "type": "text",
+      "template": "IF(@input_id=\"\",\"\",$LKD(EMPLOYEES.pt_applicable,EMPLOYEES.employee_id,@employee_id,\"N\"))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(EMPLOYEES!$U$2:$U$1501,MATCH(I2,EMPLOYEES!$A$2:$A$1501,0)),\"N\"))"
+    },
+    {
+      "column": "gross_earnings",
+      "letter": "N",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IFERROR(INDEX([PAYROLL_CALC.gross_earnings],@pc_row),0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(PAYROLL_CALC!$AY$2:$AY$2001,F2),0))"
+    },
+    {
+      "column": "pf_wage_earned",
+      "letter": "O",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IFERROR(INDEX([PAYROLL_CALC.pf_wage_earned],@pc_row),0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(PAYROLL_CALC!$AZ$2:$AZ$2001,F2),0))"
+    },
+    {
+      "column": "esi_wage_earned",
+      "letter": "P",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IFERROR(INDEX([PAYROLL_CALC.esi_wage_earned],@pc_row),0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(PAYROLL_CALC!$BA$2:$BA$2001,F2),0))"
+    },
+    {
+      "column": "taxable_earnings",
+      "letter": "Q",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IFERROR(INDEX([PAYROLL_CALC.taxable_earnings],@pc_row),0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(PAYROLL_CALC!$BB$2:$BB$2001,F2),0))"
+    },
+    {
+      "column": "contract_gross",
+      "letter": "R",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IFERROR(INDEX([PAYROLL_CALC.monthly_contract_gross],@pc_row),0))",
+      "row2": "=IF(A2=\"\",\"\",IFERROR(INDEX(PAYROLL_CALC!$AF$2:$AF$2001,F2),0))"
+    },
+    {
+      "column": "pf_wage_capped",
+      "letter": "S",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(AND(@pf_applicable=\"Y\",@run_flag=1),IF($RULE(PF_CEILING_ENABLED,@period_end)=1,MIN(@pf_wage_earned,$RULE(PF_WAGE_CEILING,@period_end)),@pf_wage_earned),0))",
+      "row2": "=IF(A2=\"\",\"\",IF(AND(K2=\"Y\",J2=1),IF(SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"PF_CEILING_ENABLED\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")=1,MIN(O2,SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"PF_WAGE_CEILING\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")),O2),0))"
+    },
+    {
+      "column": "pf_emp",
+      "letter": "T",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND(@pf_wage_capped*$RULE(PF_EMP_RATE,@period_end),0))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(S2*SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"PF_EMP_RATE\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\"),0))"
+    },
+    {
+      "column": "pf_er",
+      "letter": "U",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUND(@pf_wage_capped*$RULE(PF_ER_RATE,@period_end),0))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(S2*SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"PF_ER_RATE\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\"),0))"
+    },
+    {
+      "column": "esi_eligible",
+      "letter": "V",
+      "type": "number",
+      "template": "IF(@input_id=\"\",\"\",IF(AND(@esi_applicable=\"Y\",@run_flag=1,@contract_gross<=$RULE(ESI_GROSS_CEILING,@period_end)),1,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(AND(L2=\"Y\",J2=1,R2<=SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"ESI_GROSS_CEILING\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")),1,0))"
+    },
+    {
+      "column": "esi_emp",
+      "letter": "W",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUNDUP(@esi_wage_earned*$RULE(ESI_EMP_RATE,@period_end)*@esi_eligible,0))",
+      "row2": "=IF(A2=\"\",\"\",ROUNDUP(P2*SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"ESI_EMP_RATE\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")*V2,0))"
+    },
+    {
+      "column": "esi_er",
+      "letter": "X",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",ROUNDUP(@esi_wage_earned*$RULE(ESI_ER_RATE,@period_end)*@esi_eligible,0))",
+      "row2": "=IF(A2=\"\",\"\",ROUNDUP(P2*SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"ESI_ER_RATE\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")*V2,0))"
+    },
+    {
+      "column": "pt",
+      "letter": "Y",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(AND(@pt_applicable=\"Y\",@run_flag=1),IF(AND($RULE(PT_SLAB2_FROM,@period_end)>0,@gross_earnings>=$RULE(PT_SLAB2_FROM,@period_end)),$RULE(PT_SLAB2_AMOUNT,@period_end),IF(AND($RULE(PT_SLAB1_FROM,@period_end)>0,@gross_earnings>=$RULE(PT_SLAB1_FROM,@period_end)),$RULE(PT_SLAB1_AMOUNT,@period_end),0)),0))",
+      "row2": "=IF(A2=\"\",\"\",IF(AND(M2=\"Y\",J2=1),IF(AND(SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"PT_SLAB2_FROM\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")>0,N2>=SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"PT_SLAB2_FROM\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")),SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"PT_SLAB2_AMOUNT\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\"),IF(AND(SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"PT_SLAB1_FROM\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")>0,N2>=SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"PT_SLAB1_FROM\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")),SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"PT_SLAB1_AMOUNT\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\"),0)),0))"
+    },
+    {
+      "column": "lwf_emp",
+      "letter": "Z",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(AND(@run_flag=1,MONTH(@period_end)=$RULE(LWF_APPLY_MONTH,@period_end)),$RULE(LWF_EMP,@period_end),0))",
+      "row2": "=IF(A2=\"\",\"\",IF(AND(J2=1,MONTH(H2)=SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"LWF_APPLY_MONTH\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")),SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"LWF_EMP\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\"),0))"
+    },
+    {
+      "column": "lwf_er",
+      "letter": "AA",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(AND(@run_flag=1,MONTH(@period_end)=$RULE(LWF_APPLY_MONTH,@period_end)),$RULE(LWF_ER,@period_end),0))",
+      "row2": "=IF(A2=\"\",\"\",IF(AND(J2=1,MONTH(H2)=SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"LWF_APPLY_MONTH\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")),SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"LWF_ER\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\"),0))"
+    },
+    {
+      "column": "tds",
+      "letter": "AB",
+      "type": "money",
+      "template": "IF(@input_id=\"\",\"\",IF(INDEX([PAYROLL_INPUTS.tds_manual_flag],@pi_row)=\"Y\",N(INDEX([PAYROLL_INPUTS.tds_manual_amount],@pi_row)),IF(AND($RULE(TDS_FLAT_RATE,@period_end)>0,@taxable_earnings>=$RULE(TDS_MIN_MONTHLY_TAXABLE,@period_end)),ROUND(@taxable_earnings*$RULE(TDS_FLAT_RATE,@period_end),0),0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(INDEX(PAYROLL_INPUTS!$J$2:$J$2001,G2)=\"Y\",N(INDEX(PAYROLL_INPUTS!$K$2:$K$2001,G2)),IF(AND(SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"TDS_FLAT_RATE\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")>0,Q2>=SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"TDS_MIN_MONTHLY_TAXABLE\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")),ROUND(Q2*SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"TDS_FLAT_RATE\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(H2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(H2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\"),0),0)))",
+      "note": "manual amount (finance computes slab tax externally) or optional flat-rate rule; full slab engine is a configurable extension"
+    }
+  ],
+  "FULL_FINAL": [
+    {
+      "column": "join_date",
+      "letter": "U",
+      "type": "date",
+      "template": "IF(@ff_id=\"\",\"\",N($LKD(EMPLOYEES.date_of_joining,EMPLOYEES.employee_id,@employee_id,0)))",
+      "row2": "=IF(A2=\"\",\"\",N(IFERROR(INDEX(EMPLOYEES!$G$2:$G$1501,MATCH(B2,EMPLOYEES!$A$2:$A$1501,0)),0)))"
+    },
+    {
+      "column": "years_service",
+      "letter": "V",
+      "type": "number",
+      "template": "IF(@ff_id=\"\",\"\",ROUND((@last_working_day-@join_date)/365.25,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND((C2-U2)/365.25,2))"
+    },
+    {
+      "column": "sal_from",
+      "letter": "W",
+      "type": "date",
+      "template": "IF(@ff_id=\"\",\"\",MAXIFS([EMPLOYEE_SALARY.effective_from],[EMPLOYEE_SALARY.employee_id],@employee_id,[EMPLOYEE_SALARY.effective_from],\"<=\"&@last_working_day,[EMPLOYEE_SALARY.status],\"ACTIVE\"))",
+      "row2": "=IF(A2=\"\",\"\",MAXIFS(EMPLOYEE_SALARY!$C$2:$C$4001,EMPLOYEE_SALARY!$B$2:$B$4001,B2,EMPLOYEE_SALARY!$C$2:$C$4001,\"<=\"&C2,EMPLOYEE_SALARY!$V$2:$V$4001,\"ACTIVE\"))"
+    },
+    {
+      "column": "sal_row",
+      "letter": "X",
+      "type": "number",
+      "template": "IF(@ff_id=\"\",\"\",IF(@sal_from=0,0,IFERROR(MATCH(@employee_id&\":\"&@sal_from,[EMPLOYEE_SALARY.salary_key],0),0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(W2=0,0,IFERROR(MATCH(B2&\":\"&W2,EMPLOYEE_SALARY!$X$2:$X$4001,0),0)))"
+    },
+    {
+      "column": "monthly_gross",
+      "letter": "Y",
+      "type": "money",
+      "template": "IF(@ff_id=\"\",\"\",IF(@sal_row=0,0,INDEX([EMPLOYEE_SALARY.monthly_gross],@sal_row)))",
+      "row2": "=IF(A2=\"\",\"\",IF(X2=0,0,INDEX(EMPLOYEE_SALARY!$Y$2:$Y$4001,X2)))"
+    },
+    {
+      "column": "basic_da",
+      "letter": "Z",
+      "type": "money",
+      "template": "IF(@ff_id=\"\",\"\",IF(@sal_row=0,0,N(INDEX([EMPLOYEE_SALARY.basic],@sal_row))+N(INDEX([EMPLOYEE_SALARY.da],@sal_row))))",
+      "row2": "=IF(A2=\"\",\"\",IF(X2=0,0,N(INDEX(EMPLOYEE_SALARY!$E$2:$E$4001,X2))+N(INDEX(EMPLOYEE_SALARY!$G$2:$G$4001,X2))))"
+    },
+    {
+      "column": "pending_salary_net",
+      "letter": "AA",
+      "type": "money",
+      "template": "IF(@ff_id=\"\",\"\",IF(@pending_salary_included=\"Y\",0,$LKD(PAYROLL_CALC.net_pay,PAYROLL_CALC.calc_key,@exit_period_id&\":\"&@employee_id,0)))",
+      "row2": "=IF(A2=\"\",\"\",IF(G2=\"Y\",0,IFERROR(INDEX(PAYROLL_CALC!$BQ$2:$BQ$2001,MATCH(F2&\":\"&B2,PAYROLL_CALC!$I$2:$I$2001,0)),0)))"
+    },
+    {
+      "column": "ff_leave_year",
+      "letter": "AB",
+      "type": "number",
+      "template": "IF(@ff_id=\"\",\"\",IF(MONTH(@last_working_day)>=$CFG(LEAVE_YEAR_START_MONTH),YEAR(@last_working_day),YEAR(@last_working_day)-1))",
+      "row2": "=IF(A2=\"\",\"\",IF(MONTH(C2)>=INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"LEAVE_YEAR_START_MONTH\",SYSTEM_CONFIG!$A$2:$A$201,0)),YEAR(C2),YEAR(C2)-1))"
+    },
+    {
+      "column": "leave_encash_days",
+      "letter": "AC",
+      "type": "number",
+      "template": "IF(@ff_id=\"\",\"\",SUMIFS([LEAVE_BALANCES.encashable_days],[LEAVE_BALANCES.employee_id],@employee_id,[LEAVE_BALANCES.leave_year],@ff_leave_year))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(LEAVE_BALANCES!$AK$2:$AK$4001,LEAVE_BALANCES!$B$2:$B$4001,B2,LEAVE_BALANCES!$D$2:$D$4001,AB2))"
+    },
+    {
+      "column": "leave_encash_amount",
+      "letter": "AD",
+      "type": "money",
+      "template": "IF(@ff_id=\"\",\"\",ROUND(@leave_encash_days*@basic_da/$RULE(LEAVE_ENCASH_DIVISOR,@last_working_day),2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(AC2*Z2/SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"LEAVE_ENCASH_DIVISOR\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(C2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(C2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\"),2))"
+    },
+    {
+      "column": "notice_shortfall_days",
+      "letter": "AE",
+      "type": "number",
+      "template": "IF(@ff_id=\"\",\"\",MAX(0,N(@notice_period_days)-N(@notice_served_days)))",
+      "row2": "=IF(A2=\"\",\"\",MAX(0,N(D2)-N(E2)))"
+    },
+    {
+      "column": "notice_recovery",
+      "letter": "AF",
+      "type": "money",
+      "template": "IF(@ff_id=\"\",\"\",ROUND(@notice_shortfall_days*@monthly_gross/$RULE(NOTICE_RECOVERY_DIVISOR,@last_working_day),2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(AE2*Y2/SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"NOTICE_RECOVERY_DIVISOR\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(C2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(C2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\"),2))"
+    },
+    {
+      "column": "gratuity_eligible",
+      "letter": "AG",
+      "type": "number",
+      "template": "IF(@ff_id=\"\",\"\",IF(@years_service>=$RULE(GRATUITY_MIN_YEARS,@last_working_day),1,0))",
+      "row2": "=IF(A2=\"\",\"\",IF(V2>=SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"GRATUITY_MIN_YEARS\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(C2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(C2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\"),1,0))"
+    },
+    {
+      "column": "gratuity_amount",
+      "letter": "AH",
+      "type": "money",
+      "template": "IF(@ff_id=\"\",\"\",IF(@gratuity_eligible=1,MIN($RULE(GRATUITY_CAP,@last_working_day),ROUND(@basic_da*$RULE(GRATUITY_DAYS,@last_working_day)/$RULE(GRATUITY_DIVISOR,@last_working_day)*ROUND(@years_service,0),2)),0))",
+      "row2": "=IF(A2=\"\",\"\",IF(AG2=1,MIN(SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"GRATUITY_CAP\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(C2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(C2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\"),ROUND(Z2*SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"GRATUITY_DAYS\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(C2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(C2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")/SUMIFS(STATUTORY_RULES!$D$2:$D$601,STATUTORY_RULES!$B$2:$B$601,\"GRATUITY_DIVISOR\",STATUTORY_RULES!$F$2:$F$601,\"<=\"&(C2),STATUTORY_RULES!$T$2:$T$601,\">=\"&(C2),STATUTORY_RULES!$R$2:$R$601,\"ACTIVE\")*ROUND(V2,0),2)),0))"
+    },
+    {
+      "column": "loan_outstanding",
+      "letter": "AI",
+      "type": "money",
+      "template": "IF(@ff_id=\"\",\"\",SUMIFS([LOAN_SCHEDULE.emi_amount],[LOAN_SCHEDULE.employee_id],@employee_id,[LOAN_SCHEDULE.status],\"SCHEDULED\"))",
+      "row2": "=IF(A2=\"\",\"\",SUMIFS(LOAN_SCHEDULE!$R$2:$R$10001,LOAN_SCHEDULE!$C$2:$C$10001,B2,LOAN_SCHEDULE!$P$2:$P$10001,\"SCHEDULED\"))"
+    },
+    {
+      "column": "total_payable",
+      "letter": "AJ",
+      "type": "money",
+      "template": "IF(@ff_id=\"\",\"\",@pending_salary_net+@leave_encash_amount+@gratuity_amount+N(@other_payables))",
+      "row2": "=IF(A2=\"\",\"\",AA2+AD2+AH2+N(I2))"
+    },
+    {
+      "column": "total_recoveries",
+      "letter": "AK",
+      "type": "money",
+      "template": "IF(@ff_id=\"\",\"\",@notice_recovery+@loan_outstanding+N(@other_dues_recoverable))",
+      "row2": "=IF(A2=\"\",\"\",AF2+AI2+N(H2))"
+    },
+    {
+      "column": "net_full_final",
+      "letter": "AL",
+      "type": "money",
+      "template": "IF(@ff_id=\"\",\"\",ROUND(@total_payable-@total_recoveries,2))",
+      "row2": "=IF(A2=\"\",\"\",ROUND(AJ2-AK2,2))"
+    }
+  ],
+  "DASHBOARD_DATA": [
+    {
+      "column": "employees_active",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([EMPLOYEES.employee_status],\"ACTIVE\")",
+      "row2": "=COUNTIFS(EMPLOYEES!$J$2:$J$1501,\"ACTIVE\")",
+      "note": "Active employees"
+    },
+    {
+      "column": "att_present",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([ATTENDANCE_DAILY.work_date],$CFG(DASHBOARD_DATE),[ATTENDANCE_DAILY.status],\"PRESENT\")+COUNTIFS([ATTENDANCE_DAILY.work_date],$CFG(DASHBOARD_DATE),[ATTENDANCE_DAILY.status],\"WFH_OD\")+COUNTIFS([ATTENDANCE_DAILY.work_date],$CFG(DASHBOARD_DATE),[ATTENDANCE_DAILY.status],\"HOLIDAY_WORK\")+COUNTIFS([ATTENDANCE_DAILY.work_date],$CFG(DASHBOARD_DATE),[ATTENDANCE_DAILY.status],\"WEEKOFF_WORK\")",
+      "row2": "=COUNTIFS(ATTENDANCE_DAILY!$C$2:$C$6001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DASHBOARD_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0)),ATTENDANCE_DAILY!$AZ$2:$AZ$6001,\"PRESENT\")+COUNTIFS(ATTENDANCE_DAILY!$C$2:$C$6001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DASHBOARD_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0)),ATTENDANCE_DAILY!$AZ$2:$AZ$6001,\"WFH_OD\")+COUNTIFS(ATTENDANCE_DAILY!$C$2:$C$6001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DASHBOARD_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0)),ATTENDANCE_DAILY!$AZ$2:$AZ$6001,\"HOLIDAY_WORK\")+COUNTIFS(ATTENDANCE_DAILY!$C$2:$C$6001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DASHBOARD_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0)),ATTENDANCE_DAILY!$AZ$2:$AZ$6001,\"WEEKOFF_WORK\")",
+      "note": "Present (incl. WFH/OD, holiday/week-off work)"
+    },
+    {
+      "column": "att_in_progress",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([ATTENDANCE_DAILY.work_date],$CFG(DASHBOARD_DATE),[ATTENDANCE_DAILY.status],\"IN_PROGRESS\")",
+      "row2": "=COUNTIFS(ATTENDANCE_DAILY!$C$2:$C$6001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DASHBOARD_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0)),ATTENDANCE_DAILY!$AZ$2:$AZ$6001,\"IN_PROGRESS\")",
+      "note": "Working now (checked in)"
+    },
+    {
+      "column": "att_half_day",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([ATTENDANCE_DAILY.work_date],$CFG(DASHBOARD_DATE),[ATTENDANCE_DAILY.status],\"HALF_DAY\")",
+      "row2": "=COUNTIFS(ATTENDANCE_DAILY!$C$2:$C$6001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DASHBOARD_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0)),ATTENDANCE_DAILY!$AZ$2:$AZ$6001,\"HALF_DAY\")",
+      "note": "Half day"
+    },
+    {
+      "column": "att_absent",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([ATTENDANCE_DAILY.work_date],$CFG(DASHBOARD_DATE),[ATTENDANCE_DAILY.status],\"ABSENT\")",
+      "row2": "=COUNTIFS(ATTENDANCE_DAILY!$C$2:$C$6001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DASHBOARD_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0)),ATTENDANCE_DAILY!$AZ$2:$AZ$6001,\"ABSENT\")",
+      "note": "Absent"
+    },
+    {
+      "column": "att_on_leave",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([ATTENDANCE_DAILY.work_date],$CFG(DASHBOARD_DATE),[ATTENDANCE_DAILY.status],\"LEAVE\")+COUNTIFS([ATTENDANCE_DAILY.work_date],$CFG(DASHBOARD_DATE),[ATTENDANCE_DAILY.status],\"UNPAID_LEAVE\")",
+      "row2": "=COUNTIFS(ATTENDANCE_DAILY!$C$2:$C$6001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DASHBOARD_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0)),ATTENDANCE_DAILY!$AZ$2:$AZ$6001,\"LEAVE\")+COUNTIFS(ATTENDANCE_DAILY!$C$2:$C$6001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DASHBOARD_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0)),ATTENDANCE_DAILY!$AZ$2:$AZ$6001,\"UNPAID_LEAVE\")",
+      "note": "On leave"
+    },
+    {
+      "column": "att_late",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([ATTENDANCE_DAILY.work_date],$CFG(DASHBOARD_DATE),[ATTENDANCE_DAILY.late_minutes],\">0\")",
+      "row2": "=COUNTIFS(ATTENDANCE_DAILY!$C$2:$C$6001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DASHBOARD_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0)),ATTENDANCE_DAILY!$BC$2:$BC$6001,\">0\")",
+      "note": "Late arrivals"
+    },
+    {
+      "column": "att_missing_punch",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([ATTENDANCE_DAILY.work_date],$CFG(DASHBOARD_DATE),[ATTENDANCE_DAILY.status],\"MISSING_PUNCH\")",
+      "row2": "=COUNTIFS(ATTENDANCE_DAILY!$C$2:$C$6001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"DASHBOARD_DATE\",SYSTEM_CONFIG!$A$2:$A$201,0)),ATTENDANCE_DAILY!$AZ$2:$AZ$6001,\"MISSING_PUNCH\")",
+      "note": "Missing punch"
+    },
+    {
+      "column": "pending_leave",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([LEAVE_APPLICATIONS.status],\"PENDING\")",
+      "row2": "=COUNTIFS(LEAVE_APPLICATIONS!$T$2:$T$4001,\"PENDING\")",
+      "note": "Pending leave / WFH / OD"
+    },
+    {
+      "column": "pending_adjustments",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([ATTENDANCE_ADJUSTMENTS.status],\"PENDING\")",
+      "row2": "=COUNTIFS(ATTENDANCE_ADJUSTMENTS!$V$2:$V$3001,\"PENDING\")",
+      "note": "Pending regularisations"
+    },
+    {
+      "column": "pending_overtime",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([OVERTIME.status],\"PENDING\")",
+      "row2": "=COUNTIFS(OVERTIME!$S$2:$S$3001,\"PENDING\")",
+      "note": "Pending overtime"
+    },
+    {
+      "column": "pending_expenses",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([EXPENSES.status],\"PENDING\")",
+      "row2": "=COUNTIFS(EXPENSES!$T$2:$T$5001,\"PENDING\")",
+      "note": "Pending expenses"
+    },
+    {
+      "column": "pending_timesheets",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([TIMESHEETS.status],\"PENDING\")",
+      "row2": "=COUNTIFS(TIMESHEETS!$R$2:$R$10001,\"PENDING\")",
+      "note": "Pending timesheets"
+    },
+    {
+      "column": "open_exceptions",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([ATTENDANCE_EXCEPTIONS.status],\"OPEN\")",
+      "row2": "=COUNTIFS(ATTENDANCE_EXCEPTIONS!$Q$2:$Q$3001,\"OPEN\")",
+      "note": "Open attendance exceptions"
+    },
+    {
+      "column": "payroll_status",
+      "letter": "D",
+      "type": "text",
+      "template": "=IFERROR(INDEX([PAYROLL_CONTROL.status],MATCH($CFG(ACTIVE_PERIOD_ID),[PAYROLL_CONTROL.period_id],0)),\"\")",
+      "row2": "=IFERROR(INDEX(PAYROLL_CONTROL!$U$2:$U$201,MATCH(INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"ACTIVE_PERIOD_ID\",SYSTEM_CONFIG!$A$2:$A$201,0)),PAYROLL_CONTROL!$A$2:$A$201,0)),\"\")",
+      "note": "Active payroll period status"
+    },
+    {
+      "column": "payroll_gross",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMIFS([PAYROLL_CALC.gross_earnings],[PAYROLL_CALC.period_id],$CFG(ACTIVE_PERIOD_ID))",
+      "row2": "=SUMIFS(PAYROLL_CALC!$AY$2:$AY$2001,PAYROLL_CALC!$G$2:$G$2001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"ACTIVE_PERIOD_ID\",SYSTEM_CONFIG!$A$2:$A$201,0)))",
+      "note": "Active period gross"
+    },
+    {
+      "column": "payroll_net",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMIFS([PAYROLL_CALC.net_pay],[PAYROLL_CALC.period_id],$CFG(ACTIVE_PERIOD_ID))",
+      "row2": "=SUMIFS(PAYROLL_CALC!$BQ$2:$BQ$2001,PAYROLL_CALC!$G$2:$G$2001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"ACTIVE_PERIOD_ID\",SYSTEM_CONFIG!$A$2:$A$201,0)))",
+      "note": "Active period net pay"
+    },
+    {
+      "column": "payroll_employer_cost",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMIFS([PAYROLL_CALC.employer_cost],[PAYROLL_CALC.period_id],$CFG(ACTIVE_PERIOD_ID))",
+      "row2": "=SUMIFS(PAYROLL_CALC!$BR$2:$BR$2001,PAYROLL_CALC!$G$2:$G$2001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"ACTIVE_PERIOD_ID\",SYSTEM_CONFIG!$A$2:$A$201,0)))",
+      "note": "Active period employer cost"
+    },
+    {
+      "column": "payroll_issues",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([PAYROLL_CALC.period_id],$CFG(ACTIVE_PERIOD_ID),[PAYROLL_CALC.check_status],\"<>OK\")",
+      "row2": "=COUNTIFS(PAYROLL_CALC!$G$2:$G$2001,INDEX(SYSTEM_CONFIG!$B$2:$B$201,MATCH(\"ACTIVE_PERIOD_ID\",SYSTEM_CONFIG!$A$2:$A$201,0)),PAYROLL_CALC!$BT$2:$BT$2001,\"<>OK\")",
+      "note": "Active period rows needing attention"
+    },
+    {
+      "column": "h_errors_employees",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMPRODUCT(--ISERROR({FRANGE:EMPLOYEES}))",
+      "row2": "=SUMPRODUCT(--ISERROR(EMPLOYEES!$AH$2:$AJ$1501))",
+      "note": "Formula errors in EMPLOYEES"
+    },
+    {
+      "column": "h_errors_attendance_events",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMPRODUCT(--ISERROR({FRANGE:ATTENDANCE_EVENTS}))",
+      "row2": "=SUMPRODUCT(--ISERROR(ATTENDANCE_EVENTS!$W$2:$AB$10001))",
+      "note": "Formula errors in ATTENDANCE_EVENTS"
+    },
+    {
+      "column": "h_errors_attendance_daily",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMPRODUCT(--ISERROR({FRANGE:ATTENDANCE_DAILY}))",
+      "row2": "=SUMPRODUCT(--ISERROR(ATTENDANCE_DAILY!$I$2:$BL$6001))",
+      "note": "Formula errors in ATTENDANCE_DAILY"
+    },
+    {
+      "column": "h_errors_leave_applications",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMPRODUCT(--ISERROR({FRANGE:LEAVE_APPLICATIONS}))",
+      "row2": "=SUMPRODUCT(--ISERROR(LEAVE_APPLICATIONS!$V$2:$AI$4001))",
+      "note": "Formula errors in LEAVE_APPLICATIONS"
+    },
+    {
+      "column": "h_errors_leave_balances",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMPRODUCT(--ISERROR({FRANGE:LEAVE_BALANCES}))",
+      "row2": "=SUMPRODUCT(--ISERROR(LEAVE_BALANCES!$N$2:$AN$4001))",
+      "note": "Formula errors in LEAVE_BALANCES"
+    },
+    {
+      "column": "h_errors_overtime",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMPRODUCT(--ISERROR({FRANGE:OVERTIME}))",
+      "row2": "=SUMPRODUCT(--ISERROR(OVERTIME!$U$2:$Z$3001))",
+      "note": "Formula errors in OVERTIME"
+    },
+    {
+      "column": "h_errors_employee_salary",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMPRODUCT(--ISERROR({FRANGE:EMPLOYEE_SALARY}))",
+      "row2": "=SUMPRODUCT(--ISERROR(EMPLOYEE_SALARY!$X$2:$Z$4001))",
+      "note": "Formula errors in EMPLOYEE_SALARY"
+    },
+    {
+      "column": "h_errors_payroll_control",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMPRODUCT(--ISERROR({FRANGE:PAYROLL_CONTROL}))",
+      "row2": "=SUMPRODUCT(--ISERROR(PAYROLL_CONTROL!$W$2:$AC$201))",
+      "note": "Formula errors in PAYROLL_CONTROL"
+    },
+    {
+      "column": "h_errors_payroll_inputs",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMPRODUCT(--ISERROR({FRANGE:PAYROLL_INPUTS}))",
+      "row2": "=SUMPRODUCT(--ISERROR(PAYROLL_INPUTS!$V$2:$AP$2001))",
+      "note": "Formula errors in PAYROLL_INPUTS"
+    },
+    {
+      "column": "h_errors_payroll_calc",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMPRODUCT(--ISERROR({FRANGE:PAYROLL_CALC}))",
+      "row2": "=SUMPRODUCT(--ISERROR(PAYROLL_CALC!$F$2:$BT$2001))",
+      "note": "Formula errors in PAYROLL_CALC"
+    },
+    {
+      "column": "h_errors_statutory_calc",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMPRODUCT(--ISERROR({FRANGE:STATUTORY_CALC}))",
+      "row2": "=SUMPRODUCT(--ISERROR(STATUTORY_CALC!$F$2:$AB$2001))",
+      "note": "Formula errors in STATUTORY_CALC"
+    },
+    {
+      "column": "h_errors_full_final",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMPRODUCT(--ISERROR({FRANGE:FULL_FINAL}))",
+      "row2": "=SUMPRODUCT(--ISERROR(FULL_FINAL!$U$2:$AL$501))",
+      "note": "Formula errors in FULL_FINAL"
+    },
+    {
+      "column": "h_errors_loans",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUMPRODUCT(--ISERROR({FRANGE:LOANS}))",
+      "row2": "=SUMPRODUCT(--ISERROR(LOANS!$U$2:$X$1501))",
+      "note": "Formula errors in LOANS"
+    },
+    {
+      "column": "h_duplicate_ids",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([EMPLOYEES.dup_code_check],\"DUPLICATE*\")+COUNTIFS([SHIFT_ROSTER.dup_check],\"DUPLICATE*\")+COUNTIFS([EMPLOYEE_SALARY.dup_check],\"DUPLICATE*\")+COUNTIFS([LEAVE_BALANCES.dup_check],\"DUPLICATE*\")+COUNTIFS([LEAVE_POLICIES.dup_check],\"DUPLICATE*\")+COUNTIFS([ATTENDANCE_DAILY.dup_check],\"DUPLICATE*\")+COUNTIFS([PAYROLL_INPUTS.dup_check],\"DUPLICATE*\")+COUNTIFS([STATUTORY_RULES.overlap_check],\"OVERLAP*\")",
+      "row2": "=COUNTIFS(EMPLOYEES!$AJ$2:$AJ$1501,\"DUPLICATE*\")+COUNTIFS(SHIFT_ROSTER!$P$2:$P$20001,\"DUPLICATE*\")+COUNTIFS(EMPLOYEE_SALARY!$Z$2:$Z$4001,\"DUPLICATE*\")+COUNTIFS(LEAVE_BALANCES!$AN$2:$AN$4001,\"DUPLICATE*\")+COUNTIFS(LEAVE_POLICIES!$W$2:$W$301,\"DUPLICATE*\")+COUNTIFS(ATTENDANCE_DAILY!$J$2:$J$6001,\"DUPLICATE*\")+COUNTIFS(PAYROLL_INPUTS!$AP$2:$AP$2001,\"DUPLICATE*\")+COUNTIFS(STATUTORY_RULES!$U$2:$U$601,\"OVERLAP*\")",
+      "note": "Duplicate / overlapping keys"
+    },
+    {
+      "column": "h_missing_salary",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([PAYROLL_CALC.check_status],\"NO_SALARY_STRUCTURE\")",
+      "row2": "=COUNTIFS(PAYROLL_CALC!$BT$2:$BT$2001,\"NO_SALARY_STRUCTURE\")",
+      "note": "Payroll rows without salary structure"
+    },
+    {
+      "column": "h_missing_shift",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([ATTENDANCE_DAILY.exception_flag],\"NO_SHIFT\")",
+      "row2": "=COUNTIFS(ATTENDANCE_DAILY!$BK$2:$BK$6001,\"NO_SHIFT\")",
+      "note": "Days without a shift"
+    },
+    {
+      "column": "h_unresolved_attendance",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUM([ATTENDANCE_DAILY.exception_open])",
+      "row2": "=SUM(ATTENDANCE_DAILY!$BL$2:$BL$6001)",
+      "note": "Unresolved attendance exceptions"
+    },
+    {
+      "column": "h_negative_balances",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUM([LEAVE_BALANCES.negative_flag])",
+      "row2": "=SUM(LEAVE_BALANCES!$AM$2:$AM$4001)",
+      "note": "Negative balance exceptions"
+    },
+    {
+      "column": "h_locked_violations",
+      "letter": "D",
+      "type": "text",
+      "template": "=SUM([ATTENDANCE_ADJUSTMENTS.locked_violation])",
+      "row2": "=SUM(ATTENDANCE_ADJUSTMENTS!$Z$2:$Z$3001)",
+      "note": "Approvals recorded after period lock"
+    },
+    {
+      "column": "h_ledger_sign_mismatch",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([LEAVE_TRANSACTIONS.sign_check],\"SIGN_MISMATCH\")",
+      "row2": "=COUNTIFS(LEAVE_TRANSACTIONS!$U$2:$U$12001,\"SIGN_MISMATCH\")",
+      "note": "Leave ledger sign mismatches"
+    },
+    {
+      "column": "h_missing_attendance_rows",
+      "letter": "D",
+      "type": "text",
+      "template": "=COUNTIFS([PAYROLL_INPUTS.input_health],\"MISSING_ATTENDANCE_ROWS\")",
+      "row2": "=COUNTIFS(PAYROLL_INPUTS!$AO$2:$AO$2001,\"MISSING_ATTENDANCE_ROWS\")",
+      "note": "Payroll rows with missing attendance rows"
+    },
+    {
+      "column": "cap_events_pct",
+      "letter": "D",
+      "type": "text",
+      "template": "=ROUND(COUNTA([ATTENDANCE_EVENTS.event_id])/ROWS([ATTENDANCE_EVENTS.event_id]),4)",
+      "row2": "=ROUND(COUNTA(ATTENDANCE_EVENTS!$A$2:$A$10001)/ROWS(ATTENDANCE_EVENTS!$A$2:$A$10001),4)",
+      "note": "ATTENDANCE_EVENTS capacity used"
+    },
+    {
+      "column": "cap_daily_pct",
+      "letter": "D",
+      "type": "text",
+      "template": "=ROUND(COUNTA([ATTENDANCE_DAILY.attendance_id])/ROWS([ATTENDANCE_DAILY.attendance_id]),4)",
+      "row2": "=ROUND(COUNTA(ATTENDANCE_DAILY!$A$2:$A$6001)/ROWS(ATTENDANCE_DAILY!$A$2:$A$6001),4)",
+      "note": "ATTENDANCE_DAILY capacity used"
+    },
+    {
+      "column": "cap_payroll_pct",
+      "letter": "D",
+      "type": "text",
+      "template": "=ROUND(COUNTA([PAYROLL_INPUTS.input_id])/ROWS([PAYROLL_INPUTS.input_id]),4)",
+      "row2": "=ROUND(COUNTA(PAYROLL_INPUTS!$A$2:$A$2001)/ROWS(PAYROLL_INPUTS!$A$2:$A$2001),4)",
+      "note": "PAYROLL_INPUTS capacity used"
+    }
+  ]
+}

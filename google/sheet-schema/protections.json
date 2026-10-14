@@ -1,0 +1,729 @@
+[
+  {
+    "tab": "SYSTEM_CONFIG",
+    "description": "SYSTEM_CONFIG: whole tab locked",
+    "range": null,
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "USERS",
+    "description": "USERS: whole tab locked",
+    "range": null,
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "ROLES",
+    "description": "ROLES: whole tab locked",
+    "range": null,
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "EMPLOYEES",
+    "description": "EMPLOYEES: formula block weekend_mask..dup_code_check",
+    "range": {
+      "columnIndex": 33,
+      "endColumnIndex": 35,
+      "startRow": 2,
+      "endRow": 1501
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "EMPLOYEES",
+    "description": "EMPLOYEES: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "EMPLOYMENT_HISTORY",
+    "description": "EMPLOYMENT_HISTORY: whole tab locked (append-only)",
+    "range": null,
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "EMPLOYEE_DOCUMENTS",
+    "description": "EMPLOYEE_DOCUMENTS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "DEPARTMENTS",
+    "description": "DEPARTMENTS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "DESIGNATIONS",
+    "description": "DESIGNATIONS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LOCATIONS",
+    "description": "LOCATIONS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "SHIFT_MASTER",
+    "description": "SHIFT_MASTER: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "SHIFT_ROSTER",
+    "description": "SHIFT_ROSTER: formula block roster_key..dup_check",
+    "range": {
+      "columnIndex": 14,
+      "endColumnIndex": 15,
+      "startRow": 2,
+      "endRow": 20001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "SHIFT_ROSTER",
+    "description": "SHIFT_ROSTER: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "HOLIDAYS",
+    "description": "HOLIDAYS: formula block effective_date..effective_date",
+    "range": {
+      "columnIndex": 14,
+      "endColumnIndex": 14,
+      "startRow": 2,
+      "endRow": 501
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "HOLIDAYS",
+    "description": "HOLIDAYS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LEAVE_TYPES",
+    "description": "LEAVE_TYPES: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "description": "LEAVE_POLICIES: formula block policy_key..dup_check",
+    "range": {
+      "columnIndex": 21,
+      "endColumnIndex": 22,
+      "startRow": 2,
+      "endRow": 301
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LEAVE_POLICIES",
+    "description": "LEAVE_POLICIES: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LEAVE_BALANCES",
+    "description": "LEAVE_BALANCES: formula block balance_key..dup_check",
+    "range": {
+      "columnIndex": 13,
+      "endColumnIndex": 39,
+      "startRow": 2,
+      "endRow": 4001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LEAVE_BALANCES",
+    "description": "LEAVE_BALANCES: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LEAVE_TRANSACTIONS",
+    "description": "LEAVE_TRANSACTIONS: whole tab locked (append-only)",
+    "range": null,
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LEAVE_APPLICATIONS",
+    "description": "LEAVE_APPLICATIONS: formula block category..is_period_locked",
+    "range": {
+      "columnIndex": 21,
+      "endColumnIndex": 34,
+      "startRow": 2,
+      "endRow": 4001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LEAVE_APPLICATIONS",
+    "description": "LEAVE_APPLICATIONS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "ATTENDANCE_EVENTS",
+    "description": "ATTENDANCE_EVENTS: whole tab locked (append-only)",
+    "range": null,
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "ATTENDANCE_DAILY",
+    "description": "ATTENDANCE_DAILY: formula block daily_key..exception_open",
+    "range": {
+      "columnIndex": 8,
+      "endColumnIndex": 63,
+      "startRow": 2,
+      "endRow": 6001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "ATTENDANCE_DAILY",
+    "description": "ATTENDANCE_DAILY: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "ATTENDANCE_ADJUSTMENTS",
+    "description": "ATTENDANCE_ADJUSTMENTS: formula block attendance_key..locked_violation",
+    "range": {
+      "columnIndex": 23,
+      "endColumnIndex": 25,
+      "startRow": 2,
+      "endRow": 3001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "ATTENDANCE_ADJUSTMENTS",
+    "description": "ATTENDANCE_ADJUSTMENTS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "ATTENDANCE_EXCEPTIONS",
+    "description": "ATTENDANCE_EXCEPTIONS: formula block still_flagged..still_flagged",
+    "range": {
+      "columnIndex": 18,
+      "endColumnIndex": 18,
+      "startRow": 2,
+      "endRow": 3001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "ATTENDANCE_EXCEPTIONS",
+    "description": "ATTENDANCE_EXCEPTIONS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "OVERTIME",
+    "description": "OVERTIME: formula block daily_key..is_period_locked",
+    "range": {
+      "columnIndex": 20,
+      "endColumnIndex": 25,
+      "startRow": 2,
+      "endRow": 3001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "OVERTIME",
+    "description": "OVERTIME: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "TIMESHEETS",
+    "description": "TIMESHEETS: formula block daily_total_hours..variance_flag",
+    "range": {
+      "columnIndex": 19,
+      "endColumnIndex": 21,
+      "startRow": 2,
+      "endRow": 10001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "TIMESHEETS",
+    "description": "TIMESHEETS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "SALARY_COMPONENTS",
+    "description": "SALARY_COMPONENTS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "description": "EMPLOYEE_SALARY: formula block salary_key..dup_check",
+    "range": {
+      "columnIndex": 23,
+      "endColumnIndex": 25,
+      "startRow": 2,
+      "endRow": 4001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "EMPLOYEE_SALARY",
+    "description": "EMPLOYEE_SALARY: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "PAYROLL_CONTROL",
+    "description": "PAYROLL_CONTROL: formula block days_in_period..ready_to_approve",
+    "range": {
+      "columnIndex": 22,
+      "endColumnIndex": 28,
+      "startRow": 2,
+      "endRow": 201
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "PAYROLL_CONTROL",
+    "description": "PAYROLL_CONTROL: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "description": "PAYROLL_INPUTS: formula block period_start..dup_check",
+    "range": {
+      "columnIndex": 21,
+      "endColumnIndex": 41,
+      "startRow": 2,
+      "endRow": 2001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "PAYROLL_INPUTS",
+    "description": "PAYROLL_INPUTS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "PAYROLL_CALC",
+    "description": "PAYROLL_CALC: formula block pi_row..check_status",
+    "range": {
+      "columnIndex": 5,
+      "endColumnIndex": 71,
+      "startRow": 2,
+      "endRow": 2001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "PAYROLL_CALC",
+    "description": "PAYROLL_CALC: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "PAYROLL_SNAPSHOT",
+    "description": "PAYROLL_SNAPSHOT: whole tab locked (append-only)",
+    "range": null,
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "PAYSLIPS",
+    "description": "PAYSLIPS: formula block net_pay..net_pay",
+    "range": {
+      "columnIndex": 19,
+      "endColumnIndex": 19,
+      "startRow": 2,
+      "endRow": 20001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "PAYSLIPS",
+    "description": "PAYSLIPS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LOANS",
+    "description": "LOANS: formula block emi..outstanding",
+    "range": {
+      "columnIndex": 20,
+      "endColumnIndex": 23,
+      "startRow": 2,
+      "endRow": 1501
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LOANS",
+    "description": "LOANS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LOAN_SCHEDULE",
+    "description": "LOAN_SCHEDULE: formula block emi_amount..emi_amount",
+    "range": {
+      "columnIndex": 17,
+      "endColumnIndex": 17,
+      "startRow": 2,
+      "endRow": 10001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LOAN_SCHEDULE",
+    "description": "LOAN_SCHEDULE: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "EXPENSES",
+    "description": "EXPENSES: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "REIMBURSEMENTS",
+    "description": "REIMBURSEMENTS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "TAX_DECLARATIONS",
+    "description": "TAX_DECLARATIONS: formula block employee_fy_declared..employee_fy_declared",
+    "range": {
+      "columnIndex": 19,
+      "endColumnIndex": 19,
+      "startRow": 2,
+      "endRow": 8001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "TAX_DECLARATIONS",
+    "description": "TAX_DECLARATIONS: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "STATUTORY_RULES",
+    "description": "STATUTORY_RULES: formula block effective_to_norm..overlap_check",
+    "range": {
+      "columnIndex": 19,
+      "endColumnIndex": 20,
+      "startRow": 2,
+      "endRow": 601
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "STATUTORY_RULES",
+    "description": "STATUTORY_RULES: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "STATUTORY_CALC",
+    "description": "STATUTORY_CALC: formula block pc_row..tds",
+    "range": {
+      "columnIndex": 5,
+      "endColumnIndex": 27,
+      "startRow": 2,
+      "endRow": 2001
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "STATUTORY_CALC",
+    "description": "STATUTORY_CALC: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "FULL_FINAL",
+    "description": "FULL_FINAL: formula block join_date..net_full_final",
+    "range": {
+      "columnIndex": 20,
+      "endColumnIndex": 37,
+      "startRow": 2,
+      "endRow": 501
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "FULL_FINAL",
+    "description": "FULL_FINAL: header row",
+    "range": {
+      "columnIndex": 0,
+      "startRow": 1,
+      "endRow": 1,
+      "allColumns": true
+    },
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "NOTIFICATIONS",
+    "description": "NOTIFICATIONS: whole tab locked",
+    "range": null,
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "AUDIT_LOG",
+    "description": "AUDIT_LOG: whole tab locked (append-only)",
+    "range": null,
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "ERROR_LOG",
+    "description": "ERROR_LOG: whole tab locked (append-only)",
+    "range": null,
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "DASHBOARD_DATA",
+    "description": "DASHBOARD_DATA: whole tab locked",
+    "range": null,
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "LOOKUPS",
+    "description": "LOOKUPS: whole tab locked",
+    "range": null,
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  },
+  {
+    "tab": "README",
+    "description": "README: whole tab locked",
+    "range": null,
+    "editors": "SERVICE_ACCOUNT_AND_SUPER_ADMIN",
+    "warningOnly": false
+  }
+]

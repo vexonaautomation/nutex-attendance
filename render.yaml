@@ -1,0 +1,34 @@
+# Render Blueprint: two web services from this repository (API + website). Render -> New -> Blueprint -> pick this repo.
+# Secrets (sync: false) are asked for in the Render dashboard; they never live in git.
+# Keep the API at ONE instance: locks, sessions and the audit chain head are in memory.
+services:
+  - type: web
+    name: nutex-api
+    runtime: node
+    plan: starter            # free plans sleep after 15 minutes: the first check-in of the day would wait about a minute
+    numInstances: 1
+    buildCommand: npm ci --include=dev
+    startCommand: npm run start:api
+    healthCheckPath: /api/health
+    envVars:
+      - { key: NODE_VERSION, value: "22" }
+      - { key: NODE_ENV, value: production }
+      - { key: NUTEX_BACKEND, value: google }
+      - { key: COOKIE_SECURE, value: "true" }
+      - { key: COMPANY_TIMEZONE, value: Asia/Kolkata }
+      - { key: CAPACITY_SCALE, value: "0.25" }
+      - { key: READ_CACHE_TTL_MS, value: "30000" }
+      - { key: SESSION_SECRET, generateValue: true }
+      - { key: CORS_ORIGIN, sync: false }                 # https://<your website service>.onrender.com
+      - { key: GOOGLE_SPREADSHEET_ID, sync: false }
+      - { key: GOOGLE_SERVICE_ACCOUNT_JSON, sync: false } # the key file, base64 encoded (see docs/deployment.md)
+  - type: web
+    name: nutex-web
+    runtime: node
+    plan: starter
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm run start:web
+    envVars:
+      - { key: NODE_VERSION, value: "22" }
+      - { key: NODE_ENV, value: production }
+      - { key: API_URL, sync: false }                     # https://<your api service>.onrender.com (needed at build time)
