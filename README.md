@@ -35,7 +35,7 @@ npm run dev:web        # http://localhost:3000
 npm run dev:mobile     # phone on the same Wi-Fi: prints an https:// address so the phone can share its location
 ```
 
-**Local test login:** with the emulator backend the API creates the login `admin` / `admin` (super admin) and switches sign-in lockout and rate limit **off**, so testing is friction-free. Set `NUTEX_DEV_ADMIN=0` to turn that off. Neither can exist in production: the emulator is refused there, and the API refuses to start in production with lockout or the rate limit disabled.
+**Local test login:** with the emulator backend the API creates the login `admin` / `123` (super admin) and switches sign-in lockout and rate limit **off**, so testing is friction-free. Set `NUTEX_DEV_ADMIN=0` to turn that off. Neither can exist in production: the emulator is refused there, and the API refuses to start in production with lockout or the rate limit disabled.
 
 The **emulator** loads the exact grid the Google setup script creates and evaluates the same formulas with HyperFormula. It exists for tests and offline development and is refused when `NODE_ENV=production`.
 

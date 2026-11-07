@@ -53,7 +53,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <div className="side-brand"><Brand /><div><b>NUTEX</b><small>Smart Attendance</small></div></div>
         <nav className="nav">
           {items.map((n) => (
-            <Link key={n.href} href={n.href} aria-current={path === n.href || path.startsWith(`${n.href}/`) ? 'page' : undefined}><Icon name={n.icon} /> {n.label}</Link>
+            <Link key={n.href} href={n.href} prefetch={false} aria-current={path === n.href || path.startsWith(`${n.href}/`) ? 'page' : undefined}><Icon name={n.icon} /> {n.label}</Link>
           ))}
         </nav>
         <span className="spacer" />

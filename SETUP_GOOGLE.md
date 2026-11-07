@@ -179,7 +179,7 @@ Kuch bhi ho to API ka terminal dekho: agar "GOOGLE_SPREADSHEET_ID is not set" ja
 npm run dev:mobile
 ```
 
-Ye demo data ke saath (Google ke bina) chalta hai aur `https://<PC-ka-IP>:3443` deta hai. Phone par ek baar certificate warning aayegi: **Advanced -> Proceed**. Login: `admin` / `admin`. Ye shortcut **sirf is local test mode** mein hai, real (Google) mode mein kabhi nahi.
+Ye demo data ke saath (Google ke bina) chalta hai aur `https://<PC-ka-IP>:3443` deta hai. Phone par ek baar certificate warning aayegi: **Advanced -> Proceed**. Login: `admin` / `123`. Ye shortcut **sirf is local test mode** mein hai, real (Google) mode mein kabhi nahi.
 
 **Asli use ke liye HTTPS wali site chahiye.** Aasan tareeke:
 

@@ -214,7 +214,7 @@ export function UserAdmin() {
   const { setAct, setStatus, dialogs } = useUserActions(users.reload);
   const withoutLogin = useMemo(() => {
     const has = new Set((users.data ?? []).filter((u) => !u.incomplete && u.status !== 'DISABLED').map((u) => u.employeeId));
-    return (emps.data ?? []).filter((e) => e.status !== 'INACTIVE' && !has.has(e.employee_id));
+    return (emps.data ?? []).filter((e) => (e.status === 'ACTIVE' || e.status === 'NOTICE') && !has.has(e.employee_id));
   }, [users.data, emps.data]);
   return (
     <Card title="Logins" actions={<button className="btn primary" onClick={() => setCreating(true)}><Icon name="plus" size={16} /> Create login</button>}>

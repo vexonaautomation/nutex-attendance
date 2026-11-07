@@ -15,7 +15,7 @@ async function main() {
     if (process.env.NODE_ENV === 'production') throw new Error('NUTEX_BACKEND=emulator is refused in production');
     const credentialsFile = path.resolve(process.cwd(), '../../.local/seed-credentials.txt');
     const e = await createEmulatorContext({ full: false, rows: 400, big: { ATTENDANCE_EVENTS: 1500, ATTENDANCE_DAILY: 900, PAYROLL_INPUTS: 40, PAYROLL_CALC: 40, STATUTORY_CALC: 40 }, credentialsFile, password: process.env.SEED_PASSWORD,
-      // local testing: login `admin` / `admin`, and no lockout / rate limit (both are refused in production)
+      // local testing: login `admin` / `123`, and no lockout / rate limit (both are refused in production)
       devAdmin: process.env.NUTEX_DEV_ADMIN !== '0',
       env: process.env.NUTEX_DEV_ADMIN === '0' ? {} : { LOGIN_MAX_ATTEMPTS: 0, LOGIN_RATE_LIMIT_PER_MIN: 0 } });
     ctx = e.ctx;
@@ -29,7 +29,7 @@ async function main() {
       company_id: 'CMP-NUTEX', created_at: e.event_datetime, created_by: 'seed', source: 'SEED', request_id: 'demo', status: 'ACTIVE',
     })));
     console.log(`[nutex] EMULATOR backend (offline dev). Demo logins are in ${credentialsFile}`);
-    if (process.env.NUTEX_DEV_ADMIN !== '0') console.log('[nutex] LOCAL TEST MODE: login admin / admin, sign-in lockout and rate limit are OFF (set NUTEX_DEV_ADMIN=0 to turn this off)');
+    if (process.env.NUTEX_DEV_ADMIN !== '0') console.log('[nutex] LOCAL TEST MODE: login admin / 123, sign-in lockout and rate limit are OFF (set NUTEX_DEV_ADMIN=0 to turn this off)');
   } else {
     ctx = await createProductionContext();
   }

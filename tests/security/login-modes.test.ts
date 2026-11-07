@@ -47,17 +47,17 @@ describe('brute-force protection can be switched off for local testing, never in
 });
 
 describe('local test login', () => {
-  it('admin / admin exists only when the local test option is on, as a super admin', async () => {
+  it('admin / 123 exists only when the local test option is on, as a super admin', async () => {
     const on = await boot({ devAdmin: true });
     const r = await on.login(DEV_ADMIN.loginId, DEV_ADMIN.password);
     expect(r.status).toBe(200);
     expect(r.body.user.role).toBe('SUPER_ADMIN');
-    expect((await on.login('ADMIN', 'admin')).status).toBe(200); // login id is case-insensitive
+    expect((await on.login('ADMIN', '123')).status).toBe(200); // login id is case-insensitive
     expect((await on.login('admin', 'wrong')).status).toBe(401);
     const me = await on.app.inject({ method: 'GET', url: '/api/auth/me', headers: { cookie: `nutex_session=${r.cookie}` } });
     expect(JSON.parse(me.body).user.employeeId).toBe('E001'); // can punch in as a real employee
     const off = await boot({ devAdmin: false });
-    expect((await off.login('admin', 'admin')).status).toBe(401);
+    expect((await off.login('admin', '123')).status).toBe(401);
   });
 
   it('the login form accepts a plain username, not just an email', () => {
@@ -67,7 +67,7 @@ describe('local test login', () => {
     expect(loginBody.safeParse({ email: 'a', password: 'x', extra: 1 }).success).toBe(false);
   });
 
-  it('the emulator (and so admin/admin) refuses to run in production', async () => {
+  it('the emulator (and so admin/123) refuses to run in production', async () => {
     const prev = process.env.NODE_ENV;
     process.env.NODE_ENV = 'production';
     try { await expect(createEmulatorContext({ devAdmin: true })).rejects.toThrow(/production/); } finally { process.env.NODE_ENV = prev; }

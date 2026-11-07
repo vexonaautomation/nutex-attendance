@@ -50,7 +50,7 @@ tests/                   attendance (location), leave, payroll, security (incl. 
 - API tests: `makeApi()` from `tests/api-helpers.ts`; the clock is injectable (`api.clock.set(...)`). Sessions are long-lived in tests (`SESSION_TTL_MIN`).
 - Test capacities are tiny; pass `big: { TAB: rows }` when a scenario needs more rows (a `CapacityError` / HTTP 507 means exactly that).
 - Test passwords are synthetic values; the emulator refuses `NODE_ENV=production`.
-- Local dev (`npm run dev:api` / `dev:mobile`) creates `admin` / `admin` and disables lockout + rate limit (`NUTEX_DEV_ADMIN=0` to opt out). `loadEnv` throws in production if `LOGIN_MAX_ATTEMPTS` or `LOGIN_RATE_LIMIT_PER_MIN` is 0. Keep both guards.
+- Local dev (`npm run dev:api` / `dev:mobile`) creates `admin` / `123` and disables lockout + rate limit (`NUTEX_DEV_ADMIN=0` to opt out). `loadEnv` throws in production if `LOGIN_MAX_ATTEMPTS` or `LOGIN_RATE_LIMIT_PER_MIN` is 0. Keep both guards.
 
 ## Security invariants to preserve
 

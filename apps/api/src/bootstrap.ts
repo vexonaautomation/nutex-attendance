@@ -37,7 +37,7 @@ export interface EmulatorOptions {
   devAdmin?: boolean;
 }
 
-export const DEV_ADMIN = { userId: 'U000', loginId: 'admin', password: 'admin', employeeId: 'E001' } as const;
+export const DEV_ADMIN = { userId: 'U000', loginId: 'admin', password: '123', employeeId: 'E001' } as const;
 
 /** offline development / tests: HyperFormula-backed spreadsheet + in-memory Drive. Never use in production. */
 export async function createEmulatorContext(o: EmulatorOptions = {}): Promise<{ ctx: AppContext; passwords: Record<string, string>; idx: SchemaIndex; gateway: EmulatorGateway }> {

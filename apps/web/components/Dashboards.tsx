@@ -104,7 +104,7 @@ export function AdminDashboard() {
 
   const check = useMemo(() => {
     if (!emps.data || !users.data || !sal.data || !locs.data) return undefined;
-    const active = emps.data.filter((e) => e.status !== 'INACTIVE');
+    const active = emps.data.filter((e) => e.status === 'ACTIVE' || e.status === 'NOTICE');
     const withLogin = new Set(users.data.filter((u) => u.status !== 'DISABLED').map((u) => String(u.employeeId)));
     const withSalary = new Set(sal.data.map((s) => String(s.employee_id)));
     return {

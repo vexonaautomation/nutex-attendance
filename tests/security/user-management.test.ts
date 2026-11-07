@@ -260,8 +260,8 @@ describe('removing an employee', () => {
 });
 
 describe('the local test shortcut never weakens production', () => {
-  it('the admin/admin login exists only when the emulator is started in local test mode', async () => {
-    expect((await rawLogin('admin', 'admin')).statusCode).toBe(401); // makeApi() does not enable devAdmin
+  it('the admin/123 test login exists only when the emulator is started in local test mode', async () => {
+    expect((await rawLogin('admin', '123')).statusCode).toBe(401); // makeApi() does not enable devAdmin
   });
 });
 

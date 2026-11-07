@@ -60,8 +60,8 @@ async function main() {
 
   // NODE_ENV stays non-production on purpose: the emulator backend refuses to run in production
   children.push(run(['run', live ? 'start' : 'dev', '-w', '@nutex/api'], { HOST: '0.0.0.0' }));
-  await waitFor('http://localhost:4000/api/health');
-  children.push(run(['run', 'start', '-w', '@nutex/web'], { API_URL: 'http://localhost:4000' }));
+  await waitFor('http://127.0.0.1:4000/api/health');
+  children.push(run(['run', 'start', '-w', '@nutex/web'], { API_URL: 'http://127.0.0.1:4000' }));
   await waitFor('http://localhost:3000/login');
 
   const ips = lanAddresses();
@@ -80,7 +80,7 @@ async function main() {
     console.log('\n  First visit shows a certificate warning (self-signed, local only):');
     console.log('  Advanced -> Proceed / Visit this website. Then check-in can read the phone location.');
   }
-  console.log(live ? '\n  Login:               the administrator created by npm run google:init' : '\n  Login:               admin / admin  (local test mode; other accounts: .local/seed-credentials.txt)');
+  console.log(live ? '\n  Login:               the administrator created by npm run google:init' : '\n  Login:               admin / 123  (local test mode; other accounts: .local/seed-credentials.txt)');
   console.log('  Stop:                Ctrl+C');
   console.log('\n  If the phone cannot connect: allow Node.js through Windows Firewall');
   console.log('  (Private networks), and make sure the phone is on the same Wi-Fi.');
