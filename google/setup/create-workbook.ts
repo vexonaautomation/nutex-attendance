@@ -58,7 +58,7 @@ async function main() {
     console.log(`  ${spreadsheetUrl}`);
   } else {
     console.log('Creating spreadsheet…');
-    const created = await withRetry(() => sheets.spreadsheets.create({ requestBody: { properties: { title: WORKBOOK_NAME, locale: 'en_IN', timeZone: tz } }, fields: 'spreadsheetId,spreadsheetUrl,sheets.properties.sheetId' }));
+    const created = await withRetry(() => sheets.spreadsheets.create({ requestBody: { properties: { title: WORKBOOK_NAME, locale: 'en_GB', timeZone: tz } }, fields: 'spreadsheetId,spreadsheetUrl,sheets.properties.sheetId' }));
     spreadsheetId = created.data.spreadsheetId!;
     spreadsheetUrl = created.data.spreadsheetUrl;
     blankSheets = [created.data.sheets?.[0]?.properties?.sheetId ?? 0];
@@ -67,7 +67,7 @@ async function main() {
 
   // formulas depend on the locale (decimal point, argument separator), so pin it
   await withRetry(() => sheets.spreadsheets.batchUpdate({ spreadsheetId, requestBody: { requests: [
-    { updateSpreadsheetProperties: { properties: { locale: 'en_IN', timeZone: tz, title: WORKBOOK_NAME }, fields: 'locale,timeZone,title' } },
+    { updateSpreadsheetProperties: { properties: { locale: 'en_GB', timeZone: tz, title: WORKBOOK_NAME }, fields: 'locale,timeZone,title' } },
     ...addSheetRequests(idx), ...blankSheets.map((sheetId) => ({ deleteSheet: { sheetId } })),
   ] } }));
   console.log(`Created ${idx.tabs.length} tabs`);
