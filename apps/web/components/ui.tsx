@@ -1,4 +1,5 @@
 'use client';
+import { createPortal } from 'react-dom';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { label, toneOf } from '@/lib/format';
 import { Icon } from './Icon';
@@ -85,13 +86,15 @@ export function Modal({ title, onClose, children, small }: { title: string; onCl
     document.addEventListener('keydown', onKey);
     return () => { document.removeEventListener('keydown', onKey); prev?.focus(); };
   }, [onClose]);
-  return (
+  // rendered in <body>: inside a card with a 3D tilt (a CSS transform) `position: fixed` would be relative to the card and the dialog would be cut off
+  return createPortal(
     <div className="modal-scrim" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div ref={ref} className={`modal ${small ? 'sm' : ''}`} role="dialog" aria-modal="true" aria-label={title}>
         <h2>{title}</h2>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
