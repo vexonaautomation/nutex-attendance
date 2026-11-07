@@ -29,6 +29,22 @@ async function request<T>(method: string, url: string, body?: unknown, headers: 
   return data as T;
 }
 
+/** download a file the server builds (for example an Excel template) through the signed-in session */
+export async function downloadFile(url: string, fallbackName: string): Promise<void> {
+  let res: Response;
+  try { res = await fetch(url, { credentials: 'same-origin', cache: 'no-store', headers: { 'x-requested-with': 'nutex' } }); } catch { throw new ApiError(0, 'NETWORK', 'Cannot reach the server. Check your connection.'); }
+  if (!res.ok) {
+    let e: { error?: { code?: string; message?: string; requestId?: string } } | null = null;
+    try { e = await res.json(); } catch { /* not JSON */ }
+    throw new ApiError(res.status, e?.error?.code ?? 'ERROR', e?.error?.message ?? `Download failed (${res.status})`, e?.error?.requestId);
+  }
+  const name = /filename="([^"]+)"/.exec(res.headers.get('content-disposition') ?? '')?.[1] ?? fallbackName;
+  const objectUrl = URL.createObjectURL(await res.blob());
+  const a = document.createElement('a');
+  a.href = objectUrl; a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+}
+
 /** stable random id for Idempotency-Key headers */
 export const newKey = (): string => (typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : `k-${Date.now()}-${Math.random().toString(36).slice(2)}`);
 

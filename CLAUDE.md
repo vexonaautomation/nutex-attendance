@@ -14,6 +14,8 @@ Guidance for Claude Code (and humans) working in this repository.
 8. **No fake credentials or pretend integrations.** Secrets come from `.env` (never committed).
 9. **Monthly attendance grid** (`apps/api/src/attendance/monthly.ts`): day codes and OT minutes are the sheet's own `ATTENDANCE_DAILY` results; the grid only lays them out and adds them up for display (no attendance rule). When a month is over it is frozen into its own tab ("Nov 2026", values only, like `PAYROLL_SNAPSHOT`) by an hourly job and by the "Save as tab" button; a saved month is never overwritten (409 `ALREADY_SAVED`). Opening a month as someone with company-wide access creates the missing employee x day rows up to today. These tabs are outside the 44-tab schema: `SheetsGateway.listSheets / addSheet / styleGridSheet` are optional methods.
 
+10. **Bulk Excel import** (`apps/api/src/admin/bulk.ts`, employees and salaries): template download (blank or with current data) and upload. Every row is validated like the single forms (required columns, formats, enums, scope, locked payroll periods, no editing of dated salary rows); an upload is all or nothing, a dry run saves nothing, and each saved row gets its own `AUDIT_LOG` entry (`audit.writeMany`, one write call). Matching key is `employee_code`; a blank cell never clears an existing value. Bank columns are never exported.
+
 ## Layout
 
 ```

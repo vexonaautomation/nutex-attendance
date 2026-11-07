@@ -10,6 +10,7 @@ import { Actor, AppContext, HttpError, toLocalWallClock, unauthorized } from './
 import { SESSION_COOKIE, authenticate, authorize, issueSession, login, revokeSession } from './auth/auth';
 import * as attendance from './attendance/attendance';
 import * as monthly from './attendance/monthly';
+import * as bulk from './admin/bulk';
 import * as leave from './leave/leave';
 import * as payroll from './payroll/payroll';
 import * as reqs from './payroll/requests';
@@ -129,6 +130,14 @@ export async function buildApp(ctx: AppContext): Promise<FastifyInstance> {
   get('/api/dashboard', async (req) => admin.dashboard(ctx, A(req)));
   get('/api/approvals', async (req) => reqs.approvalsInbox(ctx, A(req)));
   get('/api/notifications', async (req) => admin.myNotifications(ctx, A(req)));
+
+  // ---------------------------------------------------------------- bulk employees / salary through Excel
+  app.get('/api/bulk/:kind/template', secured(async (req, reply) => {
+    const q = req.query as { mode?: string };
+    const t = await bulk.template(ctx, A(req), P(req).kind, q.mode !== 'blank');
+    return reply.header('content-type', bulk.XLSX_MIME).header('content-disposition', `attachment; filename="${t.filename}"`).header('cache-control', 'no-store').send(t.buffer);
+  }));
+  post('/api/bulk/:kind/import', async (req) => bulk.importFile(ctx, A(req), P(req).kind, parse(z.object({ file: z.string().min(10).max(8_000_000), fileName: z.string().max(200).optional(), dryRun: z.boolean().default(true) }).strict(), req.body)));
 
   // ---------------------------------------------------------------- attendance
   get('/api/attendance/policy', async (req) => attendance.attendancePolicy(ctx, A(req)));

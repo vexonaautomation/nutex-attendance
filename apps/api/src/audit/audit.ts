@@ -59,6 +59,36 @@ export class AuditService {
       }
     });
   }
+
+  /** many entries in one go (bulk imports): the chain is computed in memory and written with a single call */
+  async writeMany(actor: Pick<Actor, 'user' | 'requestId' | 'ip' | 'source'> | null, entries: AuditEntry[]): Promise<void> {
+    if (!entries.length) return;
+    await this.mutex.run('audit-chain', async () => {
+      if (this.lastHash === null) {
+        const rows = await this.ctx.repo.readAll('AUDIT_LOG');
+        this.lastHash = rows.length ? String(rows[rows.length - 1].entry_hash ?? '') : 'GENESIS';
+      }
+      let prev = this.lastHash;
+      const timestamp = toLocalWallClock(this.ctx.now(), this.ctx.env.COMPANY_TIMEZONE);
+      const recs = entries.map((e) => {
+        const rec = {
+          audit_id: this.ctx.id('AUD'), timestamp, actor_user_id: actor?.user.userId ?? 'SYSTEM', actor_role: actor?.user.role ?? 'SYSTEM', action: e.action, entity_type: e.entityType,
+          entity_id: e.entityId, before_json: ser(e.before), after_json: ser(e.after), reason: e.reason ?? '', source: actor?.source ?? 'SYSTEM', request_id: actor?.requestId ?? '',
+          ip_address: actor?.ip ?? '', prev_hash: prev,
+        };
+        const entry_hash = hashEntry(rec);
+        prev = entry_hash;
+        return { ...rec, entry_hash };
+      });
+      try {
+        await this.ctx.repo.appendMany('AUDIT_LOG', recs, { verify: false });
+        this.lastHash = prev;
+      } catch (err) {
+        this.lastHash = null;
+        throw err;
+      }
+    });
+  }
 }
 
 export function hashEntry(rec: Record<string, unknown>): string {

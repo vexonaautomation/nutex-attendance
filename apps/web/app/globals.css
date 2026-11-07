@@ -359,3 +359,8 @@ tfoot td { font-weight: 700; background: var(--bg-elev-2); }
 .gc-HD { background: color-mix(in srgb, #eab308 32%, transparent); color: var(--text); }
 .gc-WFH { background: color-mix(in srgb, #14b8a6 28%, transparent); color: var(--text); }
 .gc-M, .gc-IN { background: color-mix(in srgb, #94a3b8 30%, transparent); color: var(--text); }
+
+/* ---------- bulk Excel dialog ---------- */
+.bulk-steps { list-style: none; display: grid; gap: 16px; margin-bottom: 14px; padding: 0; }
+.req-key { display: inline-block; padding: 1px 8px; border-radius: 6px; color: #fff; font-weight: 700; font-size: 0.78rem; }
+.req-key.req { background: #d9363e; } .req-key.opt { background: #2f6bde; } .req-key.info { background: #8c97ad; }

@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useAuth } from '@/components/AuthProvider';
 import { PageHeader } from '@/components/ui';
+import { BulkDialog } from '@/components/BulkDialog';
+import { Icon } from '@/components/Icon';
 import { ResourcePage } from '@/components/ResourcePage';
 import { IssueLoginDialog, type EmployeeLite } from '@/components/UserAdmin';
 
@@ -10,10 +12,20 @@ export default function EmployeesPage() {
   const { can } = useAuth();
   const canLogin = can('users', 'write');
   const [offer, setOffer] = useState<EmployeeLite | null>(null);
+  const [bulk, setBulk] = useState<'employees' | 'salaries' | null>(null);
+  const [tick, setTick] = useState(0);
+  const canBulkEmployees = can('employees', 'write');
+  const canBulkSalary = can('salary', 'write');
   return (
     <>
-      <PageHeader title="Employees" subtitle="Add people, set their salary and give each one a username and password. Branch, team and self scope are enforced by the server." />
-      <ResourcePage
+      <PageHeader title="Employees" subtitle="Add people, set their salary and give each one a username and password. Branch, team and self scope are enforced by the server."
+        actions={(canBulkEmployees || canBulkSalary) && (
+          <span className="row" style={{ gap: 8, flexWrap: 'wrap' }}>
+            {canBulkEmployees && <button className="btn" onClick={() => setBulk('employees')}><Icon name="download" size={15} /> Bulk employees (Excel)</button>}
+            {canBulkSalary && <button className="btn" onClick={() => setBulk('salaries')}><Icon name="download" size={15} /> Bulk salary (Excel)</button>}
+          </span>
+        )} />
+      <ResourcePage key={tick}
         path="employees" createLabel="Add employee"
         columns={['employee_code', 'first_name', 'last_name', 'department_id', 'location_id', 'employment_type', 'employee_status', 'date_of_joining']}
         hideFields={['bank_account_ref', 'bank_ifsc']}
@@ -35,6 +47,7 @@ export default function EmployeesPage() {
         </div>
       )}
       {offer?.status === 'ASK' && <IssueLoginDialog employees={[]} fixed={{ ...offer, status: 'ACTIVE' }} onClose={() => setOffer(null)} onDone={() => setOffer(null)} />}
+      {bulk && <BulkDialog kind={bulk} onClose={() => setBulk(null)} onDone={() => setTick((n) => n + 1)} />}
     </>
   );
 }

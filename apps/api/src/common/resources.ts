@@ -48,7 +48,7 @@ export const RESOURCES: ResourceDef[] = [
 ];
 
 /** company-wide (non employee-scoped) config: a SELF/TEAM grant must never satisfy it */
-async function authorizeCompanyWide(ctx: AppContext, actor: Actor, resource: Resource, action: 'read' | 'write') {
+export async function authorizeCompanyWide(ctx: AppContext, actor: Actor, resource: Resource, action: 'read' | 'write') {
   const g = await authorize(ctx, actor.user, resource, action);
   if (!g.scopes.some((sc) => sc === 'ALL' || sc === 'BRANCH')) throw forbidden();
 }
@@ -60,7 +60,7 @@ export function resourceDef(path: string): ResourceDef {
   return d;
 }
 
-const SYSTEM_COLS = new Set(['company_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'source', 'request_id']);
+export const SYSTEM_COLS = new Set(['company_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'source', 'request_id']);
 
 function tabOf(ctx: AppContext, d: ResourceDef): TabDef { return (ctx.idx as SchemaIndex).tab(d.tab); }
 
