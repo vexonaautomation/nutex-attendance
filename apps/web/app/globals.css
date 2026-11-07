@@ -337,3 +337,25 @@ tfoot td { font-weight: 700; background: var(--bg-elev-2); }
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
   .card, .scene { transform: none !important; }
 }
+
+/* ---------- monthly attendance grid ---------- */
+.grid-wrap { max-height: 70vh; }
+.att-grid { width: max-content; min-width: 100%; font-size: 0.82rem; }
+.att-grid th, .att-grid td { padding: 6px 8px; white-space: nowrap; }
+.att-grid th.day, .att-grid td.day { width: 34px; min-width: 34px; padding: 6px 2px; text-align: center; }
+.att-grid .num { text-align: right; font-variant-numeric: tabular-nums; }
+.att-grid th { position: sticky; top: 0; z-index: 2; }
+.att-grid .stick { position: sticky; z-index: 1; background: var(--solid); }
+.att-grid th.stick { z-index: 3; }
+.att-grid .s1 { left: 0; min-width: 52px; } .att-grid .s2 { left: 52px; min-width: 170px; } .att-grid .s3 { left: 222px; min-width: 76px; box-shadow: 1px 0 0 var(--border); }
+.gc { font-weight: 700; font-size: 0.78rem; }
+.legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-dim); }
+.legend-item .gc { min-width: 30px; padding: 2px 6px; border-radius: 6px; text-align: center; }
+.gc-P, .gc-WP, .gc-HP { background: color-mix(in srgb, #22c55e 26%, transparent); color: var(--text); }
+.gc-A { background: color-mix(in srgb, #ef4444 30%, transparent); color: var(--text); }
+.gc-W { background: color-mix(in srgb, #fb923c 34%, transparent); color: var(--text); }
+.gc-L, .gc-UL { background: color-mix(in srgb, #3b82f6 28%, transparent); color: var(--text); }
+.gc-H { background: color-mix(in srgb, #a855f7 28%, transparent); color: var(--text); }
+.gc-HD { background: color-mix(in srgb, #eab308 32%, transparent); color: var(--text); }
+.gc-WFH { background: color-mix(in srgb, #14b8a6 28%, transparent); color: var(--text); }
+.gc-M, .gc-IN { background: color-mix(in srgb, #94a3b8 30%, transparent); color: var(--text); }

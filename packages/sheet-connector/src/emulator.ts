@@ -1,6 +1,6 @@
 import { HyperFormula, type RawCellContent } from 'hyperformula';
 import { SchemaIndex, renderGrid } from '@nutex/formula-specs';
-import { RangeUpdate, SheetsGateway, parseA1 } from './gateway';
+import { RangeUpdate, SheetInfo, SheetsGateway, parseA1 } from './gateway';
 import type { CellValue } from './serial';
 
 /**
@@ -66,6 +66,20 @@ export class EmulatorGateway implements SheetsGateway {
       }
     });
   }
+
+  async listSheets(): Promise<SheetInfo[]> {
+    return [...this.sheetIds].map(([title, sheetId]) => ({ title, sheetId }));
+  }
+
+  async addSheet(title: string): Promise<SheetInfo> {
+    if (this.sheetIds.has(title)) throw new Error(`Sheet "${title}" already exists`);
+    this.hf.addSheet(title);
+    const sheetId = this.hf.getSheetId(title)!;
+    this.sheetIds.set(title, sheetId);
+    return { title, sheetId };
+  }
+
+  async styleGridSheet(): Promise<void> { /* colours exist only in the real sheet */ }
 
   /** value of any cell incl. formula columns (test helper) */
   cell(sheet: string, a1: string): CellValue {

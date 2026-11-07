@@ -9,6 +9,7 @@ import { DEFAULT_PERMISSIONS } from '@nutex/types';
 import { Actor, AppContext, HttpError, toLocalWallClock, unauthorized } from './common/core';
 import { SESSION_COOKIE, authenticate, authorize, issueSession, login, revokeSession } from './auth/auth';
 import * as attendance from './attendance/attendance';
+import * as monthly from './attendance/monthly';
 import * as leave from './leave/leave';
 import * as payroll from './payroll/payroll';
 import * as reqs from './payroll/requests';
@@ -135,6 +136,9 @@ export async function buildApp(ctx: AppContext): Promise<FastifyInstance> {
   post('/api/attendance/manual-punch', async (req) => attendance.manualPunch(ctx, A(req), parse(V.manualPunchBody, req.body)));
   get('/api/attendance/daily', async (req) => attendance.listDaily(ctx, A(req), Q(req, dateQ)).then((rows) => rows.map(({ _row, ...r }) => { void _row; return r; })));
   get('/api/attendance/me', async (req) => attendance.listDaily(ctx, A(req), { ...Q(req, dateQ), employeeId: A(req).user.employeeId }).then((rows) => rows.map(({ _row, ...r }) => { void _row; return r; })));
+  get('/api/attendance/monthly/months', async (req) => monthly.listMonths(ctx, A(req)));
+  get('/api/attendance/monthly', async (req) => { const q = req.query as { year?: string; month?: string }; const ym = monthly.parseYearMonth(q.year, q.month); return monthly.getMonth(ctx, A(req), ym.year, ym.month); });
+  post('/api/attendance/monthly/save', async (req) => { const ym = monthly.parseYearMonth((req.body as { year?: unknown })?.year, (req.body as { month?: unknown })?.month); return monthly.saveMonth(ctx, A(req), ym.year, ym.month); });
   get('/api/attendance/events', async (req) => attendance.listEvents(ctx, A(req), Q(req, dateQ)));
   post('/api/attendance/scaffold', async (req) => { const b = parse(z.object({ from: z.string(), to: z.string() }).strict(), req.body); return attendance.scaffoldDaily(ctx, A(req), b.from, b.to); });
   post('/api/attendance/adjustments', async (req) => attendance.requestAdjustment(ctx, A(req), parse(V.adjustmentBody, req.body)));

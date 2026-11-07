@@ -2,6 +2,7 @@ import path from 'node:path';
 import { buildApp } from './app';
 import { createEmulatorContext, createProductionContext } from './bootstrap';
 import { scaffoldAttendanceDaily } from './common/scaffold';
+import { autoCloseMonths } from './attendance/monthly';
 import { loadProjectEnv } from './common/dotenv';
 import { demoEvents } from '../../../google/setup/demo-attendance';
 
@@ -35,6 +36,10 @@ async function main() {
   }
   const app = await buildApp(ctx);
   await app.listen({ port, host: process.env.HOST ?? '0.0.0.0' });
+  // when a month is over, freeze it into its own tab ("Nov 2026"); checked at start and then every hour
+  const closeMonths = () => { void autoCloseMonths(ctx).catch(() => undefined); };
+  setTimeout(closeMonths, 60_000).unref();
+  setInterval(closeMonths, 3_600_000).unref();
   // Render's free plan sleeps a service after 15 idle minutes: ping our own public URL every minute (set KEEP_ALIVE=0 to turn off)
   const publicUrl = process.env.RENDER_EXTERNAL_URL;
   if (publicUrl && process.env.KEEP_ALIVE !== '0') {

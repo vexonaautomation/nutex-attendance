@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { api } from '@/lib/api';
 import { useAuth } from '@/components/AuthProvider';
 import { DataTable } from '@/components/DataTable';
+import { MonthlyGrid } from '@/components/MonthlyGrid';
 import { PunchLog } from '@/components/PunchLog';
 import { RequestDialog } from '@/components/WorkflowPage';
 import { Badge, Card, ConfirmDialog, ErrorState, PageHeader, Tabs } from '@/components/ui';
@@ -39,6 +40,7 @@ export default function AttendancePage() {
   const tabs = [
     { id: 'mine', label: 'My attendance' },
     ...(me?.role !== 'EMPLOYEE' ? [{ id: 'team', label: 'Team / branch' }] : []),
+    ...(me?.role !== 'EMPLOYEE' ? [{ id: 'monthly', label: 'Monthly grid' }] : []),
     { id: 'adjust', label: 'Regularisations' },
     ...(can('attendance', 'approve') ? [{ id: 'exceptions', label: 'Exceptions' }] : []),
     ...(can('attendance_events') ? [{ id: 'locations', label: 'Check-in locations' }] : []),
@@ -61,6 +63,7 @@ export default function AttendancePage() {
           {all.error ? <ErrorState error={all.error} onRetry={all.reload} /> : <DataTable<Row> columns={cols(true)} rows={all.data} loading={all.loading} exportName="team-attendance" />}
         </Card>
       )}
+      {tab === 'monthly' && <MonthlyGrid />}
       {tab === 'locations' && (
         <Card title="Check-in / check-out locations"
           actions={<span className="row">

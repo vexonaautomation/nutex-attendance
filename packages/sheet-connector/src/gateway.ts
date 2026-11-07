@@ -13,6 +13,21 @@ export interface SheetsGateway {
   readRanges(ranges: string[]): Promise<CellValue[][][]>;
   /** batch write with RAW semantics (never evaluates formulas) */
   writeRanges(updates: RangeUpdate[]): Promise<void>;
+  /**
+   * Extra tabs beyond the fixed schema (archive tabs such as one monthly attendance grid per month). Optional: only the
+   * monthly-grid feature uses them, and it reports a clear error when a gateway cannot add a tab.
+   */
+  listSheets?(): Promise<SheetInfo[]>;
+  addSheet?(title: string, rows: number, cols: number): Promise<SheetInfo>;
+  /** colours / frozen header for a monthly grid tab (cosmetic; the emulator ignores it) */
+  styleGridSheet?(sheetId: number, spec: GridStyle): Promise<void>;
+}
+
+export interface SheetInfo { title: string; sheetId: number }
+export interface GridStyle {
+  rows: number; cols: number;
+  /** 0-based first and last column index that holds a day code (P / A / W ...) and the first data row (0-based) */
+  dayCols: [number, number]; firstDataRow: number; headerRow: number;
 }
 
 export interface A1Range { sheet: string; c1: number; r1: number; c2: number; r2: number }
