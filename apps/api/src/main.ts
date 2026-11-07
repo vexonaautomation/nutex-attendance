@@ -35,10 +35,10 @@ async function main() {
   }
   const app = await buildApp(ctx);
   await app.listen({ port, host: process.env.HOST ?? '0.0.0.0' });
-  // Render's free plan sleeps a service after 15 idle minutes: ping our own public URL every 2 minutes (set KEEP_ALIVE=0 to turn off)
+  // Render's free plan sleeps a service after 15 idle minutes: ping our own public URL every minute (set KEEP_ALIVE=0 to turn off)
   const publicUrl = process.env.RENDER_EXTERNAL_URL;
   if (publicUrl && process.env.KEEP_ALIVE !== '0') {
-    setInterval(() => { fetch(`${publicUrl}/api/health`).catch(() => undefined); }, 120_000).unref();
+    setInterval(() => { fetch(`${publicUrl}/api/health`).catch(() => undefined); }, 60_000).unref();
   }
 }
 
