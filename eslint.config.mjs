@@ -18,5 +18,5 @@ export default tseslint.config(
     plugins: { 'react-hooks': reactHooks, '@next/next': next },
     rules: { 'react-hooks/rules-of-hooks': 'error', 'react-hooks/exhaustive-deps': 'warn', '@next/next/no-img-element': 'warn' },
   },
-  { files: ['**/*.mjs'], languageOptions: { globals: { console: 'readonly', process: 'readonly' } } },
+  { files: ['**/*.mjs'], languageOptions: { globals: { console: 'readonly', process: 'readonly', setInterval: 'readonly', fetch: 'readonly' } } },
 );
