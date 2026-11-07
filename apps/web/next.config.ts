@@ -1,6 +1,5 @@
 import type { NextConfig } from 'next';
 
-const API_URL = process.env.API_URL ?? 'http://127.0.0.1:4000';
 const isProd = process.env.NODE_ENV === 'production';
 
 // Check-in / check-out read the device location, so this page origin may use geolocation; the camera and microphone are never needed.
@@ -26,10 +25,6 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   transpilePackages: ['@nutex/types', '@nutex/report-engine'],
-  async rewrites() {
-    // the browser only ever talks to its own origin: cookies stay first-party and the API URL stays private
-    return [{ source: '/api/:path*', destination: `${API_URL}/api/:path*` }];
-  },
   async headers() {
     return [
       {

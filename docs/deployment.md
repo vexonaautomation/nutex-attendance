@@ -6,7 +6,7 @@
 Browser --HTTPS--> Next.js (apps/web)  --/api proxy-->  Fastify API (apps/api)  -->  Google Sheets + Drive
 ```
 
-The web app proxies `/api/*` to the API (`next.config.ts` rewrites), so the browser only talks to one HTTPS origin: the session cookie is first-party (`HttpOnly`, `SameSite=Strict`, `Secure`) and the API and Google credentials are never exposed. Browsers share location only with HTTPS pages (or `localhost`), so the public address must be HTTPS.
+The web app proxies `/api/*` to the API (`apps/web/proxy.ts`, reads `API_URL` at run time), so the browser only talks to one HTTPS origin: the session cookie is first-party (`HttpOnly`, `SameSite=Strict`, `Secure`) and the API and Google credentials are never exposed. Browsers share location only with HTTPS pages (or `localhost`), so the public address must be HTTPS.
 
 ## Environment
 
