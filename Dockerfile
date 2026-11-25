@@ -1,4 +1,4 @@
-# One image runs both processes: `npm run start:api` (Fastify) and `npm run start:web` (Next.js). See docker-compose.yml.
+# One container runs website + API (scripts/start-all.mjs). `npm run start:api` / `start:web` can also run separately (docker-compose.yml).
 FROM node:22-slim
 WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1
@@ -12,4 +12,4 @@ COPY . .
 RUN npm run build
 USER node
 EXPOSE 3000 4000
-CMD ["npm", "run", "start:api"]
+CMD ["node", "scripts/start-all.mjs"]
