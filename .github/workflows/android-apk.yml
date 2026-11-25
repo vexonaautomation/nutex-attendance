@@ -1,0 +1,49 @@
+name: Android APK
+
+on:
+  push:
+    branches: [main]
+    paths: ['android/**', '.github/workflows/android-apk.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write # to publish the APK on the "apk" release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ANDROID_KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+      ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17' }
+      - uses: gradle/actions/setup-gradle@v4
+        with: { gradle-version: '8.10.2' }
+
+      - name: Build (signed release if the signing key is configured, otherwise a test APK)
+        working-directory: android
+        run: |
+          if [ -n "$ANDROID_KEYSTORE_B64" ]; then
+            echo "$ANDROID_KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.p12"
+            ANDROID_KEYSTORE_FILE="$RUNNER_TEMP/release.p12" gradle :app:assembleRelease --no-daemon
+            cp app/build/outputs/apk/release/app-release.apk ../nutex-attendance.apk
+          else
+            echo "::warning::No signing key secrets: building a TEST APK (cannot be updated in place, shows the address bar)"
+            gradle :app:assembleDebug --no-daemon
+            cp app/build/outputs/apk/debug/app-debug.apk ../nutex-attendance-test.apk
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nutex-attendance-apk
+          path: '*.apk'
+
+      - name: Publish the signed APK at a fixed download link
+        if: env.ANDROID_KEYSTORE_B64 != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view apk >/dev/null 2>&1 || gh release create apk --title "Android app" --notes "Latest NUTEX Attendance APK. The app shows the live website, so website updates need no new APK."
+          gh release upload apk nutex-attendance.apk --clobber

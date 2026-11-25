@@ -1,0 +1,40 @@
+plugins {
+    id 'com.android.application'
+}
+
+// release signing comes from the environment (GitHub Actions secrets); without it only a debug APK can be built
+def keystore = System.getenv('ANDROID_KEYSTORE_FILE')
+
+android {
+    namespace 'com.nutex.attendance'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.nutex.attendance'
+        minSdk 26
+        targetSdk 35
+        versionCode((System.getenv('GITHUB_RUN_NUMBER') ?: '1').toInteger())
+        versionName "1.0.${System.getenv('GITHUB_RUN_NUMBER') ?: '0'}"
+        manifestPlaceholders = [siteHost: siteHost]
+        resValue 'string', 'start_url', "https://${siteHost}/"
+        resValue 'string', 'asset_statements', "[{\\\"relation\\\":[\\\"delegate_permission/common.handle_all_urls\\\"],\\\"target\\\":{\\\"namespace\\\":\\\"web\\\",\\\"site\\\":\\\"https://${siteHost}\\\"}}]"
+    }
+
+    if (keystore) {
+        signingConfigs {
+            release {
+                storeFile file(keystore)
+                storeType 'pkcs12'
+                storePassword System.getenv('ANDROID_KEYSTORE_PASSWORD')
+                keyAlias 'nutex'
+                keyPassword System.getenv('ANDROID_KEYSTORE_PASSWORD')
+            }
+        }
+        buildTypes { release { signingConfig signingConfigs.release } }
+    }
+}
+
+dependencies {
+    // Trusted Web Activity: the website runs full screen in the phone's Chrome engine, so location, file upload and downloads work as on the web
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.5.0'
+}

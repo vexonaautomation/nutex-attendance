@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- the NUTEX gem with the N and the location dot (same shapes as apps/web/components/Brand.tsx), centred in the 108dp icon -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group android:translateX="22" android:translateY="22">
+        <path android:fillColor="#6B83FF" android:pathData="M32,3 L56,17 L56,47 L32,61 L8,47 L8,17 Z" />
+        <path android:fillColor="#33FFFFFF" android:pathData="M32,3 L8,17 L8,47 L32,33 Z" />
+        <path android:fillColor="#D96A5CF6" android:pathData="M32,33 L56,17 L56,47 L32,61 Z" />
+        <path android:fillColor="#47FFFFFF" android:pathData="M32,3 L56,17 L32,31 L8,17 Z" />
+        <path android:strokeColor="#FFFFFF" android:strokeWidth="5.4" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M21,43 L21,22 L43,43 L43,22" />
+        <path android:fillColor="#FF8A3D" android:strokeColor="#FFFFFF" android:strokeWidth="2" android:pathData="M42.8,14 a6.2,6.2 0 1,0 12.4,0 a6.2,6.2 0 1,0 -12.4,0 Z" />
+    </group>
+</vector>
